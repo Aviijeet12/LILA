@@ -1,0 +1,54 @@
+﻿# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Production build outputs
+dist/
+frontend/dist/
+dist-ssr/
+build/
+
+# Testing and Python caches
+.pytest_cache/
+**/__pycache__/
+*.py[cod]
+*$py.class
+.coverage
+htmlcov/
+.tox/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+*.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS and Editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Raw Proprietary Telemetry Data
+# Raw parquet data files and zip package are excluded to respect proprietary redistribution rights
+# Processed JSON artifacts in data/processed/ and frontend/public/data/processed/ are included for deployment
+data/raw/player_data/
+data/player_data.zip
+
+# Temporary test outputs
+test_output*

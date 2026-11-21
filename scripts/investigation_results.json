@@ -1,0 +1,287 @@
+{
+  "total_files": 1243,
+  "day_file_counts": {
+    "February_10": 437,
+    "February_11": 293,
+    "February_12": 268,
+    "February_13": 166,
+    "February_14": 79
+  },
+  "total_rows": 89104,
+  "day_rows": {
+    "February_10": 33687,
+    "February_11": 21235,
+    "February_12": 18429,
+    "February_13": 11106,
+    "February_14": 4647
+  },
+  "total_rows_by_user_type": {
+    "human": 66161,
+    "bot": 22943
+  },
+  "unique_users_count": 339,
+  "unique_matches_count": 796,
+  "maps": [
+    "AmbroseValley",
+    "Lockdown",
+    "GrandRift"
+  ],
+  "schema_details": {
+    "user_id: string not null\n  -- field metadata --\n  PARQUET:field_id: '0'\nmatch_id: string not null\n  -- field metadata --\n  PARQUET:field_id: '0'\nmap_id: string not null\n  -- field metadata --\n  PARQUET:field_id: '0'\nx: float not null\n  -- field metadata --\n  PARQUET:field_id: '0'\ny: float not null\n  -- field metadata --\n  PARQUET:field_id: '0'\nz: float not null\n  -- field metadata --\n  PARQUET:field_id: '0'\nts: timestamp[ms] not null\n  -- field metadata --\n  PARQUET:field_id: '0'\nevent: binary not null\n  -- field metadata --\n  PARQUET:field_id: '0'": {
+      "names": [
+        "user_id",
+        "match_id",
+        "map_id",
+        "x",
+        "y",
+        "z",
+        "ts",
+        "event"
+      ],
+      "types": [
+        "string",
+        "string",
+        "string",
+        "float",
+        "float",
+        "float",
+        "timestamp[ms]",
+        "binary"
+      ],
+      "metadata": {}
+    }
+  },
+  "null_counts": {
+    "user_id": 0,
+    "match_id": 0,
+    "map_id": 0,
+    "x": 0,
+    "y": 0,
+    "z": 0,
+    "ts": 0,
+    "event": 0
+  },
+  "exact_duplicates": "1420",
+  "duplicate_user_ts": "3917",
+  "event_counts": {
+    "Position": 51347,
+    "Loot": 12885,
+    "BotKilled": 700,
+    "KilledByStorm": 39,
+    "BotKill": 2415,
+    "BotPosition": 21712,
+    "Kill": 3,
+    "Killed": 3
+  },
+  "events_by_user_type": {
+    "human": {
+      "Position": 50711,
+      "Loot": 12770,
+      "BotKilled": 403,
+      "KilledByStorm": 39,
+      "BotKill": 2232,
+      "Kill": 3,
+      "Killed": 3
+    },
+    "bot": {
+      "BotPosition": 21712,
+      "BotKilled": 297,
+      "BotKill": 183,
+      "Position": 636,
+      "Loot": 115
+    }
+  },
+  "coord_stats": {
+    "AmbroseValley": {
+      "count": 61013,
+      "x_min": -324.96697998046875,
+      "x_max": 301.78729248046875,
+      "y_min": 100.0,
+      "y_max": 162.66619873046875,
+      "z_min": -380.00714111328125,
+      "z_max": 360.7577209472656,
+      "x_nulls": 0,
+      "y_nulls": 0,
+      "z_nulls": 0,
+      "x_nan": 0,
+      "y_nan": 0,
+      "z_nan": 0
+    },
+    "GrandRift": {
+      "count": 6853,
+      "x_min": -225.90382385253906,
+      "x_max": 256.6163635253906,
+      "y_min": 8.138656616210938,
+      "y_max": 46.85612869262695,
+      "z_min": -194.00479125976562,
+      "z_max": 170.1127471923828,
+      "x_nulls": 0,
+      "y_nulls": 0,
+      "z_nulls": 0,
+      "x_nan": 0,
+      "y_nan": 0,
+      "z_nan": 0
+    },
+    "Lockdown": {
+      "count": 21238,
+      "x_min": -406.6295166015625,
+      "x_max": 348.3560791015625,
+      "y_min": 32.58428955078125,
+      "y_max": 70.55411529541016,
+      "z_min": -285.1046142578125,
+      "z_max": 329.23785400390625,
+      "x_nulls": 0,
+      "y_nulls": 0,
+      "z_nulls": 0,
+      "x_nan": 0,
+      "y_nan": 0,
+      "z_nan": 0
+    }
+  },
+  "out_of_bounds_counts": {
+    "AmbroseValley": 0,
+    "GrandRift": 0,
+    "Lockdown": 0
+  },
+  "min_ts": "1970-01-21 11:51:21.535000",
+  "max_ts": "1970-01-21 11:58:01.300000",
+  "sample_records": [
+    {
+      "file": "0019c582-574d-4a53-9f77-554519b75b4c_1298e3e2-2776-4038-ba9b-72808b041561.nakama-0",
+      "user_type": "human",
+      "head": [
+        {
+          "user_id": "0019c582-574d-4a53-9f77-554519b75b4c",
+          "match_id": "1298e3e2-2776-4038-ba9b-72808b041561.nakama-0",
+          "map_id": "AmbroseValley",
+          "x": "-315.3538818359375",
+          "y": "125.67549133300781",
+          "z": "-2.5926055908203125",
+          "ts": "1970-01-21 11:52:34.537000",
+          "event": "Position"
+        },
+        {
+          "user_id": "0019c582-574d-4a53-9f77-554519b75b4c",
+          "match_id": "1298e3e2-2776-4038-ba9b-72808b041561.nakama-0",
+          "map_id": "AmbroseValley",
+          "x": "-317.8042297363281",
+          "y": "125.52490234375",
+          "z": "0.6614475250244141",
+          "ts": "1970-01-21 11:52:34.557000",
+          "event": "Position"
+        },
+        {
+          "user_id": "0019c582-574d-4a53-9f77-554519b75b4c",
+          "match_id": "1298e3e2-2776-4038-ba9b-72808b041561.nakama-0",
+          "map_id": "AmbroseValley",
+          "x": "-301.99090576171875",
+          "y": "120.11923217773438",
+          "z": "19.379867553710938",
+          "ts": "1970-01-21 11:52:34.572000",
+          "event": "Position"
+        }
+      ]
+    },
+    {
+      "file": "0019c582-574d-4a53-9f77-554519b75b4c_ae8f6cdf-3495-48cc-849d-5b5339a7cca1.nakama-0",
+      "user_type": "human",
+      "head": [
+        {
+          "user_id": "0019c582-574d-4a53-9f77-554519b75b4c",
+          "match_id": "ae8f6cdf-3495-48cc-849d-5b5339a7cca1.nakama-0",
+          "map_id": "AmbroseValley",
+          "x": "-145.7797088623047",
+          "y": "101.3499984741211",
+          "z": "-192.83877563476562",
+          "ts": "1970-01-21 11:52:36.501000",
+          "event": "Position"
+        },
+        {
+          "user_id": "0019c582-574d-4a53-9f77-554519b75b4c",
+          "match_id": "ae8f6cdf-3495-48cc-849d-5b5339a7cca1.nakama-0",
+          "map_id": "AmbroseValley",
+          "x": "-144.06040954589844",
+          "y": "101.3499984741211",
+          "z": "-190.47242736816406",
+          "ts": "1970-01-21 11:52:36.516000",
+          "event": "Position"
+        },
+        {
+          "user_id": "0019c582-574d-4a53-9f77-554519b75b4c",
+          "match_id": "ae8f6cdf-3495-48cc-849d-5b5339a7cca1.nakama-0",
+          "map_id": "AmbroseValley",
+          "x": "-140.218017578125",
+          "y": "101.68587493896484",
+          "z": "-185.20484924316406",
+          "ts": "1970-01-21 11:52:36.521000",
+          "event": "Position"
+        }
+      ]
+    },
+    {
+      "file": "0019c582-574d-4a53-9f77-554519b75b4c_c3a6fc96-69b6-41a9-ad26-1ac3297e5c65.nakama-0",
+      "user_type": "human",
+      "head": [
+        {
+          "user_id": "0019c582-574d-4a53-9f77-554519b75b4c",
+          "match_id": "c3a6fc96-69b6-41a9-ad26-1ac3297e5c65.nakama-0",
+          "map_id": "GrandRift",
+          "x": "-223.18521118164062",
+          "y": "32.44349670410156",
+          "z": "42.54265594482422",
+          "ts": "1970-01-21 11:52:33.311000",
+          "event": "Position"
+        },
+        {
+          "user_id": "0019c582-574d-4a53-9f77-554519b75b4c",
+          "match_id": "c3a6fc96-69b6-41a9-ad26-1ac3297e5c65.nakama-0",
+          "map_id": "GrandRift",
+          "x": "-201.2790069580078",
+          "y": "38.5986442565918",
+          "z": "41.20635223388672",
+          "ts": "1970-01-21 11:52:33.326000",
+          "event": "Position"
+        },
+        {
+          "user_id": "0019c582-574d-4a53-9f77-554519b75b4c",
+          "match_id": "c3a6fc96-69b6-41a9-ad26-1ac3297e5c65.nakama-0",
+          "map_id": "GrandRift",
+          "x": "-188.55532836914062",
+          "y": "39.87350082397461",
+          "z": "38.23188781738281",
+          "ts": "1970-01-21 11:52:33.331000",
+          "event": "Position"
+        }
+      ]
+    }
+  ],
+  "minimap_info": {
+    "AmbroseValley_Minimap.png": {
+      "dimensions": [
+        4320,
+        4320
+      ],
+      "format": "PNG",
+      "mode": "RGBA",
+      "aspect_ratio": 1.0
+    },
+    "GrandRift_Minimap.png": {
+      "dimensions": [
+        2160,
+        2158
+      ],
+      "format": "PNG",
+      "mode": "RGBA",
+      "aspect_ratio": 1.0009267840593141
+    },
+    "Lockdown_Minimap.jpg": {
+      "dimensions": [
+        9000,
+        9000
+      ],
+      "format": "JPEG",
+      "mode": "RGB",
+      "aspect_ratio": 1.0
+    }
+  }
+}

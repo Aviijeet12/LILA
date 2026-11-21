@@ -1,0 +1,59 @@
+
+# Project Instructions — LILA Player Intelligence
+
+## Project objective
+Build a production-quality browser-based player journey
+and gameplay analytics tool for LILA BLACK.
+
+## Engineering principles
+1. Understand the actual dataset before implementing features.
+2. Never invent dataset fields or event types.
+3. Never fabricate analytics or insights.
+4. Preserve the original raw dataset.
+5. Keep data processing separate from frontend rendering.
+6. Use reusable TypeScript components.
+7. Use strict TypeScript typing.
+8. Keep coordinate transformation in a dedicated module.
+9. Handle missing, invalid and duplicate records explicitly.
+10. Optimize rendering for large datasets.
+
+## Frontend
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- shadcn/ui
+- Recharts
+- HTML Canvas
+
+## Backend/data processing
+- Python
+- Pandas
+- PyArrow
+- DuckDB
+- NumPy
+
+## Code quality
+- Modular architecture
+- Meaningful naming
+- No unnecessary dependencies
+- No hardcoded dataset assumptions
+- Unit tests for coordinate transformations
+- Tests for data filtering and analytics
+
+## UI guidelines
+- Dark tactical analytics theme
+- Professional, clean dashboard
+- Responsive layout
+- Consistent typography
+- Clear legends and tooltips
+- Accessible controls
+- Avoid unnecessary animations
+
+## AI agent workflow
+- Inspect before editing.
+- Prepare an implementation plan.
+- Implement one phase at a time.
+- Run tests after every major change.
+- Never silently replace working functionality.
+- Report assumptions and limitations.
