@@ -1,30 +1,195 @@
-﻿@import "tailwindcss";
+@import "tailwindcss";
 
 @layer base {
   :root {
-    --bg-base: #080B11;
-    --bg-surface: #0E131F;
-    --bg-elevated: #151D2E;
-    --border-subtle: #1E293B;
-    --border-highlight: #334155;
-    --accent-cyan: #00E5FF;
-    --accent-blue: #3B82F6;
-    --accent-green: #10B981;
-    --accent-amber: #F59E0B;
-    --accent-rose: #F43F5E;
+    --bg-primary: #080D14;
+    --bg-secondary: #101925;
+    --bg-elevated: #172435;
+    --border-subtle: #1E2B3E;
+    --border-medium: #2A3C55;
+    --accent-cyan: #00D9F5;
+    --accent-human: #14C995;
+    --accent-bot: #F5A623;
+    --accent-warning: #F5A623;
+    --accent-danger: #EF4444;
     --text-primary: #F8FAFC;
     --text-secondary: #94A3B8;
     --text-muted: #64748B;
   }
 
   body {
-    background-color: var(--bg-base);
+    background-color: var(--bg-primary);
     color: var(--text-primary);
-    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     margin: 0;
     padding: 0;
     overflow-x: hidden;
   }
+
+  /* Monospace for tabular data, timestamps, coordinates, and metrics */
+  .font-mono, code, pre {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-feature-settings: "tnum" 1;
+  }
+}
+
+/* Tactical Surface Design Tokens */
+.tactical-bg {
+  background-color: #080D14;
+}
+
+.tactical-surface {
+  background-color: #101925;
+  border: 1px solid #1E2B3E;
+}
+
+.tactical-elevated {
+  background-color: #172435;
+  border: 1px solid #2A3C55;
+}
+
+.tactical-card {
+  background: #101925;
+  border: 1px solid #1E2B3E;
+  border-radius: 0.75rem;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.tactical-card:hover {
+  background: #131F2E;
+  border-color: #2E425E;
+}
+
+/* Glass Frost & Glassmorphism Utility Classes */
+.glass-panel {
+  background: rgba(14, 19, 31, 0.72);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
+}
+
+.glass-card {
+  background: rgba(21, 29, 46, 0.58);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover {
+  background: rgba(25, 36, 58, 0.75);
+  border-color: rgba(0, 229, 255, 0.3);
+  box-shadow: 0 6px 24px rgba(0, 229, 255, 0.12);
+  transform: translateY(-1px);
+}
+
+.glass-header {
+  background: rgba(10, 14, 23, 0.78);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-sidebar {
+  background: rgba(10, 15, 26, 0.82);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-input {
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: all 0.2s ease;
+}
+
+.glass-input:focus-within {
+  border-color: rgba(0, 229, 255, 0.5);
+  box-shadow: 0 0 16px rgba(0, 229, 255, 0.2);
+}
+
+/* Futuristic HUD & Cyber Utilities */
+.cyber-grid-bg {
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(0, 229, 255, 0.08) 0%, transparent 60%),
+    radial-gradient(circle at 100% 100%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 36px 36px, 36px 36px;
+}
+
+.futuristic-card {
+  position: relative;
+  background: rgba(12, 18, 32, 0.75);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.futuristic-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(0, 229, 255, 0.5) 50%, transparent 100%);
+  opacity: 0.6;
+  transition: opacity 0.25s ease;
+}
+
+.futuristic-card:hover {
+  border-color: rgba(0, 229, 255, 0.35);
+  box-shadow: 0 8px 30px rgba(0, 229, 255, 0.12);
+}
+
+.futuristic-card:hover::before {
+  opacity: 1;
+  background: linear-gradient(90deg, transparent 0%, rgba(0, 229, 255, 0.9) 50%, transparent 100%);
+}
+
+.glow-cyan {
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.35);
+}
+
+.glow-text-cyan {
+  text-shadow: 0 0 8px rgba(0, 229, 255, 0.65);
+}
+
+/* Screen Transitions */
+@keyframes screenEnter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-screen-enter {
+  animation: screenEnter 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes messageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-message-enter {
+  animation: messageSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 /* Custom scrollbars for data-dense tables and panels */
@@ -33,12 +198,12 @@
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #0E131F;
+  background: rgba(14, 19, 31, 0.5);
 }
 ::-webkit-scrollbar-thumb {
-  background: #334155;
+  background: rgba(51, 65, 85, 0.6);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #475569;
+  background: rgba(71, 85, 105, 0.8);
 }

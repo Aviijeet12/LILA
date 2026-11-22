@@ -104,13 +104,40 @@ describe('CombatAnalysisPage', () => {
 
     await waitFor(() => {
       expect(screen.getByText('Combat Telemetry Analysis')).toBeInTheDocument();
-      // Semantic disclosure notice at bottom
       expect(screen.getByText('Combat Telemetry Boundaries')).toBeInTheDocument();
     });
 
-    // Semantic boundary list items — text is split across elements, use regex container match
     expect(screen.getByText(/BotKill vs BotKilled:/i)).toBeInTheDocument();
     expect(screen.getByText(/Storm Fatalities:/i)).toBeInTheDocument();
+  });
+
+  it('filters events by individual maps without All Maps option', async () => {
+    render(
+      <MemoryRouter>
+        <CombatAnalysisPage />
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      // Default map is AmbroseValley
+      expect(screen.getByText('human-hero-1')).toBeInTheDocument();
+      // Lockdown event is not shown
+      expect(screen.queryByText('human-straggler-3')).not.toBeInTheDocument();
+    });
+
+    // "All Maps" option should not exist
+    expect(screen.queryByText('All Maps')).not.toBeInTheDocument();
+
+    // Switch to Lockdown
+    const lockdownBtn = screen.getByRole('button', { name: /Lockdown/i });
+    fireEvent.click(lockdownBtn);
+
+    await waitFor(() => {
+      // Now Lockdown event should appear (when category permits or switch category)
+      // Category is all_combat by default, KilledByStorm is combat
+      expect(screen.getByText('human-straggler-3')).toBeInTheDocument();
+      expect(screen.queryByText('human-hero-1')).not.toBeInTheDocument();
+    });
   });
 
   it('filters events by category using the select dropdown', async () => {
@@ -121,13 +148,11 @@ describe('CombatAnalysisPage', () => {
     );
 
     await waitFor(() => {
-      // By default, selectedMap is AmbroseValley and category is all_combat (shows BotKill, BotKilled, Kill)
       expect(screen.getByText('human-hero-1')).toBeInTheDocument();
       expect(screen.getByText('bot-target-2')).toBeInTheDocument();
       expect(screen.getByText('human-pvp-4')).toBeInTheDocument();
     });
 
-    // Select category dropdown — actual option text is "All Combat Events (Excl. Loot)"
     const categorySelect = screen.getByDisplayValue(/All Combat Events/i);
     fireEvent.change(categorySelect, { target: { value: 'BotKill' } });
 
@@ -136,7 +161,24 @@ describe('CombatAnalysisPage', () => {
     expect(screen.queryByText('human-pvp-4')).not.toBeInTheDocument();
   });
 
-  it('shows selected event preview card and deep link on row click', async () => {
+  it('does not contain an Action column in the table', async () => {
+    render(
+      <MemoryRouter>
+        <CombatAnalysisPage />
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText('human-hero-1')).toBeInTheDocument();
+    });
+
+    // Table header should not contain "Action"
+    expect(screen.queryByRole('columnheader', { name: /Action/i })).not.toBeInTheDocument();
+    // Replay button in table should not exist
+    expect(screen.queryByRole('button', { name: /^Replay$/i })).not.toBeInTheDocument();
+  });
+
+  it('shows selected event dossier card on row click with coordinates', async () => {
     render(
       <MemoryRouter>
         <CombatAnalysisPage />
@@ -152,12 +194,13 @@ describe('CombatAnalysisPage', () => {
     if (row) fireEvent.click(row);
 
     await waitFor(() => {
-      expect(screen.getByText('Selected Event')).toBeInTheDocument();
-      expect(screen.getByText('Open In Map Explorer Replay')).toBeInTheDocument();
+      // Selected badge in row or card
+      expect(screen.getAllByText(/Selected/i).length).toBeGreaterThan(0);
+      expect(screen.getByText(/Entity Classification/i)).toBeInTheDocument();
     });
 
-    // Coordinates appear in both table and preview card — both are valid
-    const coordElements = screen.getAllByText(/100\.5/);
+    // Coordinates appear in preview card
+    const coordElements = screen.getAllByText(/100.5/);
     expect(coordElements.length).toBeGreaterThan(0);
   });
 });

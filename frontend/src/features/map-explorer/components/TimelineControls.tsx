@@ -23,6 +23,8 @@ interface TimelineControlsProps {
   speed: number;
   isCompleted: boolean;
   events?: DiscreteEvent[];
+  isTimelineActive?: boolean;
+  onShowFullOverview?: () => void;
   onPlay: () => void;
   onPause: () => void;
   onRestart: () => void;
@@ -38,6 +40,8 @@ export const TimelineControls: React.FC<TimelineControlsProps> = ({
   speed,
   isCompleted,
   events = [],
+  isTimelineActive = false,
+  onShowFullOverview,
   onPlay,
   onPause,
   onRestart,
@@ -78,10 +82,10 @@ export const TimelineControls: React.FC<TimelineControlsProps> = ({
   };
 
   return (
-    <div className="bg-[#0E131F] border border-[#1E293B] rounded-lg p-3 font-mono text-xs select-none">
+    <div className="bg-[#0A0E17]/95 backdrop-blur-md border border-[#1E2B3E] rounded-xl p-3 font-mono text-xs select-none shadow-xl">
       {/* Top row: controls, time displays, speed buttons */}
       <div className="flex items-center justify-between gap-3 mb-2 flex-wrap">
-        {/* Play / Pause & Restart */}
+        {/* Play / Pause & Restart & Mode indicator */}
         <div className="flex items-center gap-1.5">
           <button
             onClick={isPlaying ? onPause : onPlay}
@@ -89,7 +93,7 @@ export const TimelineControls: React.FC<TimelineControlsProps> = ({
               'p-2 rounded-lg font-bold flex items-center justify-center transition-colors',
               isPlaying
                 ? 'bg-[#F59E0B]/20 text-[#F59E0B] border border-[#F59E0B]/40 hover:bg-[#F59E0B]/30'
-                : 'bg-[#00E5FF]/20 text-[#00E5FF] border border-[#00E5FF]/40 hover:bg-[#00E5FF]/30'
+                : 'bg-[#00D9F5]/20 text-[#00D9F5] border border-[#00D9F5]/40 hover:bg-[#00D9F5]/30'
             )}
             title={isPlaying ? 'Pause Playback' : 'Play Timeline'}
           >
@@ -98,7 +102,7 @@ export const TimelineControls: React.FC<TimelineControlsProps> = ({
 
           <button
             onClick={onRestart}
-            className="p-2 rounded-lg text-[#94A3B8] border border-[#1E293B] hover:text-[#F8FAFC] hover:bg-[#151D2E] transition-colors"
+            className="p-2 rounded-lg text-[#94A3B8] border border-[#1E2B3E] hover:text-[#F8FAFC] hover:bg-[#101925] transition-colors"
             title="Restart from beginning"
           >
             <RotateCcw size={13} />
@@ -115,9 +119,35 @@ export const TimelineControls: React.FC<TimelineControlsProps> = ({
             </span>
           </div>
 
+          {/* Full Match / Timeline Mode Toggle Badge */}
+          {onShowFullOverview && (
+            <button
+              onClick={onShowFullOverview}
+              className={clsx(
+                'ml-1 px-2.5 py-1 rounded text-[10px] font-mono font-medium transition-all border flex items-center gap-1.5',
+                !isTimelineActive && !isPlaying
+                  ? 'bg-[#00D9F5]/15 text-[#00D9F5] border-[#00D9F5]/40 shadow-[0_0_10px_rgba(0,217,245,0.15)]'
+                  : 'bg-[#101925] text-[#94A3B8] border-[#1E2B3E] hover:text-[#F8FAFC] hover:border-[#334155]'
+              )}
+              title={
+                !isTimelineActive && !isPlaying
+                  ? 'Currently showing all trajectories & events. Click to replay from start.'
+                  : 'Click to showcase all match trajectories & events at once.'
+              }
+            >
+              <span
+                className={clsx(
+                  'w-1.5 h-1.5 rounded-full',
+                  !isTimelineActive && !isPlaying ? 'bg-[#00D9F5] animate-pulse' : 'bg-[#64748B]'
+                )}
+              />
+              {!isTimelineActive && !isPlaying ? 'Full Match Overview' : 'Show All Trajectories'}
+            </button>
+          )}
+
           {/* Completed badge */}
           {isCompleted && (
-            <span className="ml-2 px-2 py-0.5 rounded bg-[#10B981]/15 text-[#10B981] border border-[#10B981]/30 text-[10px] font-semibold flex items-center gap-1">
+            <span className="ml-1 px-2 py-0.5 rounded bg-[#10B981]/15 text-[#10B981] border border-[#10B981]/30 text-[10px] font-semibold flex items-center gap-1">
               <CheckCircle2 size={11} /> Replay Complete
             </span>
           )}
@@ -127,7 +157,7 @@ export const TimelineControls: React.FC<TimelineControlsProps> = ({
         <div className="flex items-center gap-3">
           {/* UTC Timestamp */}
           <div className="text-[10px] text-[#64748B] hidden sm:flex items-center gap-1.5">
-            <Clock size={11} className="text-[#00E5FF]" />
+            <Clock size={11} className="text-[#00D9F5]" />
             <span>{formatTimestampUTC(currentTs)}</span>
           </div>
 
@@ -137,7 +167,7 @@ export const TimelineControls: React.FC<TimelineControlsProps> = ({
           </div>
 
           {/* Speed Selector */}
-          <div className="flex items-center gap-0.5 bg-[#151D2E] border border-[#1E293B] rounded-lg p-0.5">
+          <div className="flex items-center gap-0.5 bg-[#101925] border border-[#1E2B3E] rounded-lg p-0.5">
             {speeds.map((s) => (
               <button
                 key={s}
@@ -145,8 +175,8 @@ export const TimelineControls: React.FC<TimelineControlsProps> = ({
                 className={clsx(
                   'px-1.5 py-0.5 rounded text-[10px] font-mono font-semibold transition-colors',
                   speed === s
-                    ? 'bg-[#00E5FF] text-[#080B11]'
-                    : 'text-[#64748B] hover:text-[#94A3B8] hover:bg-[#1E293B]'
+                    ? 'bg-[#00D9F5] text-[#080B11]'
+                    : 'text-[#64748B] hover:text-[#94A3B8] hover:bg-[#1E2B3E]'
                 )}
               >
                 {s}×

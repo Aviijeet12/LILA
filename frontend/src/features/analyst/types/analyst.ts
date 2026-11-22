@@ -12,6 +12,12 @@ export type AnalystIntent =
   | 'storm_deaths_summary'
   | 'human_vs_bot_traffic'
   | 'loot_vs_human_traffic'
+  | 'dataset_overview'
+  | 'analytical_insights'
+  | 'map_intelligence'
+  | 'player_intelligence'
+  | 'temporal_analysis'
+  | 'coordinate_system'
   | 'unsupported';
 
 export interface AnalyticalFilter {
@@ -22,6 +28,9 @@ export interface AnalyticalFilter {
   topN?: number;
   entityType?: 'all' | 'human' | 'bot';
   matchId?: string;
+  userId?: string;
+  date?: string;
+  findingId?: number;
 }
 
 export interface MetricSummary {
@@ -75,7 +84,7 @@ export interface ChatMessage {
 }
 
 export interface SuggestedQuestion {
-  category: 'Player Movement' | 'Combat Telemetry' | 'Loot Activity' | 'Spatial Analysis';
+  category: 'Executive Insights' | 'Dataset Overview' | 'Player Movement' | 'Combat Telemetry' | 'Loot Activity' | 'Spatial Analysis';
   question: string;
   intent: AnalystIntent;
   defaultMap?: MapId;

@@ -27,10 +27,11 @@ import type { GlobalStats } from "../../types/telemetry";
 import { StatWidget, Badge } from "../../components/ui/StatWidget";
 
 // â”€â”€â”€ Colour palette â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-const CYAN   = "#00E5FF";
-const GREEN  = "#10B981";
-const AMBER  = "#F59E0B";
-const ROSE   = "#F43F5E";
+// ─── Design Tokens ──────────────────────────────────────────────────────────
+const CYAN   = "#00D9F5";
+const GREEN  = "#14C995";
+const AMBER  = "#F5A623";
+const ROSE   = "#EF4444";
 const SLATE  = "#64748B";
 const PURPLE = "#A855F7";
 
@@ -47,10 +48,10 @@ const OUTCOME_COLOURS: Record<string, string> = {
 
 const EVENT_COLOURS = [CYAN, GREEN, AMBER, ROSE, PURPLE, SLATE, "#6366F1", "#F97316"];
 
-// â”€â”€â”€ Custom tooltip shared style â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Custom tooltip shared style ─────────────────────────────────────────────
 const TooltipStyle: React.CSSProperties = {
-  background:   "#0E131F",
-  border:       "1px solid #1E293B",
+  background:   "#101925",
+  border:       "1px solid #1E2B3E",
   borderRadius: 6,
   fontSize:     11,
   fontFamily:   "ui-monospace, monospace",
@@ -60,11 +61,11 @@ const TooltipStyle: React.CSSProperties = {
 function ChartTooltip({ active, payload, label }: any) {
   if (!active || !payload?.length) return null;
   return (
-    <div style={TooltipStyle} className="px-3 py-2 shadow-lg">
-      <div className="text-[#94A3B8] text-[10px] mb-1">{label}</div>
+    <div style={TooltipStyle} className="px-3 py-2 shadow-xl">
+      <div className="text-slate-400 text-[10px] mb-1 font-sans">{label}</div>
       {payload.map((p: any, i: number) => (
-        <div key={i} style={{ color: p.color || CYAN }}>
-          {p.name}: <span className="font-semibold">{p.value?.toLocaleString()}</span>
+        <div key={i} style={{ color: p.color || CYAN }} className="font-mono">
+          {p.name}: <span className="font-semibold text-white">{p.value?.toLocaleString()}</span>
         </div>
       ))}
     </div>
@@ -75,37 +76,38 @@ function PieTooltip({ active, payload }: any) {
   if (!active || !payload?.length) return null;
   const { name, value } = payload[0];
   return (
-    <div style={TooltipStyle} className="px-3 py-2 shadow-lg">
-      <div className="text-[#94A3B8] text-[10px] mb-0.5">{name}</div>
-      <div style={{ color: CYAN }} className="font-semibold">{value?.toLocaleString()}</div>
+    <div style={TooltipStyle} className="px-3 py-2 shadow-xl">
+      <div className="text-slate-400 text-[10px] mb-0.5 font-sans">{name}</div>
+      <div style={{ color: CYAN }} className="font-semibold font-mono">{value?.toLocaleString()}</div>
     </div>
   );
 }
 
-// â”€â”€â”€ Section wrapper â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-const Section: React.FC<{ title: string; sub?: string; children: React.ReactNode }> = ({
-  title, sub, children,
+// ─── Section wrapper ─────────────────────────────────────────────────────────
+const Section: React.FC<{ title: string; sub?: string; children: React.ReactNode; className?: string }> = ({
+  title, sub, children, className = ""
 }) => (
-  <div className="mb-6">
-    <div className="flex items-center gap-3 mb-3">
-      <span className="text-xs font-mono font-semibold uppercase tracking-widest text-[#94A3B8]">{title}</span>
-      {sub && <span className="text-[10px] font-mono text-[#334155]">{sub}</span>}
-      <div className="flex-1 h-px bg-[#1E293B]" />
+  <div className={`mb-6 ${className}`}>
+    <div className="flex items-center gap-2.5 mb-2.5">
+      <div className="w-1 h-3.5 bg-[#00D9F5] rounded-sm" />
+      <span className="text-xs font-semibold uppercase tracking-wider text-slate-200">{title}</span>
+      {sub && <span className="text-[10px] text-slate-400 font-mono">({sub})</span>}
+      <div className="flex-1 h-px bg-[#1E2B3E]" />
     </div>
     {children}
   </div>
 );
 
-// â”€â”€â”€ Loading skeleton â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Loading skeleton ────────────────────────────────────────────────────────
 const Skeleton: React.FC<{ className?: string }> = ({ className = "" }) => (
-  <div className={`animate-pulse rounded bg-[#151D2E] ${className}`} />
+  <div className={`animate-pulse rounded-lg bg-[#101925] border border-[#1E2B3E] ${className}`} />
 );
 
-// â”€â”€â”€ Main component â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Main component ──────────────────────────────────────────────────────────
 export const OverviewPage: React.FC = () => {
-  const [stats, setStats]   = useState<GlobalStats | null>(null);
+  const [stats, setStats]     = useState<GlobalStats | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError]   = useState<string | null>(null);
+  const [error, setError]     = useState<string | null>(null);
 
   useEffect(() => {
     dataService.getGlobalStats()
@@ -114,17 +116,15 @@ export const OverviewPage: React.FC = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  // â”€â”€ Error state â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   if (error) {
     return (
-      <div className="flex items-center gap-3 p-4 rounded border border-[#F43F5E]/30 bg-[#F43F5E]/5 text-sm font-mono text-[#F43F5E]">
+      <div className="flex items-center gap-3 p-4 rounded-lg border border-[#EF4444]/30 bg-[#EF4444]/10 text-sm font-mono text-[#EF4444]">
         <AlertTriangle size={16} />
         <span>Failed to load dataset: {error}</span>
       </div>
     );
   }
 
-  // â”€â”€ Loading state â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   if (loading || !stats) {
     return (
       <div className="space-y-6">
@@ -140,17 +140,18 @@ export const OverviewPage: React.FC = () => {
     );
   }
 
-  // â”€â”€ Derived chart data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // Derived chart data
   const dailyMatchData = Object.entries(stats.matches_per_day)
     .sort(([a], [b]) => a.localeCompare(b))
     .map(([date, count]) => ({
-      date: date.slice(5),   // "02-10"
+      date: date.slice(5),
       matches: count,
       journeys: stats.journeys_per_day[date] ?? 0,
     }));
 
   const mapMatchData = Object.entries(stats.matches_per_map).map(([map, count]) => ({
-    name: map,
+    name: map === 'AmbroseValley' ? 'Ambrose Valley' : map === 'GrandRift' ? 'Grand Rift' : 'Lockdown',
+    rawName: map,
     matches: count,
     journeys: stats.journeys_per_map[map] ?? 0,
   }));
@@ -167,200 +168,231 @@ export const OverviewPage: React.FC = () => {
   const totalEvents = eventData.reduce((s, e) => s + e.count, 0);
 
   return (
-    <div className="space-y-6">
-      {/*  KPI Row  */}
-      <Section title="Dataset Summary" sub={`${stats.date_range}  -  UTC`}>
+    <div className="space-y-5">
+      {/* Compact Tactical Intelligence Header */}
+      <div className="bg-[#101925] border border-[#1E2B3E] rounded-xl px-4 py-3 flex flex-col md:flex-row md:items-center justify-between gap-3 shadow-md">
+        <div className="flex items-center gap-3">
+          <div className="h-8 w-11 rounded bg-black border border-[#1E2B3E] p-1 flex items-center justify-center flex-shrink-0">
+            <img src="/lila-logo.png" alt="LILA" className="h-full w-full object-contain" />
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <h2 className="text-sm font-bold font-mono text-[#F8FAFC] tracking-wide">
+                LILA BLACK <span className="text-[#00D9F5]">INTELLIGENCE</span>
+              </h2>
+              <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#1E2B3E] text-slate-300">
+                DATASET v1.0
+              </span>
+            </div>
+            <div className="text-xs text-slate-400 font-sans flex flex-wrap items-center gap-x-2 gap-y-0.5 mt-0.5">
+              <span>Timeline: <strong className="text-slate-200 font-mono">Feb 10 – 14, 2026 UTC</strong></span>
+              <span className="text-slate-600">•</span>
+              <span>Scope: <strong className="text-slate-200 font-mono">3 Maps</strong></span>
+              <span className="text-slate-600">•</span>
+              <span>Status: <strong className="text-[#14C995] font-mono">Audited & Reconciled</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2 text-xs font-mono">
+          <div className="px-2.5 py-1 rounded bg-[#080D14] border border-[#1E2B3E] text-slate-300">
+            <span className="text-slate-500 mr-1.5">RECORDS:</span>
+            <strong className="text-[#F8FAFC]">87,599</strong>
+          </div>
+          <div className="px-2.5 py-1 rounded bg-[#080D14] border border-[#1E2B3E] text-slate-300">
+            <span className="text-slate-500 mr-1.5">EVENTS:</span>
+            <strong className="text-[#00D9F5]">14,750</strong>
+          </div>
+        </div>
+      </div>
+
+      {/* KPI Row */}
+      <Section title="Dataset Summary" sub={`${stats.date_range} • UTC`}>
         <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3">
           <StatWidget
             label="Total Matches"
             value={stats.total_matches.toLocaleString()}
             icon={<Trophy size={14} />}
             badge={<Badge variant="cyan">796</Badge>}
+            subtext="3 maps covered"
+          />
+          <StatWidget
+            label="Player Journeys"
+            value={stats.total_journeys.toLocaleString()}
+            icon={<Route size={14} />}
+            subtext="1 dup file skipped"
           />
           <StatWidget
             label="Human Players"
             value={stats.total_unique_humans.toLocaleString()}
             icon={<Users size={14} />}
             badge={<Badge variant="green">HUMAN</Badge>}
+            subtext="UUID identifiers"
           />
           <StatWidget
             label="Bot Entities"
             value={stats.total_unique_bots.toLocaleString()}
             icon={<Bot size={14} />}
             badge={<Badge variant="amber">BOT</Badge>}
+            subtext="Numeric identifiers"
           />
           <StatWidget
             label="Clean Records"
             value={stats.total_clean_records.toLocaleString()}
-            subtext={`${(stats.total_raw_records - stats.total_clean_records).toLocaleString()} dupes removed`}
             icon={<Zap size={14} />}
+            subtext="14,750 discrete + 50.5k pos"
           />
           <StatWidget
-            label="Journeys"
-            value={stats.total_journeys.toLocaleString()}
-            subtext="1 dup file skipped"
-            icon={<Route size={14} />}
-          />
-          <StatWidget
-            label="Total Distance"
-            value={`${stats.total_distance_travelled_km.toLocaleString(undefined, { maximumFractionDigits: 0 })} km`}
+            label="Recorded Distance"
+            value={`${stats.total_distance_travelled_km.toLocaleString(undefined, { maximumFractionDigits: 1 })} km`}
             icon={<Footprints size={14} />}
-            subtext="Euclidean, all players"
+            subtext="Euclidean traversal"
           />
         </div>
       </Section>
 
-      {/*  Daily Activity  */}
-      <Section title="Match Distribution by Day">
-        <div className="bg-[#0E131F] border border-[#1E293B] rounded-lg p-4">
-          <ResponsiveContainer width="100%" height={200}>
-            <BarChart data={dailyMatchData} barGap={4}>
-              <XAxis
-                dataKey="date"
-                tick={{ fill: "#64748B", fontSize: 11, fontFamily: "ui-monospace,monospace" }}
-                axisLine={false}
-                tickLine={false}
-              />
-              <YAxis
-                tick={{ fill: "#64748B", fontSize: 11, fontFamily: "ui-monospace,monospace" }}
-                axisLine={false}
-                tickLine={false}
-                width={36}
-              />
-              <Tooltip content={<ChartTooltip />} cursor={{ fill: "#1E293B55" }} />
-              <Legend
-                wrapperStyle={{ fontSize: 11, fontFamily: "ui-monospace,monospace", color: "#94A3B8" }}
-              />
-              <Bar isAnimationActive={false} dataKey="matches"  name="Matches"  fill={CYAN}  radius={[3,3,0,0]} maxBarSize={40} />
-              <Bar isAnimationActive={false} dataKey="journeys" name="Journeys" fill={GREEN} radius={[3,3,0,0]} maxBarSize={40} />
-            </BarChart>
-          </ResponsiveContainer>
-          <p className="text-[10px] font-mono text-[#334155] mt-2">
-            Note: 1 match recorded on 2026-02-09 â€” likely a timezone boundary event. Core dataset is Feb 10â€“14.
-          </p>
-        </div>
-      </Section>
-
-      {/*  Map + Outcome row  */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {/* Map distribution */}
-        <Section title="Map Distribution">
-          <div className="bg-[#0E131F] border border-[#1E293B] rounded-lg p-4">
-            <ResponsiveContainer width="100%" height={200}>
-              <BarChart data={mapMatchData} layout="vertical" barGap={4}>
-                <XAxis
-                  type="number"
-                  tick={{ fill: "#64748B", fontSize: 11, fontFamily: "ui-monospace,monospace" }}
-                  axisLine={false}
-                  tickLine={false}
-                />
-                <YAxis
-                  dataKey="name"
-                  type="category"
-                  tick={{ fill: "#94A3B8", fontSize: 11, fontFamily: "ui-monospace,monospace" }}
-                  axisLine={false}
-                  tickLine={false}
-                  width={110}
-                />
-                <Tooltip content={<ChartTooltip />} cursor={{ fill: "#1E293B55" }} />
-                <Legend
-                  wrapperStyle={{ fontSize: 11, fontFamily: "ui-monospace,monospace", color: "#94A3B8" }}
-                />
-                <Bar isAnimationActive={false} dataKey="matches"  name="Matches"  radius={[0,3,3,0]} maxBarSize={18}>
-                  {mapMatchData.map((entry) => (
-                    <Cell key={entry.name} fill={MAP_COLOURS[entry.name] ?? SLATE} />
-                  ))}
-                </Bar>
-                <Bar isAnimationActive={false} dataKey="journeys" name="Journeys" fill={SLATE} radius={[0,3,3,0]} maxBarSize={18} />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </Section>
-
-        {/* Outcome distribution */}
-        <Section title="Outcome Distribution" sub="SURVIVED_PRESUMED = no Killed event observed">
-          <div className="bg-[#0E131F] border border-[#1E293B] rounded-lg p-4">
-            <div className="flex items-center gap-6">
-              <ResponsiveContainer width="50%" height={200}>
-                <PieChart>
-                  <Pie isAnimationActive={false} data={outcomeData}
-                    dataKey="value"
-                    nameKey="name"
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={52}
-                    outerRadius={80}
-                    paddingAngle={3}
-                    strokeWidth={0}
-                  >
-                    {outcomeData.map((entry) => (
-                      <Cell key={entry.name} fill={OUTCOME_COLOURS[entry.name] ?? SLATE} />
-                    ))}
-                  </Pie>
-                  <Tooltip content={<PieTooltip />} />
-                </PieChart>
+      {/* Main Analytical Grid: Velocity (Left) & Geospatial/Outcome Shares (Right) */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+        {/* Daily Match & Journey Velocity (7 cols) */}
+        <div className="lg:col-span-7">
+          <Section title="Operational Velocity" sub="Matches & Journeys by Day">
+            <div className="bg-[#101925] border border-[#1E2B3E] rounded-xl p-4 shadow-sm">
+              <ResponsiveContainer width="100%" height={210}>
+                <BarChart data={dailyMatchData} barGap={4}>
+                  <XAxis
+                    dataKey="date"
+                    tick={{ fill: "#94A3B8", fontSize: 11, fontFamily: "ui-monospace,monospace" }}
+                    axisLine={false}
+                    tickLine={false}
+                  />
+                  <YAxis
+                    tick={{ fill: "#64748B", fontSize: 11, fontFamily: "ui-monospace,monospace" }}
+                    axisLine={false}
+                    tickLine={false}
+                    width={32}
+                  />
+                  <Tooltip content={<ChartTooltip />} cursor={{ fill: "#1E2B3E33" }} />
+                  <Legend
+                    wrapperStyle={{ fontSize: 11, fontFamily: "ui-monospace,monospace", color: "#94A3B8" }}
+                  />
+                  <Bar isAnimationActive={false} dataKey="matches" name="Matches" fill={CYAN} radius={[2, 2, 0, 0]} maxBarSize={36} />
+                  <Bar isAnimationActive={false} dataKey="journeys" name="Journeys" fill={GREEN} radius={[2, 2, 0, 0]} maxBarSize={36} />
+                </BarChart>
               </ResponsiveContainer>
-              <div className="flex-1 space-y-2.5">
-                {outcomeData.map((entry) => {
-                  const pct = ((entry.value / (stats.total_journeys)) * 100).toFixed(1);
-                  return (
-                    <div key={entry.name} className="flex flex-col gap-0.5">
-                      <div className="flex items-center justify-between text-xs font-mono">
-                        <span className="flex items-center gap-1.5">
-                          <span
-                            className="inline-block w-2 h-2 rounded-full"
-                            style={{ background: OUTCOME_COLOURS[entry.name] ?? SLATE }}
-                          />
-                          <span className="text-[#94A3B8] text-[11px]">
-                            {entry.name === "SURVIVED_PRESUMED" ? "SURVIVED_PRESUMED" : entry.name}
-                          </span>
-                        </span>
-                        <span className="text-[#F8FAFC] font-semibold">{entry.value.toLocaleString()}</span>
-                      </div>
-                      <div className="h-1 rounded-full bg-[#1E293B]">
-                        <div
-                          className="h-full rounded-full"
-                          style={{
-                            width: `${pct}%`,
-                            background: OUTCOME_COLOURS[entry.name] ?? SLATE,
-                          }}
-                        />
-                      </div>
-                      <div className="text-[10px] font-mono text-[#64748B]">{pct}% of journeys</div>
-                    </div>
-                  );
-                })}
+              <div className="text-[10px] font-mono text-slate-500 mt-2 flex items-center justify-between">
+                <span>Feb 09 contains 1 timezone boundary match. Core operation: Feb 10–14.</span>
+                <span className="text-slate-400">Total: 796 Matches</span>
               </div>
             </div>
-          </div>
-        </Section>
+          </Section>
+        </div>
+
+        {/* Map & Outcome Distribution (5 cols) */}
+        <div className="lg:col-span-5 space-y-4">
+          {/* Map Distribution */}
+          <Section title="Map Distribution" sub="Matches & Journeys per Map">
+            <div className="bg-[#101925] border border-[#1E2B3E] rounded-xl p-4 shadow-sm">
+              <ResponsiveContainer width="100%" height={105}>
+                <BarChart data={mapMatchData} layout="vertical" barGap={2} margin={{ left: 0, right: 10, top: 0, bottom: 0 }}>
+                  <XAxis type="number" tick={{ fill: "#64748B", fontSize: 10 }} axisLine={false} tickLine={false} />
+                  <YAxis dataKey="name" type="category" tick={{ fill: "#94A3B8", fontSize: 11, fontFamily: "ui-monospace,monospace" }} axisLine={false} tickLine={false} width={105} />
+                  <Tooltip content={<ChartTooltip />} cursor={{ fill: "#1E2B3E33" }} />
+                  <Bar isAnimationActive={false} dataKey="matches" name="Matches" radius={[0, 2, 2, 0]} maxBarSize={12}>
+                    {mapMatchData.map((entry) => (
+                      <Cell key={entry.rawName} fill={MAP_COLOURS[entry.rawName] ?? SLATE} />
+                    ))}
+                  </Bar>
+                  <Bar isAnimationActive={false} dataKey="journeys" name="Journeys" fill={SLATE} radius={[0, 2, 2, 0]} maxBarSize={12} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </Section>
+
+          {/* Outcome Distribution */}
+          <Section title="Outcome Distribution" sub="Presumed Survival vs Elimination">
+            <div className="bg-[#101925] border border-[#1E2B3E] rounded-xl p-3.5 shadow-sm">
+              <div className="flex items-center gap-4">
+                <ResponsiveContainer width="45%" height={100}>
+                  <PieChart>
+                    <Pie
+                      isAnimationActive={false}
+                      data={outcomeData}
+                      dataKey="value"
+                      nameKey="name"
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={30}
+                      outerRadius={48}
+                      paddingAngle={3}
+                      strokeWidth={0}
+                    >
+                      {outcomeData.map((entry) => (
+                        <Cell key={entry.name} fill={OUTCOME_COLOURS[entry.name] ?? SLATE} />
+                      ))}
+                    </Pie>
+                    <Tooltip content={<PieTooltip />} />
+                  </PieChart>
+                </ResponsiveContainer>
+                <div className="flex-1 space-y-2">
+                  {outcomeData.map((entry) => {
+                    const pct = ((entry.value / stats.total_journeys) * 100).toFixed(1);
+                    return (
+                      <div key={entry.name} className="flex flex-col gap-0.5">
+                        <div className="flex items-center justify-between text-xs font-mono">
+                          <span className="flex items-center gap-1.5">
+                            <span
+                              className="w-2 h-2 rounded-full"
+                              style={{ background: OUTCOME_COLOURS[entry.name] ?? SLATE }}
+                            />
+                            <span className="text-slate-300 text-[11px]">{entry.name}</span>
+                          </span>
+                          <span className="text-white font-semibold">{entry.value.toLocaleString()}</span>
+                        </div>
+                        <div className="h-1 rounded-full bg-[#1E2B3E]">
+                          <div
+                            className="h-full rounded-full"
+                            style={{
+                              width: `${pct}%`,
+                              background: OUTCOME_COLOURS[entry.name] ?? SLATE,
+                            }}
+                          />
+                        </div>
+                        <div className="text-[10px] font-mono text-slate-500">{pct}% of journeys</div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </Section>
+        </div>
       </div>
 
-      {/*  Event Breakdown  */}
-      <Section title="Event Distribution" sub="All 87,599 clean records">
-        <div className="bg-[#0E131F] border border-[#1E293B] rounded-lg p-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <ResponsiveContainer width="100%" height={220}>
+      {/* Discrete Event Distribution */}
+      <Section title="Discrete Event Distribution" sub="14,750 discrete events recorded">
+        <div className="bg-[#101925] border border-[#1E2B3E] rounded-xl p-4 shadow-sm">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <ResponsiveContainer width="100%" height={210}>
               <BarChart data={eventData}>
                 <XAxis
                   dataKey="name"
-                  tick={{ fill: "#64748B", fontSize: 10, fontFamily: "ui-monospace,monospace" }}
+                  tick={{ fill: "#94A3B8", fontSize: 10, fontFamily: "ui-monospace,monospace" }}
                   axisLine={false}
                   tickLine={false}
                   interval={0}
-                  angle={-30}
+                  angle={-25}
                   textAnchor="end"
-                  height={48}
+                  height={44}
                 />
                 <YAxis
                   tick={{ fill: "#64748B", fontSize: 11, fontFamily: "ui-monospace,monospace" }}
                   axisLine={false}
                   tickLine={false}
-                  width={44}
-                  tickFormatter={(v: number) => v >= 1000 ? `${(v/1000).toFixed(0)}k` : String(v)}
+                  width={40}
+                  tickFormatter={(v: number) => (v >= 1000 ? `${(v / 1000).toFixed(0)}k` : String(v))}
                 />
-                <Tooltip content={<ChartTooltip />} cursor={{ fill: "#1E293B55" }} />
-                <Bar isAnimationActive={false} dataKey="count" name="Events" radius={[3,3,0,0]} maxBarSize={36}>
+                <Tooltip content={<ChartTooltip />} cursor={{ fill: "#1E2B3E33" }} />
+                <Bar isAnimationActive={false} dataKey="count" name="Events" radius={[2, 2, 0, 0]} maxBarSize={32}>
                   {eventData.map((entry, i) => (
                     <Cell key={entry.name} fill={EVENT_COLOURS[i % EVENT_COLOURS.length]} />
                   ))}
@@ -368,7 +400,7 @@ export const OverviewPage: React.FC = () => {
               </BarChart>
             </ResponsiveContainer>
 
-            <div className="space-y-1.5">
+            <div className="space-y-1.5 flex flex-col justify-center">
               {eventData.map((entry, i) => {
                 const pct = ((entry.count / totalEvents) * 100).toFixed(1);
                 return (
@@ -377,8 +409,8 @@ export const OverviewPage: React.FC = () => {
                       className="w-2 h-2 rounded-full flex-shrink-0"
                       style={{ background: EVENT_COLOURS[i % EVENT_COLOURS.length] }}
                     />
-                    <span className="text-[#94A3B8] w-28 truncate">{entry.name}</span>
-                    <div className="flex-1 h-1 rounded-full bg-[#151D2E]">
+                    <span className="text-slate-300 w-28 truncate">{entry.name}</span>
+                    <div className="flex-1 h-1 rounded-full bg-[#172435]">
                       <div
                         className="h-full rounded-full"
                         style={{
@@ -387,8 +419,8 @@ export const OverviewPage: React.FC = () => {
                         }}
                       />
                     </div>
-                    <span className="text-[#64748B] text-[10px] w-10 text-right">{pct}%</span>
-                    <span className="text-[#F8FAFC] w-14 text-right">{entry.count.toLocaleString()}</span>
+                    <span className="text-slate-500 text-[10px] w-10 text-right">{pct}%</span>
+                    <span className="text-slate-200 w-14 text-right font-semibold">{entry.count.toLocaleString()}</span>
                   </div>
                 );
               })}
@@ -397,35 +429,35 @@ export const OverviewPage: React.FC = () => {
         </div>
       </Section>
 
-      {/*  Human vs Bot Participation  */}
-      <Section title="Human vs Bot Participation">
+      {/* Human vs Bot Participation */}
+      <Section title="Entity Participation" sub="Human vs Bot Event Totals">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {[
-            { label: "Human Events", data: stats.event_distribution_human, colour: CYAN },
-            { label: "Bot Events",   data: stats.event_distribution_bot,   colour: AMBER },
+            { label: "Human Events", data: stats.event_distribution_human, colour: GREEN },
+            { label: "Bot Events", data: stats.event_distribution_bot, colour: AMBER },
           ].map(({ label, data, colour }) => {
-            const entries = Object.entries(data).sort(([,a],[,b]) => b-a);
-            const total   = entries.reduce((s,[,v]) => s+v, 0);
+            const entries = Object.entries(data).sort(([, a], [, b]) => b - a);
+            const total = entries.reduce((s, [, v]) => s + v, 0);
             return (
-              <div key={label} className="bg-[#0E131F] border border-[#1E293B] rounded-lg p-4">
-                <div className="text-xs font-mono text-[#94A3B8] mb-3 flex items-center justify-between">
-                  <span className="flex items-center gap-1.5">
+              <div key={label} className="bg-[#101925] border border-[#1E2B3E] rounded-xl p-4 shadow-sm">
+                <div className="text-xs font-mono text-slate-300 mb-3 flex items-center justify-between">
+                  <span className="flex items-center gap-1.5 font-semibold">
                     <span className="w-2 h-2 rounded-full" style={{ background: colour }} />
                     {label}
                   </span>
-                  <span className="text-[#64748B]">{total.toLocaleString()} total</span>
+                  <span className="text-slate-500">{total.toLocaleString()} records</span>
                 </div>
                 <div className="space-y-1.5">
                   {entries.map(([name, count]) => {
                     const pct = ((count / total) * 100).toFixed(1);
                     return (
                       <div key={name} className="flex items-center gap-2 text-xs font-mono">
-                        <span className="text-[#94A3B8] w-28 truncate">{name}</span>
-                        <div className="flex-1 h-1 rounded-full bg-[#151D2E]">
+                        <span className="text-slate-400 w-28 truncate">{name}</span>
+                        <div className="flex-1 h-1 rounded-full bg-[#172435]">
                           <div className="h-full rounded-full" style={{ width: `${pct}%`, background: colour }} />
                         </div>
-                        <span className="text-[#64748B] text-[10px] w-10 text-right">{pct}%</span>
-                        <span className="text-[#F8FAFC] w-12 text-right">{count.toLocaleString()}</span>
+                        <span className="text-slate-500 text-[10px] w-10 text-right">{pct}%</span>
+                        <span className="text-slate-200 w-12 text-right">{count.toLocaleString()}</span>
                       </div>
                     );
                   })}
@@ -436,18 +468,18 @@ export const OverviewPage: React.FC = () => {
         </div>
       </Section>
 
-      {/*  Dataset Limitations  */}
-      <Section title="Dataset Limitations &amp; Assumptions">
-        <div className="bg-[#0A0E17] border border-[#1E293B] rounded-lg p-4 space-y-2">
+      {/* Dataset Limitations & Assumptions */}
+      <Section title="Dataset Limitations & Assumptions">
+        <div className="bg-[#101925] border border-[#1E2B3E] rounded-xl p-4 space-y-2">
           {[
-            { icon: <Info size={12} className="text-[#00E5FF] mt-0.5 flex-shrink-0" />, text: 'No extraction event exists in the schema. "SURVIVED_PRESUMED" means the journey ended without a Killed or KilledByStorm event â€” survival is inferred, not confirmed.' },
-            { icon: <Info size={12} className="text-[#F59E0B] mt-0.5 flex-shrink-0" />, text: 'Timestamps are stored as Unix epoch seconds (int64). The Parquet schema declares timestamp[ms] but values are seconds â€” corrected in the pipeline.' },
+            { icon: <Info size={12} className="text-[#00D9F5] mt-0.5 flex-shrink-0" />, text: 'No extraction event exists in the telemetry schema. "SURVIVED_PRESUMED" indicates the journey concluded without an observed Killed or KilledByStorm event.' },
+            { icon: <Info size={12} className="text-[#F5A623] mt-0.5 flex-shrink-0" />, text: 'Timestamps are stored as Unix epoch seconds (int64). The Parquet schema declares timestamp[ms] but values are seconds — corrected in the Python ETL pipeline.' },
             { icon: <Info size={12} className="text-[#A855F7] mt-0.5 flex-shrink-0" />, text: '1 duplicate Parquet file detected (February_11/cfa03e9f). Its 88 rows are excluded; the February_10 copy is the canonical record.' },
-            { icon: <Info size={12} className="text-[#10B981] mt-0.5 flex-shrink-0" />, text: 'Kill/Killed events (3 each) appear in the same player file â€” the telemetry server logged both killer and victim events to one client. Cross-player attribution is not possible.' },
-            { icon: <Info size={12} className="text-[#64748B] mt-0.5 flex-shrink-0" />, text: 'Bots 1379, 1402, 1429 emit Position and Loot events (normally human event types). Classification is strictly by user_id: numeric IDs are bots, UUID strings are humans.' },
-            { icon: <Info size={12} className="text-[#64748B] mt-0.5 flex-shrink-0" />, text: 'No item metadata is available. Loot events record position only â€” item type, rarity, and pickup confirmation cannot be inferred from this dataset.' },
+            { icon: <Info size={12} className="text-[#14C995] mt-0.5 flex-shrink-0" />, text: 'Kill/Killed events (3 each) appear in the same player file — the telemetry server logged both killer and victim events to one client. Cross-player attribution is not possible.' },
+            { icon: <Info size={12} className="text-slate-400 mt-0.5 flex-shrink-0" />, text: 'Bots 1379, 1402, 1429 emit Position and Loot events (normally human event types). Classification is strictly by user_id: numeric IDs are bots, UUID strings are humans.' },
+            { icon: <Info size={12} className="text-slate-400 mt-0.5 flex-shrink-0" />, text: 'Loot events record spatial coordinates only — item type, rarity, and confirmation cannot be inferred from this dataset.' },
           ].map((item, i) => (
-            <div key={i} className="flex gap-2 text-[11px] font-mono text-[#64748B]">
+            <div key={i} className="flex gap-2 text-[11px] font-mono text-slate-400">
               {item.icon}
               <span>{item.text}</span>
             </div>

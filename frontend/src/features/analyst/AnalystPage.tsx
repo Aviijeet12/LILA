@@ -126,6 +126,40 @@ export const AnalystPage: React.FC = () => {
           );
           break;
 
+        case 'dataset_overview':
+          result = await insightEngine.getDatasetOverview();
+          break;
+
+        case 'analytical_insights':
+          result = await insightEngine.getAnalyticalInsights(
+            classification.filters.findingId
+          );
+          break;
+
+        case 'map_intelligence':
+          result = await insightEngine.getMapIntelligence(mapForIntent);
+          break;
+
+        case 'player_intelligence':
+          result = await insightEngine.getPlayerIntelligence(
+            classification.filters.userId,
+            classification.filters.entityType,
+            classification.filters.topN || 5
+          );
+          break;
+
+        case 'temporal_analysis':
+          result = await insightEngine.getTemporalAnalysis(
+            classification.filters.date
+          );
+          break;
+
+        case 'coordinate_system':
+          result = await insightEngine.getCoordinateSystemIntelligence(
+            mapForIntent
+          );
+          break;
+
         case 'unsupported':
         default:
           result = insightEngine.getUnsupportedAnalysis(queryText);
@@ -178,7 +212,11 @@ export const AnalystPage: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 flex flex-col h-full overflow-hidden bg-[#080B11] text-[#F8FAFC]">
+    <div className="flex-1 flex flex-col h-full overflow-hidden bg-[#080D14] text-[#F8FAFC] relative">
+      {/* Ambient background glows for glassmorphism */}
+      <div className="absolute top-12 left-1/4 w-96 h-96 bg-[#00D9F5]/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-24 right-1/4 w-96 h-96 bg-blue-600/5 rounded-full blur-3xl pointer-events-none" />
+
       {/* Top Bar: Scope & Integrity Overview */}
       <AnalystOverviewBar
         selectedMap={selectedMap}
@@ -187,7 +225,7 @@ export const AnalystPage: React.FC = () => {
       />
 
       {/* Main Content Area: Scrollable Chat Thread */}
-      <div ref={scrollRef} className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
+      <div ref={scrollRef} className="flex-1 overflow-y-auto px-6 py-4 space-y-4 relative z-10">
         {/* Suggested Inquiries Drawer */}
         <SuggestedQuestions onSelectQuestion={handleSendMessage} />
 
@@ -203,8 +241,8 @@ export const AnalystPage: React.FC = () => {
 
           {/* Loading Indicator */}
           {isLoading && (
-            <div className="flex items-center gap-3 text-xs font-mono text-slate-400 p-4 bg-[#0E131F] border border-[#1E293B] rounded-2xl w-fit">
-              <Loader2 size={16} className="text-[#00E5FF] animate-spin" />
+            <div className="flex items-center gap-3 text-xs font-mono text-slate-300 p-4 glass-panel rounded-2xl w-fit shadow-lg animate-message-enter">
+              <Loader2 size={16} className="text-[#00D9F5] animate-spin" />
               <span>Calculating deterministic telemetry metrics...</span>
             </div>
           )}

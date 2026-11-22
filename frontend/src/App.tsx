@@ -14,6 +14,9 @@ const MapExplorerPage = lazy(() =>
 const PlayerIntelligencePage = lazy(() =>
   import("./features/players/PlayerIntelligencePage").then((m) => ({ default: m.PlayerIntelligencePage }))
 );
+const PlayerGamePage = lazy(() =>
+  import("./features/player-game/PlayerGamePage").then((m) => ({ default: m.PlayerGamePage }))
+);
 const CombatAnalysisPage = lazy(() =>
   import("./features/combat/CombatAnalysisPage").then((m) => ({ default: m.CombatAnalysisPage }))
 );
@@ -34,6 +37,7 @@ function App() {
           <Route index element={<OverviewPage />} />
           <Route path="/map-explorer" element={<MapExplorerPage />} />
           <Route path="/players" element={<PlayerIntelligencePage />} />
+          <Route path="/player-game" element={<PlayerGamePage />} />
           <Route path="/combat" element={<CombatAnalysisPage />} />
           <Route path="/regions" element={<RegionIntelligencePage />} />
           <Route path="/analyst" element={<AnalystPage />} />

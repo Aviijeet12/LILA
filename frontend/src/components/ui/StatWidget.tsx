@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import { clsx } from "clsx";
 
 interface BadgeProps {
@@ -15,17 +15,17 @@ export const Badge: React.FC<BadgeProps> = ({
   className
 }) => {
   const variantStyles = {
-    cyan: "bg-[#00E5FF]/10 text-[#00E5FF] border-[#00E5FF]/30",
-    green: "bg-[#10B981]/10 text-[#10B981] border-[#10B981]/30",
-    amber: "bg-[#F59E0B]/10 text-[#F59E0B] border-[#F59E0B]/30",
-    rose: "bg-[#F43F5E]/10 text-[#F43F5E] border-[#F43F5E]/30",
-    slate: "bg-[#334155]/20 text-[#94A3B8] border-[#334155]/50",
+    cyan: "bg-[#00D9F5]/10 text-[#00D9F5] border-[#00D9F5]/30",
+    green: "bg-[#14C995]/10 text-[#14C995] border-[#14C995]/30",
+    amber: "bg-[#F5A623]/10 text-[#F5A623] border-[#F5A623]/30",
+    rose: "bg-[#EF4444]/10 text-[#EF4444] border-[#EF4444]/30",
+    slate: "bg-[#1E2B3E]/60 text-[#94A3B8] border-[#1E2B3E]",
     blue: "bg-[#3B82F6]/10 text-[#3B82F6] border-[#3B82F6]/30"
   };
 
   const sizeStyles = {
-    sm: "px-2 py-0.5 text-xs",
-    md: "px-2.5 py-1 text-sm font-medium"
+    sm: "px-2 py-0.5 text-[10px]",
+    md: "px-2.5 py-1 text-xs font-semibold"
   };
 
   return (
@@ -63,13 +63,13 @@ export const StatWidget: React.FC<StatWidgetProps> = ({
   return (
     <div
       className={clsx(
-        "bg-[#0E131F] border border-[#1E293B] rounded-md p-4 transition-all duration-150 hover:border-[#334155]",
+        "bg-[#101925] border border-[#1E2B3E] rounded-xl p-3.5 transition-all duration-150 hover:border-[#2A3C55] group relative",
         className
       )}
     >
       <div className="flex items-center justify-between text-[#94A3B8] mb-2">
-        <span className="text-xs font-semibold uppercase tracking-wider">{label}</span>
-        {icon && <span className="text-[#64748B]">{icon}</span>}
+        <span className="text-[11px] font-medium tracking-wide text-slate-400 group-hover:text-slate-200 transition-colors">{label}</span>
+        {icon && <span className="text-slate-500 group-hover:text-[#00D9F5] transition-colors">{icon}</span>}
       </div>
       <div className="flex items-baseline justify-between gap-2">
         <div className="text-2xl font-bold font-mono text-[#F8FAFC] tracking-tight">
@@ -77,7 +77,7 @@ export const StatWidget: React.FC<StatWidgetProps> = ({
         </div>
         {badge && <div>{badge}</div>}
       </div>
-      {subtext && <div className="text-xs text-[#64748B] mt-1.5 font-mono">{subtext}</div>}
+      {subtext && <div className="text-[10px] text-slate-400 mt-1.5 font-mono flex items-center gap-1">{subtext}</div>}
     </div>
   );
 };

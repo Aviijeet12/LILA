@@ -1,13 +1,14 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { RegionIntelligencePage } from '../features/regions/RegionIntelligencePage';
 import { dataService } from '../services/dataService';
-import { MapHeatmaps, MapId } from '../types/telemetry';
+import { MapHeatmaps, MapId, DiscreteEvent } from '../types/telemetry';
 
 vi.mock('../services/dataService', () => ({
   dataService: {
     getMapHeatmaps: vi.fn(),
+    getEvents: vi.fn(),
     getMinimapUrl: vi.fn().mockReturnValue('/test-minimap.webp'),
   },
 }));
@@ -82,14 +83,42 @@ function createMockHeatmap(mapId: MapId): MapHeatmaps {
   };
 }
 
+const mockEvents: DiscreteEvent[] = [
+  {
+    event: 'Loot',
+    match_id: 'm1',
+    user_id: 'player-alpha',
+    entity_type: 'human',
+    map_id: 'AmbroseValley',
+    ts: 100,
+    u: 0.1,
+    v: 0.6,
+    x: -280,
+    z: -300,
+  },
+  {
+    event: 'BotKill',
+    match_id: 'm1',
+    user_id: 'player-alpha',
+    entity_type: 'human',
+    map_id: 'AmbroseValley',
+    ts: 120,
+    u: 0.1,
+    v: 0.6,
+    x: -275,
+    z: -295,
+  },
+];
+
 describe('RegionIntelligencePage', () => {
   beforeEach(() => {
     vi.mocked(dataService.getMapHeatmaps).mockImplementation((mapId: MapId) =>
       Promise.resolve(createMockHeatmap(mapId))
     );
+    vi.mocked(dataService.getEvents).mockResolvedValue(mockEvents);
   });
 
-  it('renders page title and default selected cell coordinates', async () => {
+  it('renders page title, tactical heatmap canvas, and default selected cell telemetry', async () => {
     render(
       <MemoryRouter>
         <RegionIntelligencePage />
@@ -97,10 +126,8 @@ describe('RegionIntelligencePage', () => {
     );
 
     await waitFor(() => {
-      // Page heading
       expect(screen.getByText(/Region Intelligence/i)).toBeInTheDocument();
-      // Default selected cell indicator in grid footer
-      expect(screen.getByText(/Selected: \[Row 25, Col 6\]/i)).toBeInTheDocument();
+      expect(screen.getAllByText(/Row 25, Col 6/i).length).toBeGreaterThan(0);
     });
 
     // Spatial bounds cards rendered in inspector
@@ -108,9 +135,11 @@ describe('RegionIntelligencePage', () => {
     expect(screen.getByText(/Normalized UV Bounds/i)).toBeInTheDocument();
     // 6-layer breakdown header
     expect(screen.getByText(/Layer-Specific Activity in Sector/i)).toBeInTheDocument();
+    // Discrete events in sector section
+    expect(screen.getByText(/Discrete Events in Sector/i)).toBeInTheDocument();
   });
 
-  it('displays top hotspot rankings and share of total percentage', async () => {
+  it('displays top hotspot rankings and allows direct selection without external redirect', async () => {
     render(
       <MemoryRouter>
         <RegionIntelligencePage />
@@ -118,15 +147,22 @@ describe('RegionIntelligencePage', () => {
     );
 
     await waitFor(() => {
-      // Hotspot table header
       expect(screen.getByText(/Ranked Hotspots Analysis/i)).toBeInTheDocument();
     });
 
     // Row 25, Col 6 has 100 out of 150 total => 66.67% share
-    // The component renders "Sector [25, 6]" in table
     expect(screen.getByText('Sector [25, 6]')).toBeInTheDocument();
-    // Share percentage rounded to 2 decimals
-    expect(screen.getAllByText(/66\.67%/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/66.67%/).length).toBeGreaterThan(0);
+
+    // Row 10, Col 10 is the #2 hotspot
+    expect(screen.getByText('Sector [10, 10]')).toBeInTheDocument();
+    const row10 = screen.getByText('Sector [10, 10]').closest('tr');
+    if (row10) fireEvent.click(row10);
+
+    // Now selected cell updates to [10, 10]
+    await waitFor(() => {
+      expect(screen.getAllByText(/Row 10, Col 10/i).length).toBeGreaterThan(0);
+    });
   });
 
   it('renders cross-map territorial comparison section with all 3 maps', async () => {
@@ -137,17 +173,15 @@ describe('RegionIntelligencePage', () => {
     );
 
     await waitFor(() => {
-      // Cross-map section heading
       expect(screen.getByText(/Cross-Map Comparative Territorial Metrics/i)).toBeInTheDocument();
     });
 
-    // All 3 map labels appear in the cross-map comparison cards
     expect(screen.getAllByText('AmbroseValley').length).toBeGreaterThan(0);
     expect(screen.getAllByText('GrandRift').length).toBeGreaterThan(0);
     expect(screen.getAllByText('Lockdown').length).toBeGreaterThan(0);
   });
 
-  it('has focus button to open Map Explorer for selected sector', async () => {
+  it('strictly excludes Focus in Map Explorer buttons to maintain in-page region containment', async () => {
     render(
       <MemoryRouter>
         <RegionIntelligencePage />
@@ -155,9 +189,11 @@ describe('RegionIntelligencePage', () => {
     );
 
     await waitFor(() => {
-      // "Focus in Map Explorer" buttons appear in both inspector header and grid footer
-      const focusButtons = screen.getAllByText(/Focus in Map Explorer/i);
-      expect(focusButtons.length).toBeGreaterThan(0);
+      expect(screen.getByText(/Region Intelligence/i)).toBeInTheDocument();
     });
+
+    // Focus in Map Explorer should NOT exist anywhere on the page
+    expect(screen.queryByText(/Focus in Map Explorer/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Focus on Map/i)).not.toBeInTheDocument();
   });
 });

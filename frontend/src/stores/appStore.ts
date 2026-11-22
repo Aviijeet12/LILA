@@ -33,6 +33,7 @@ export interface AppState {
   setSelectedMap:        (mapId: MapId) => void;
   setSelectedDate:       (date: string | null) => void;
   setSelectedMatchId:    (matchId: string | null) => void;
+  setSelectedMatchAndDate: (matchId: string | null, date: string | null) => void;
   setSelectedJourneyId:  (journeyId: string | null) => void;
   setEntityFilter:       (filter: 'all' | EntityType) => void;
   setSelectedPlayerId:   (playerId: string | null) => void;
@@ -105,9 +106,20 @@ export const useAppStore = create<AppState>((set) => ({
   isPlaying:         false,
   playbackSpeed:     1,
 
-  setSelectedMap:        (selectedMap)       => set({ selectedMap, selectedMatchId: null, selectedJourneyId: null }),
-  setSelectedDate:       (selectedDate)      => set({ selectedDate, selectedMatchId: null, selectedJourneyId: null }),
+  setSelectedMap:        (selectedMap)       => set({
+    selectedMap,
+    selectedDate: null,
+    selectedMatchId: null,
+    selectedJourneyId: null,
+    entityFilter: 'all',
+    activeLayers: { ...DEFAULT_LAYERS },
+    timelineTimestamp: null,
+    isPlaying: false,
+    selectedPlayerId: null,
+  }),
+  setSelectedDate:       (selectedDate)      => set({ selectedDate, selectedJourneyId: null }),
   setSelectedMatchId:    (selectedMatchId)   => set({ selectedMatchId, selectedJourneyId: null }),
+  setSelectedMatchAndDate: (selectedMatchId, selectedDate) => set({ selectedMatchId, selectedDate, selectedJourneyId: null }),
   setSelectedJourneyId:  (selectedJourneyId) => set({ selectedJourneyId }),
   setEntityFilter:       (entityFilter)      => set({ entityFilter, selectedJourneyId: null }),
   setSelectedPlayerId:   (selectedPlayerId)  => set({ selectedPlayerId }),

@@ -91,5 +91,43 @@ describe('QueryClassifier Unit Tests', () => {
       expect(classifyQuery('Which player is a camper?').intent).toBe('unsupported');
       expect(classifyQuery('Tell me about player strategy and intentions').intent).toBe('unsupported');
     });
+
+    it('classifies dataset overview inquiries', () => {
+      expect(classifyQuery('How many total matches are in the dataset?').intent).toBe('dataset_overview');
+      expect(classifyQuery('Give me an overview of the dataset').intent).toBe('dataset_overview');
+      expect(classifyQuery('How many players and bots?').intent).toBe('dataset_overview');
+    });
+
+    it('classifies analytical findings inquiries', () => {
+      expect(classifyQuery('What are the core analytical insights from the dataset?').intent).toBe('analytical_insights');
+      const f1 = classifyQuery('Why does Ambrose Valley have so much activity? (Finding 1)');
+      expect(f1.intent).toBe('analytical_insights');
+      expect(f1.filters.findingId).toBe(1);
+    });
+
+    it('classifies coordinate system and scale inquiries', () => {
+      const q = classifyQuery('How does the affine coordinate mapping work for Ambrose Valley?');
+      expect(q.intent).toBe('coordinate_system');
+      expect(q.filters.mapId).toBe('AmbroseValley');
+    });
+
+    it('classifies temporal analysis inquiries', () => {
+      const q = classifyQuery('What was the activity on Feb 10, 2026?');
+      expect(q.intent).toBe('temporal_analysis');
+      expect(q.filters.date).toBe('2026-02-10');
+    });
+
+    it('classifies player intelligence inquiries', () => {
+      expect(classifyQuery('Who are the top active human players by distance?').intent).toBe('player_intelligence');
+      const p = classifyQuery('Tell me about player 94d042cb-a0f2-45f3-bdca-42fab73cfef5');
+      expect(p.intent).toBe('player_intelligence');
+      expect(p.filters.userId).toBe('94d042cb-a0f2-45f3-bdca-42fab73cfef5');
+    });
+
+    it('classifies map intelligence inquiries', () => {
+      const q = classifyQuery('Tell me about Ambrose Valley');
+      expect(q.intent).toBe('map_intelligence');
+      expect(q.filters.mapId).toBe('AmbroseValley');
+    });
   });
 });

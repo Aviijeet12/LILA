@@ -19,11 +19,13 @@ import { PlayerSummary } from '../../../types/telemetry';
 interface PlayerProfileModalProps {
   player: PlayerSummary | null;
   onClose: () => void;
+  onViewReplay?: (playerId: string, matchId: string, mapId: string) => void;
 }
 
 export const PlayerProfileModal: React.FC<PlayerProfileModalProps> = ({
   player,
   onClose,
+  onViewReplay,
 }) => {
   const navigate = useNavigate();
 
@@ -48,7 +50,12 @@ export const PlayerProfileModal: React.FC<PlayerProfileModalProps> = ({
   };
 
   const handleInspectMatch = (matchId: string) => {
-    navigate(`/map-explorer?map=${primaryMap}&match=${matchId}`);
+    if (onViewReplay) {
+      onViewReplay(player.user_id, matchId, primaryMap);
+      onClose();
+    } else {
+      navigate(`/players?player=${player.user_id}&match=${matchId}&map=${primaryMap}&view=replay`);
+    }
   };
 
   return (
@@ -262,7 +269,8 @@ export const PlayerProfileModal: React.FC<PlayerProfileModalProps> = ({
                     <button
                       type="button"
                       onClick={() => handleInspectMatch(mId)}
-                      className="flex items-center gap-1 px-2.5 py-1 rounded bg-[#1A2234] text-cyan-400 hover:text-cyan-300 hover:bg-[#222E46] text-[11px] font-sans font-medium transition-colors border border-[#2D3B55]"
+                      className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#00D9F5]/10 text-[#00D9F5] hover:bg-[#00D9F5]/20 text-[11px] font-sans font-medium transition-colors border border-[#00D9F5]/30 shadow-sm"
+                      title="Inspect game on tactical map in Player Game View"
                     >
                       <span>View Replay</span>
                       <ExternalLink className="w-3 h-3" />

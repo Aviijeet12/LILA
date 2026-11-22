@@ -16,8 +16,9 @@ import {
   ExternalLink,
 } from 'lucide-react';
 import { dataService } from '../../services/dataService';
-import { PlayerSummary, EntityType } from '../../types/telemetry';
+import { PlayerSummary, EntityType, MapId } from '../../types/telemetry';
 import { PlayerProfileModal } from './components/PlayerProfileModal';
+import { PlayerGameView } from '../player-game/PlayerGamePage';
 
 type SortField = 'matches' | 'distance' | 'duration' | 'loot' | 'bot_kills' | 'deaths';
 type SortOrder = 'desc' | 'asc';
@@ -43,13 +44,28 @@ export const PlayerIntelligencePage: React.FC = () => {
   // Modal inspection state
   const [selectedPlayer, setSelectedPlayer] = useState<PlayerSummary | null>(null);
 
+  // In-page Player Game Replay state
+  const [activeReplay, setActiveReplay] = useState<{
+    playerId: string;
+    matchId: string;
+    mapId: MapId;
+  } | null>(() => {
+    const qMatch = searchParams.get('match');
+    const qPlayer = searchParams.get('player') || searchParams.get('user');
+    const qMap = (searchParams.get('map') as MapId) || 'AmbroseValley';
+    if (qMatch && qPlayer) {
+      return { playerId: qPlayer, matchId: qMatch, mapId: qMap };
+    }
+    return null;
+  });
+
   useEffect(() => {
     setLoading(true);
     dataService.getPlayers()
       .then((data) => {
         setPlayers(data);
         const qPlayer = searchParams.get('player');
-        if (qPlayer) {
+        if (qPlayer && !searchParams.get('match')) {
           const found = data.find((p) => p.user_id === qPlayer || p.user_id.includes(qPlayer));
           if (found) setSelectedPlayer(found);
         }
@@ -145,12 +161,28 @@ export const PlayerIntelligencePage: React.FC = () => {
     return `${mins}m`;
   };
 
+  if (activeReplay) {
+    return (
+      <div className="flex-1 flex flex-col h-full max-h-full overflow-hidden bg-[#080B11]">
+        <PlayerGameView
+          initialPlayerId={activeReplay.playerId}
+          initialMatchId={activeReplay.matchId}
+          initialMapId={activeReplay.mapId}
+          onBack={() => {
+            setActiveReplay(null);
+            setSearchParams({});
+          }}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="flex-1 flex flex-col h-full overflow-hidden bg-[#080B11] text-[#F8FAFC]">
       {/* Header Bar */}
-      <div className="px-6 py-4 border-b border-[#1E293B] bg-[#0E131F] flex flex-wrap items-center justify-between gap-4">
+      <div className="px-6 py-4 border-b border-[#1E2B3E] bg-[#101925] flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="p-2 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+          <div className="p-2 rounded-xl bg-cyan-500/10 text-[#00D9F5] border border-cyan-500/20">
             <Users className="w-5 h-5" />
           </div>
           <div>
@@ -165,29 +197,29 @@ export const PlayerIntelligencePage: React.FC = () => {
 
         {/* Top Summary Stat Widgets */}
         <div className="flex items-center gap-2 text-xs font-mono">
-          <div className="bg-[#151D2E] border border-[#1E293B] px-3 py-1.5 rounded-lg flex items-center gap-2">
+          <div className="bg-[#080D14] border border-[#1E2B3E] px-3 py-1.5 rounded-lg flex items-center gap-2">
             <span className="text-slate-400">Total Entities:</span>
             <strong className="text-slate-100">{totalEntities}</strong>
           </div>
-          <div className="bg-[#151D2E] border border-[#1E293B] px-3 py-1.5 rounded-lg flex items-center gap-2">
-            <span className="text-cyan-400">Humans:</span>
-            <strong className="text-cyan-300">{totalHumans}</strong>
+          <div className="bg-[#080D14] border border-[#1E2B3E] px-3 py-1.5 rounded-lg flex items-center gap-2">
+            <span className="text-[#14C995]">Humans:</span>
+            <strong className="text-[#14C995]">{totalHumans}</strong>
           </div>
-          <div className="bg-[#151D2E] border border-[#1E293B] px-3 py-1.5 rounded-lg flex items-center gap-2">
-            <span className="text-purple-400">Bots:</span>
-            <strong className="text-purple-300">{totalBots}</strong>
+          <div className="bg-[#080D14] border border-[#1E2B3E] px-3 py-1.5 rounded-lg flex items-center gap-2">
+            <span className="text-[#F5A623]">Bots:</span>
+            <strong className="text-[#F5A623]">{totalBots}</strong>
           </div>
-          <div className="bg-[#151D2E] border border-[#1E293B] px-3 py-1.5 rounded-lg flex items-center gap-2">
-            <span className="text-amber-400">Total Distance:</span>
+          <div className="bg-[#080D14] border border-[#1E2B3E] px-3 py-1.5 rounded-lg flex items-center gap-2">
+            <span className="text-slate-400">Total Distance:</span>
             <strong className="text-slate-100">{totalKm.toLocaleString()} km</strong>
           </div>
         </div>
       </div>
 
       {/* Filter and Search Controls Bar */}
-      <div className="px-6 py-3 border-b border-[#1E293B] bg-[#0B0F17] flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+      <div className="px-6 py-3 border-b border-[#1E2B3E] bg-[#0A101A] flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
         {/* Search Input */}
-        <div className="flex items-center gap-2 bg-[#121826] border border-[#1E293B] rounded-lg px-3 py-1.5 w-72">
+        <div className="flex items-center gap-2 bg-[#101925] border border-[#1E2B3E] rounded-lg px-3 py-1.5 w-72">
           <Search className="w-4 h-4 text-slate-400 shrink-0" />
           <input
             type="text"
@@ -201,12 +233,12 @@ export const PlayerIntelligencePage: React.FC = () => {
         {/* Filter Pills */}
         <div className="flex items-center gap-2 flex-wrap">
           {/* Entity Type Toggle */}
-          <div className="flex items-center bg-[#121826] border border-[#1E293B] rounded-lg p-0.5">
+          <div className="flex items-center bg-[#101925] border border-[#1E2B3E] rounded-lg p-0.5">
             <button
               type="button"
               onClick={() => setEntityFilter('all')}
               className={`px-2.5 py-1 rounded text-xs transition-colors ${
-                entityFilter === 'all' ? 'bg-[#1E293B] text-cyan-400 font-bold' : 'text-slate-400 hover:text-slate-200'
+                entityFilter === 'all' ? 'bg-[#1E2B3E] text-[#00D9F5] font-bold' : 'text-slate-400 hover:text-slate-200'
               }`}
             >
               All
@@ -215,7 +247,7 @@ export const PlayerIntelligencePage: React.FC = () => {
               type="button"
               onClick={() => setEntityFilter('human')}
               className={`px-2.5 py-1 rounded text-xs transition-colors flex items-center gap-1 ${
-                entityFilter === 'human' ? 'bg-cyan-500/20 text-cyan-300 font-bold' : 'text-slate-400 hover:text-slate-200'
+                entityFilter === 'human' ? 'bg-[#14C995]/20 text-[#14C995] font-bold border border-[#14C995]/40' : 'text-slate-400 hover:text-slate-200'
               }`}
             >
               <User className="w-3 h-3" />
@@ -225,7 +257,7 @@ export const PlayerIntelligencePage: React.FC = () => {
               type="button"
               onClick={() => setEntityFilter('bot')}
               className={`px-2.5 py-1 rounded text-xs transition-colors flex items-center gap-1 ${
-                entityFilter === 'bot' ? 'bg-purple-500/20 text-purple-300 font-bold' : 'text-slate-400 hover:text-slate-200'
+                entityFilter === 'bot' ? 'bg-[#F5A623]/20 text-[#F5A623] font-bold border border-[#F5A623]/40' : 'text-slate-400 hover:text-slate-200'
               }`}
             >
               <Bot className="w-3 h-3" />
@@ -411,6 +443,14 @@ export const PlayerIntelligencePage: React.FC = () => {
         <PlayerProfileModal
           player={selectedPlayer}
           onClose={() => setSelectedPlayer(null)}
+          onViewReplay={(pId, mId, mapId) => {
+            setActiveReplay({
+              playerId: pId,
+              matchId: mId,
+              mapId: (mapId as MapId) || 'AmbroseValley',
+            });
+            setSelectedPlayer(null);
+          }}
         />
       )}
     </div>

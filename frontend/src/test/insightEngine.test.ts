@@ -7,6 +7,10 @@ vi.mock('../services/dataService', () => ({
   dataService: {
     getMapHeatmaps: vi.fn(),
     getEvents: vi.fn(),
+    getGlobalStats: vi.fn(),
+    getMapMetadata: vi.fn(),
+    getPlayers: vi.fn(),
+    getMatches: vi.fn(),
   },
 }));
 
@@ -186,5 +190,65 @@ describe('Deterministic InsightEngine Tests', () => {
     expect(result.title).toContain('Beyond Supported Telemetry Scope');
     expect(result.limitations).toBeDefined();
     expect(result.followUpQuestions.length).toBeGreaterThan(0);
+  });
+
+  it('computes dataset overview with exact global stats', async () => {
+    vi.mocked(dataService.getGlobalStats).mockResolvedValueOnce({
+      total_matches: 796,
+      total_journeys: 1242,
+      total_unique_humans: 245,
+      total_unique_bots: 94,
+      total_unique_players: 339,
+      total_discrete_events: 14750,
+      total_distance_travelled_km: 1024.4,
+      matches_per_map: { AmbroseValley: 566, Lockdown: 171, GrandRift: 59 },
+      journeys_per_map: { AmbroseValley: 836, Lockdown: 295, GrandRift: 111 },
+      outcomes_overall: { SURVIVED_PRESUMED: 709, ELIMINATED: 533 },
+    } as any);
+
+    const result = await insightEngine.getDatasetOverview();
+    expect(result.intent).toBe('dataset_overview');
+    expect(result.metrics.find((m) => m.label === 'Total Matches')?.rawCount).toBe(796);
+    expect(result.conclusion).toContain('796 matches');
+    expect(result.conclusion).toContain('1,242 player journeys');
+  });
+
+  it('returns peer-reviewed analytical findings from INSIGHTS.md', async () => {
+    vi.mocked(dataService.getGlobalStats).mockResolvedValueOnce({} as any);
+    const f1 = await insightEngine.getAnalyticalInsights(1);
+    expect(f1.intent).toBe('analytical_insights');
+    expect(f1.title).toContain('Finding 1');
+    expect(f1.conclusion).toContain('76.4%');
+
+    const all = await insightEngine.getAnalyticalInsights();
+    expect(all.conclusion).toContain('Finding 1');
+    expect(all.conclusion).toContain('Finding 2');
+    expect(all.conclusion).toContain('Finding 3');
+  });
+
+  it('returns complete map dossier for Ambrose Valley', async () => {
+    vi.mocked(dataService.getMapMetadata).mockResolvedValueOnce({
+      scale: 900,
+      origin_x: -370,
+      origin_z: -473,
+      native_width: 2048,
+      native_height: 2048,
+      human_journeys: 700,
+      bot_journeys: 136,
+      total_distance_km: 684.1,
+      avg_journey_duration_seconds: 320,
+      outcomes: { SURVIVED_PRESUMED: 450, ELIMINATED: 386 },
+    } as any);
+    vi.mocked(dataService.getGlobalStats).mockResolvedValueOnce({
+      total_matches: 796,
+      total_journeys: 1242,
+      matches_per_map: { AmbroseValley: 566 },
+      journeys_per_map: { AmbroseValley: 836 },
+    } as any);
+
+    const result = await insightEngine.getMapIntelligence('AmbroseValley');
+    expect(result.intent).toBe('map_intelligence');
+    expect(result.conclusion).toContain('Ambrose Valley');
+    expect(result.conclusion).toContain('scale of S = 900');
   });
 });

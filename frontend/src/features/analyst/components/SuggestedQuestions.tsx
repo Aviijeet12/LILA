@@ -1,12 +1,56 @@
 import React, { useState } from 'react';
 import { SuggestedQuestion } from '../types/analyst';
-import { Navigation, Swords, Package, Compass, ChevronRight } from 'lucide-react';
+import { Navigation, Swords, Package, Compass, ChevronRight, Sparkles, LineChart, Database } from 'lucide-react';
 
 interface SuggestedQuestionsProps {
   onSelectQuestion: (question: string) => void;
 }
 
 const QUESTIONS: SuggestedQuestion[] = [
+  // Executive Insights
+  {
+    category: 'Executive Insights',
+    question: 'What are the core analytical insights from the dataset?',
+    intent: 'analytical_insights',
+  },
+  {
+    category: 'Executive Insights',
+    question: 'Why does Ambrose Valley receive disproportionately high activity? (Finding 1)',
+    intent: 'analytical_insights',
+  },
+  {
+    category: 'Executive Insights',
+    question: 'How do human and bot paths diverge on Grand Rift? (Finding 2)',
+    intent: 'analytical_insights',
+  },
+  {
+    category: 'Executive Insights',
+    question: 'Where are Loot events concentrated, and do they overlap with human corridors? (Finding 3)',
+    intent: 'analytical_insights',
+  },
+
+  // Dataset Overview
+  {
+    category: 'Dataset Overview',
+    question: 'Give me an executive overview of the dataset (matches, journeys, entities)',
+    intent: 'dataset_overview',
+  },
+  {
+    category: 'Dataset Overview',
+    question: 'How were matches and journeys distributed across the 5 operational days?',
+    intent: 'temporal_analysis',
+  },
+  {
+    category: 'Dataset Overview',
+    question: 'How does the affine coordinate mapping pipeline work for Ambrose Valley?',
+    intent: 'coordinate_system',
+  },
+  {
+    category: 'Dataset Overview',
+    question: 'Who are the most active human players by distance and matches?',
+    intent: 'player_intelligence',
+  },
+
   // Player Movement
   {
     category: 'Player Movement',
@@ -64,60 +108,64 @@ const QUESTIONS: SuggestedQuestion[] = [
     question: 'Which areas have high human traffic but relatively low bot traffic?',
     intent: 'human_vs_bot_traffic',
   },
-  {
-    category: 'Spatial Analysis',
-    question: 'Which regions have activity across several different event categories?',
-    intent: 'cross_layer_activity',
-  },
 ];
 
-const CATEGORIES: Array<{ key: SuggestedQuestion['category']; icon: React.ReactNode }> = [
-  { key: 'Player Movement', icon: <Navigation size={13} className="text-[#00E5FF]" /> },
-  { key: 'Combat Telemetry', icon: <Swords size={13} className="text-[#F43F5E]" /> },
-  { key: 'Loot Activity', icon: <Package size={13} className="text-[#F59E0B]" /> },
-  { key: 'Spatial Analysis', icon: <Compass size={13} className="text-[#A855F7]" /> },
+const CATEGORIES = [
+  { id: 'Executive Insights', label: 'Insights', icon: <LineChart size={13} /> },
+  { id: 'Dataset Overview', label: 'Overview', icon: <Database size={13} /> },
+  { id: 'Player Movement', label: 'Movement', icon: <Navigation size={13} /> },
+  { id: 'Combat Telemetry', label: 'Combat', icon: <Swords size={13} /> },
+  { id: 'Loot Activity', label: 'Loot', icon: <Package size={13} /> },
+  { id: 'Spatial Analysis', label: 'Spatial', icon: <Compass size={13} /> },
 ];
 
 export const SuggestedQuestions: React.FC<SuggestedQuestionsProps> = ({ onSelectQuestion }) => {
-  const [activeCategory, setActiveCategory] = useState<SuggestedQuestion['category']>('Player Movement');
+  const [activeCategory, setActiveCategory] = useState<string>('Player Movement');
 
-  const filteredQuestions = QUESTIONS.filter((q) => q.category === activeCategory);
+  const filtered = QUESTIONS.filter((q) => q.category === activeCategory);
 
   return (
-    <div className="bg-[#0E131F]/90 border border-[#1E293B] rounded-xl p-4 text-xs font-mono">
-      <div className="text-[11px] font-bold text-[#64748B] uppercase tracking-wider mb-2.5 flex items-center justify-between">
-        <span>Suggested Analytical Inquiries</span>
-        <span className="text-[10px] text-slate-500 font-normal">Click any question to analyze</span>
+    <div className="glass-panel p-4 rounded-2xl space-y-3.5 border border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.35)]">
+      {/* Category Selection Tabs */}
+      <div className="flex items-center justify-between flex-wrap gap-2 pb-2.5 border-b border-white/10">
+        <div className="flex items-center gap-2 text-xs font-mono text-cyan-400 font-bold uppercase tracking-wider">
+          <Sparkles size={14} className="text-cyan-400" />
+          <span>Suggested Analytical Inquiries</span>
+        </div>
+
+        <div className="flex items-center gap-1.5 flex-wrap">
+          {CATEGORIES.map((cat) => (
+            <button
+              key={cat.id}
+              onClick={() => setActiveCategory(cat.id)}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-mono transition-all ${
+                activeCategory === cat.id
+                  ? 'bg-cyan-500/20 text-[#00E5FF] font-semibold border border-cyan-500/40 shadow-[0_0_12px_rgba(0,229,255,0.2)]'
+                  : 'glass-card text-slate-400 hover:text-slate-200'
+              }`}
+            >
+              {cat.icon}
+              <span>{cat.label}</span>
+            </button>
+          ))}
+        </div>
       </div>
 
-      {/* Category Tabs */}
-      <div className="flex items-center gap-1.5 mb-3 overflow-x-auto pb-1">
-        {CATEGORIES.map(({ key, icon }) => (
-          <button
-            key={key}
-            onClick={() => setActiveCategory(key)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border transition-colors whitespace-nowrap text-xs ${
-              activeCategory === key
-                ? 'bg-[#151D2E] text-slate-100 border-[#00E5FF]/40 font-semibold shadow-sm'
-                : 'bg-transparent text-slate-400 border-transparent hover:bg-[#151D2E]/50 hover:text-slate-300'
-            }`}
-          >
-            {icon}
-            <span>{key}</span>
-          </button>
-        ))}
-      </div>
-
-      {/* Question Pills */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-        {filteredQuestions.map((q, idx) => (
+      {/* Clickable Question Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2.5">
+        {filtered.map((item, idx) => (
           <button
             key={idx}
-            onClick={() => onSelectQuestion(q.question)}
-            className="flex items-center justify-between gap-2 p-2.5 rounded-lg bg-[#151D2E]/80 border border-[#1E293B] text-slate-300 hover:text-[#00E5FF] hover:border-[#00E5FF]/40 hover:bg-[#151D2E] text-left transition-all group"
+            onClick={() => onSelectQuestion(item.question)}
+            className="glass-card hover:border-cyan-500/40 p-3 rounded-xl flex items-center justify-between text-left group transition-all"
           >
-            <span className="leading-snug">{q.question}</span>
-            <ChevronRight size={13} className="text-slate-500 group-hover:text-[#00E5FF] flex-shrink-0" />
+            <span className="text-xs text-slate-200 group-hover:text-cyan-300 transition-colors font-sans leading-snug">
+              {item.question}
+            </span>
+            <ChevronRight
+              size={14}
+              className="text-slate-500 group-hover:text-cyan-400 group-hover:translate-x-0.5 transition-all flex-shrink-0 ml-2"
+            />
           </button>
         ))}
       </div>

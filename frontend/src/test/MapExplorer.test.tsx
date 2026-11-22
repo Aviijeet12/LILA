@@ -199,4 +199,62 @@ describe('MapExplorerPage Integration', () => {
     fireEvent.click(screen.getByText('Reset All Filters'));
     expect(useAppStore.getState().entityFilter).toBe('all');
   });
+
+  it('selects a match via the matches select dropdown and displays Play Replay', async () => {
+    render(<MapExplorerPage />);
+    await screen.findByText('journeys visible');
+
+    const selectEl = screen.getByLabelText('Select Match');
+    expect(selectEl).toBeInTheDocument();
+
+    // Select match-1
+    fireEvent.change(selectEl, { target: { value: 'match-1' } });
+
+    // Verify store has match-1 selected
+    expect(useAppStore.getState().selectedMatchId).toBe('match-1');
+
+    // Verify Active Match card and Play Replay button are displayed
+    await waitFor(() => {
+      expect(screen.getByText('Active Match:')).toBeInTheDocument();
+      expect(screen.getByText('Play Replay')).toBeInTheDocument();
+    });
+  });
+
+  it('resets all filters to default when switching from one map to another', async () => {
+    render(<MapExplorerPage />);
+    await screen.findByText('journeys visible');
+
+    // Artificially configure specific filters
+    useAppStore.setState({
+      selectedDate: '2026-02-10',
+      selectedMatchId: 'match-1',
+      selectedJourneyId: 'journey-human-1',
+      entityFilter: 'bot',
+      isPlaying: true,
+      activeLayers: {
+        human_trajectories: false,
+        bot_trajectories: false,
+        loot: false,
+        bot_kill: false,
+        bot_killed: false,
+        killed_by_storm: false,
+        kill: false,
+        killed: false,
+      },
+    });
+
+    // Click on another map (Grand Rift)
+    fireEvent.click(screen.getByText('Grand Rift'));
+
+    // Assert that the map switched and all filters were reset to default values
+    const state = useAppStore.getState();
+    expect(state.selectedMap).toBe('GrandRift');
+    expect(state.selectedDate).toBeNull();
+    expect(state.selectedMatchId).toBeNull();
+    expect(state.selectedJourneyId).toBeNull();
+    expect(state.entityFilter).toBe('all');
+    expect(state.isPlaying).toBe(false);
+    expect(state.activeLayers.human_trajectories).toBe(true);
+    expect(state.activeLayers.bot_trajectories).toBe(true);
+  });
 });

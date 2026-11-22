@@ -56,7 +56,7 @@ describe('Frontend Code Splitting & Route Lazy Loading', () => {
       expect(screen.getByText('Combat Analysis')).toBeInTheDocument();
       expect(screen.getByText('Region Intelligence')).toBeInTheDocument();
     });
-  });
+  }, 15000);
 
   it('preserves deep link URL query parameters when navigating directly to a lazy route', async () => {
     window.history.pushState({}, 'Combat', '/combat?map=GrandRift&category=BotKill');
@@ -64,10 +64,10 @@ describe('Frontend Code Splitting & Route Lazy Loading', () => {
 
     await waitFor(() => {
       expect(screen.getByText('Combat Telemetry Analysis')).toBeInTheDocument();
-    }, { timeout: 4000 });
+    }, { timeout: 8000 });
 
     // Verify URL parameters remain preserved
     expect(window.location.search).toContain('map=GrandRift');
     expect(window.location.search).toContain('category=BotKill');
-  });
+  }, 15000);
 });

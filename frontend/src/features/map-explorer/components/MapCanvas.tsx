@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState, useCallback, useMemo } from 'react';
 import { MapId, Journey, DiscreteEvent, HoveredTarget, MapHeatmaps } from '../../../types/telemetry';
 import { HeatmapConfig, getOrCreateHeatmapRaster, drawCellHighlight, LAYER_THEME_COLORS, HeatmapLayerKey } from '../utils/heatmapRenderer';
 import { mapPixelToGridCell, normalizeIntensity } from '../utils/heatmapMath';
@@ -58,9 +58,9 @@ export const MapCanvas: React.FC<MapCanvasProps> = ({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const imgRef = useRef<HTMLImageElement | null>(null);
 
-  const [containerSize, setContainerSize] = useState({ w: 800, h: 800 });
-  const [zoom, setZoom] = useState(1);
-  const [pan, setPan] = useState({ x: 0, y: 0 });
+  const [containerSize, setContainerSize] = useState<{ w: number; h: number }>({ w: 0, h: 0 });
+  const [zoom, setZoom] = useState<number>(0.45);
+  const [pan, setPan] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [dragMoved, setDragMoved] = useState(false);
@@ -69,56 +69,91 @@ export const MapCanvas: React.FC<MapCanvasProps> = ({
 
   const dims = MAP_DIMS[mapId] ?? { w: 2048, h: 2048 };
 
-  // Fit view calculation
-  const fitToMap = useCallback(() => {
+  // Synchronous camera layout computation: eliminates any 1-second unscaled or misplaced render
+  const updateCameraLayout = useCallback((forcedW?: number, forcedH?: number) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
-    if (rect.width === 0 || rect.height === 0) return;
+    const w = Math.round(forcedW ?? (rect.width > 0 ? rect.width : 800));
+    const h = Math.round(forcedH ?? (rect.height > 0 ? rect.height : 800));
+    if (w <= 0 || h <= 0) return;
 
-    const scaleX = rect.width / dims.w;
-    const scaleY = rect.height / dims.h;
+    setContainerSize({ w, h });
+
+    // 1. If a match is selected and has journey points, frame match bounding box synchronously
+    if (selectedMatchId) {
+      const matchJourneys = journeys.filter((j) => j.match_id === selectedMatchId);
+      if (matchJourneys.length > 0) {
+        let minU = Infinity, maxU = -Infinity, minV = Infinity, maxV = -Infinity;
+        let pointsCount = 0;
+
+        for (const j of matchJourneys) {
+          for (const p of j.positions) {
+            if (p.u < minU) minU = p.u;
+            if (p.u > maxU) maxU = p.u;
+            if (p.v < minV) minV = p.v;
+            if (p.v > maxV) maxV = p.v;
+            pointsCount++;
+          }
+        }
+
+        if (pointsCount > 0 && isFinite(minU) && isFinite(maxU) && isFinite(minV) && isFinite(maxV)) {
+          const pixelMinX = minU * dims.w;
+          const pixelMaxX = maxU * dims.w;
+          const pixelMinY = (1 - maxV) * dims.h;
+          const pixelMaxY = (1 - minV) * dims.h;
+
+          const boxW = Math.max(100, pixelMaxX - pixelMinX);
+          const boxH = Math.max(100, pixelMaxY - pixelMinY);
+          const centerX = (pixelMinX + pixelMaxX) / 2;
+          const centerY = (pixelMinY + pixelMaxY) / 2;
+
+          // Comfortable 18% margin so endpoints, combat emotes, and trajectory lines never clip
+          const scaleX = (w * 0.82) / boxW;
+          const scaleY = (h * 0.82) / boxH;
+          const targetZoom = Math.max(0.05, Math.min(2.5, Math.min(scaleX, scaleY)));
+
+          const targetPanX = w / 2 - centerX * targetZoom;
+          const targetPanY = h / 2 - centerY * targetZoom;
+
+          setZoom(targetZoom);
+          setPan({ x: targetPanX, y: targetPanY });
+          return;
+        }
+      }
+    }
+
+    // 2. Otherwise fit map into container
+    const scaleX = w / dims.w;
+    const scaleY = h / dims.h;
     const fitZoom = Math.min(scaleX, scaleY) * 0.98;
-    const initialPanX = (rect.width - dims.w * fitZoom) / 2;
-    const initialPanY = (rect.height - dims.h * fitZoom) / 2;
+    const initialPanX = (w - dims.w * fitZoom) / 2;
+    const initialPanY = (h - dims.h * fitZoom) / 2;
 
     setZoom(fitZoom);
     setPan({ x: initialPanX, y: initialPanY });
-  }, [dims.w, dims.h]);
+  }, [dims.w, dims.h, selectedMatchId, journeys]);
 
-  // ResizeObserver on container
+  // Synchronous pre-paint camera setup via useLayoutEffect
+  useLayoutEffect(() => {
+    updateCameraLayout();
+  }, [mapId, selectedMatchId, updateCameraLayout]);
+
+  // ResizeObserver on container to maintain camera on window resize
   useEffect(() => {
-    if (!containerRef.current) return;
+    if (!containerRef.current || typeof ResizeObserver === 'undefined') return;
     const ro = new ResizeObserver(([entry]) => {
       const { width, height } = entry.contentRect;
       if (width > 0 && height > 0) {
-        setContainerSize({ w: Math.round(width), h: Math.round(height) });
+        updateCameraLayout(width, height);
       }
     });
     ro.observe(containerRef.current);
     return () => ro.disconnect();
-  }, []);
+  }, [updateCameraLayout]);
 
-  // Initial fit when container or map changes (supports URL zoom param for automated view inspection)
-  useEffect(() => {
-    fitToMap();
-    try {
-      const url = new URL(window.location.href);
-      const qz = url.searchParams.get('zoom');
-      if (qz && containerRef.current) {
-        const zMult = parseFloat(qz);
-        if (!isNaN(zMult) && zMult > 0) {
-          const rect = containerRef.current.getBoundingClientRect();
-          const scaleX = rect.width / dims.w;
-          const scaleY = rect.height / dims.h;
-          const fitZoom = Math.min(scaleX, scaleY) * 0.98 * zMult;
-          const panX = rect.width / 2 - (dims.w * 0.46) * fitZoom;
-          const panY = rect.height / 2 - (dims.h * 0.48) * fitZoom;
-          setZoom(fitZoom);
-          setPan({ x: panX, y: panY });
-        }
-      }
-    } catch (_) {}
-  }, [mapId, fitToMap, dims.w, dims.h]);
+  const fitToMap = useCallback(() => {
+    updateCameraLayout();
+  }, [updateCameraLayout]);
 
   // Load minimap WebP
   useEffect(() => {
@@ -135,24 +170,28 @@ export const MapCanvas: React.FC<MapCanvasProps> = ({
   }, [mapId]);
 
   // Filtered journeys
-  const filteredJourneys = journeys.filter((j) => {
-    if (entityFilter === 'human' && j.entity_type !== 'human') return false;
-    if (entityFilter === 'bot' && j.entity_type !== 'bot') return false;
-    if (selectedMatchId && j.match_id !== selectedMatchId) return false;
-    return true;
-  });
+  const filteredJourneys = useMemo(() => {
+    return journeys.filter((j) => {
+      if (entityFilter === 'human' && j.entity_type !== 'human') return false;
+      if (entityFilter === 'bot' && j.entity_type !== 'bot') return false;
+      if (selectedMatchId && j.match_id !== selectedMatchId) return false;
+      return true;
+    });
+  }, [journeys, entityFilter, selectedMatchId]);
 
   // Selected journey object
-  const selectedJourney = selectedJourneyId
-    ? journeys.find((j) => j.journey_id === selectedJourneyId) ?? null
-    : null;
+  const selectedJourney = useMemo(() => {
+    return selectedJourneyId
+      ? journeys.find((j) => j.journey_id === selectedJourneyId) ?? null
+      : null;
+  }, [journeys, selectedJourneyId]);
 
   // Render loop using requestAnimationFrame
   const animFrameRef = useRef<number | null>(null);
 
   const drawScene = useCallback(() => {
     const canvas = canvasRef.current;
-    if (!canvas || containerSize.w === 0 || containerSize.h === 0) return;
+    if (!canvas || containerSize.w <= 0 || containerSize.h <= 0) return;
 
     const dpr = window.devicePixelRatio || 1;
     canvas.width = containerSize.w * dpr;
@@ -201,18 +240,19 @@ export const MapCanvas: React.FC<MapCanvasProps> = ({
 
     // 2. Draw journey trajectory paths
     const hasSelection = Boolean(selectedJourneyId);
+    const shouldDrawSpawnPins = selectedMatchId != null || filteredJourneys.length <= 40;
 
     // Non-selected journeys first
     for (const j of filteredJourneys) {
       if (j.journey_id === selectedJourneyId) continue;
       if (j.entity_type === 'human' && !activeLayers.human_trajectories) continue;
       if (j.entity_type === 'bot' && !activeLayers.bot_trajectories) continue;
-      renderJourneyPath(ctx, j, dims.w, dims.h, false, hasSelection, zoom, playbackTimestamp);
+      renderJourneyPath(ctx, j, dims.w, dims.h, false, hasSelection, zoom, playbackTimestamp, shouldDrawSpawnPins);
     }
 
     // Selected journey rendered on top with emphasis
     if (selectedJourney) {
-      renderJourneyPath(ctx, selectedJourney, dims.w, dims.h, true, true, zoom, playbackTimestamp);
+      renderJourneyPath(ctx, selectedJourney, dims.w, dims.h, true, true, zoom, playbackTimestamp, true);
     }
 
     // 3. Draw discrete events
@@ -263,32 +303,84 @@ export const MapCanvas: React.FC<MapCanvasProps> = ({
   }, [drawScene]);
 
   useEffect(() => {
+    drawScene();
     scheduleRender();
     return () => {
       if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
     };
-  }, [scheduleRender]);
+  }, [drawScene, scheduleRender]);
 
-  // Mouse wheel zoom centered on cursor
-  const handleWheel = (e: React.WheelEvent<HTMLCanvasElement>) => {
+  // Native non-passive wheel and gesture listener to intercept wheel events and prevent browser page zoom
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const onWheelNative = (e: WheelEvent) => {
+      // Intercept and prevent browser page zoom
+      e.preventDefault();
+      e.stopPropagation();
+
+      const rect = canvas.getBoundingClientRect();
+      if (!rect) return;
+
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+
+      // Detect zoom direction: scroll up / pinch out = zoom in, scroll down / pinch in = zoom out
+      const zoomFactor = e.deltaY < 0 ? 1.15 : 0.87;
+
+      setZoom((prevZoom) => {
+        const newZoom = Math.min(14, Math.max(0.6, prevZoom * zoomFactor));
+        setPan((prevPan) => {
+          const mapX = (mouseX - prevPan.x) / prevZoom;
+          const mapY = (mouseY - prevPan.y) / prevZoom;
+          return {
+            x: mouseX - mapX * newZoom,
+            y: mouseY - mapY * newZoom,
+          };
+        });
+        return newZoom;
+      });
+    };
+
+    const onGesture = (e: Event) => {
+      e.preventDefault();
+      e.stopPropagation();
+    };
+
+    canvas.addEventListener('wheel', onWheelNative, { passive: false });
+    canvas.addEventListener('gesturestart', onGesture, { passive: false });
+    canvas.addEventListener('gesturechange', onGesture, { passive: false });
+    canvas.addEventListener('gestureend', onGesture, { passive: false });
+
+    return () => {
+      canvas.removeEventListener('wheel', onWheelNative);
+      canvas.removeEventListener('gesturestart', onGesture);
+      canvas.removeEventListener('gesturechange', onGesture);
+      canvas.removeEventListener('gestureend', onGesture);
+    };
+  }, []);
+
+  // Double click to zoom in centered on click position
+  const handleDoubleClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
     e.preventDefault();
     const rect = canvasRef.current?.getBoundingClientRect();
     if (!rect) return;
+    const clickX = e.clientX - rect.left;
+    const clickY = e.clientY - rect.top;
 
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-
-    const zoomFactor = e.deltaY < 0 ? 1.15 : 0.87;
-    const newZoom = Math.min(14, Math.max(0.6, zoom * zoomFactor));
-
-    const mapX = (mouseX - pan.x) / zoom;
-    const mapY = (mouseY - pan.y) / zoom;
-
-    setPan({
-      x: mouseX - mapX * newZoom,
-      y: mouseY - mapY * newZoom,
+    setZoom((prevZoom) => {
+      const newZoom = Math.min(14, prevZoom * 1.5);
+      setPan((prevPan) => {
+        const mapX = (clickX - prevPan.x) / prevZoom;
+        const mapY = (clickY - prevPan.y) / prevZoom;
+        return {
+          x: clickX - mapX * newZoom,
+          y: clickY - mapY * newZoom,
+        };
+      });
+      return newZoom;
     });
-    setZoom(newZoom);
   };
 
   // Mouse down for pan
@@ -499,17 +591,52 @@ export const MapCanvas: React.FC<MapCanvasProps> = ({
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-full min-h-[580px] bg-[#080B11] rounded-lg overflow-hidden border border-[#1E293B] select-none"
+      style={{ touchAction: 'none' }}
+      className="relative w-full h-full min-h-[300px] bg-[#080D14] rounded-lg overflow-hidden border border-[#1E2B3E] select-none"
     >
       <canvas
         ref={canvasRef}
-        onWheel={handleWheel}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseLeave}
+        onDoubleClick={handleDoubleClick}
+        style={{ touchAction: 'none' }}
         className={`w-full h-full block ${isDragging ? 'cursor-grabbing' : hovered ? 'cursor-pointer' : 'cursor-grab'}`}
       />
+
+      {/* Tactical Quick Zoom Dock (Top-Left) */}
+      <div className="absolute top-4 left-4 z-20 flex flex-col gap-1 bg-[#101925]/95 backdrop-blur-md border border-[#1E2B3E] rounded-lg p-1 shadow-2xl">
+        <button
+          type="button"
+          onClick={handleZoomIn}
+          title="Zoom In (+) - Map Viewport Only"
+          aria-label="Zoom In Map"
+          className="w-8 h-8 flex items-center justify-center rounded text-slate-200 hover:text-[#00D9F5] hover:bg-[#172435] transition-colors font-mono font-bold text-lg select-none"
+        >
+          +
+        </button>
+        <div className="w-full h-px bg-[#1E2B3E]" />
+        <button
+          type="button"
+          onClick={handleZoomOut}
+          title="Zoom Out (-) - Map Viewport Only"
+          aria-label="Zoom Out Map"
+          className="w-8 h-8 flex items-center justify-center rounded text-slate-200 hover:text-[#00D9F5] hover:bg-[#172435] transition-colors font-mono font-bold text-lg select-none"
+        >
+          -
+        </button>
+        <div className="w-full h-px bg-[#1E2B3E]" />
+        <button
+          type="button"
+          onClick={handleReset}
+          title="Reset Zoom / Fit Map"
+          aria-label="Fit Map"
+          className="w-8 h-8 flex items-center justify-center rounded text-slate-400 hover:text-[#00D9F5] hover:bg-[#172435] transition-colors font-mono text-[9px] font-bold select-none"
+        >
+          FIT
+        </button>
+      </div>
 
       {/* Floating Legend */}
       <MapLegend />

@@ -8,6 +8,8 @@ import { PlayerSummary } from '../types/telemetry';
 vi.mock('../services/dataService', () => ({
   dataService: {
     getPlayers: vi.fn(),
+    getMapJourneys: vi.fn().mockResolvedValue([]),
+    getMinimapUrl: vi.fn(() => '/data/processed/minimaps/AmbroseValley_Minimap.webp'),
   },
 }));
 
@@ -148,6 +150,38 @@ describe('PlayerIntelligencePage', () => {
       expect(screen.getAllByText(/BotKill Events/i).length).toBeGreaterThan(1);
       expect(screen.getAllByText(/Loot Events/i).length).toBeGreaterThan(1);
       expect(screen.getByText(/Elimination Events:/i)).toBeInTheDocument();
+    });
+  });
+
+  it('opens in-page Player Game View when View Replay is clicked', async () => {
+    render(
+      <MemoryRouter>
+        <PlayerIntelligencePage />
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText('alpha-human-001')).toBeInTheDocument();
+    });
+
+    const inspectBtn = screen.getAllByRole('button', { name: 'Inspect' })[0];
+    fireEvent.click(inspectBtn);
+
+    await waitFor(() => {
+      expect(screen.getByText('View Replay')).toBeInTheDocument();
+    });
+
+    fireEvent.click(screen.getByText('View Replay'));
+
+    await waitFor(() => {
+      expect(screen.getByText('Back to Players')).toBeInTheDocument();
+      expect(screen.getByText('Game Event Feed')).toBeInTheDocument();
+    });
+
+    // Clicking Back to Players returns to Directory
+    fireEvent.click(screen.getByText('Back to Players'));
+    await waitFor(() => {
+      expect(screen.getByText('Player Intelligence Directory')).toBeInTheDocument();
     });
   });
 });

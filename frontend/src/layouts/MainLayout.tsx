@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useState } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { PageLoadingFallback } from "../components/PageLoadingFallback";
 import {
@@ -7,12 +7,15 @@ import {
   Users,
   Swords,
   Layers,
-  Activity,
   Calendar,
   Database,
+  Bot,
+  PanelLeftClose,
+  PanelLeftOpen,
+  Menu,
+  X,
+  ChevronRight,
   Crosshair,
-  Server,
-  Bot
 } from "lucide-react";
 import { clsx } from "clsx";
 import { Badge } from "../components/ui/StatWidget";
@@ -23,111 +26,206 @@ const NAV_ITEMS = [
   { path: "/players", label: "Player Intelligence", icon: <Users size={16} /> },
   { path: "/combat", label: "Combat Analysis", icon: <Swords size={16} /> },
   { path: "/regions", label: "Region Intelligence", icon: <Layers size={16} /> },
-  { path: "/analyst", label: "AI Map Analyst", icon: <Bot size={16} /> }
+  { path: "/analyst", label: "AI Map Analyst", icon: <Bot size={16} /> },
 ];
 
 export const MainLayout: React.FC = () => {
   const location = useLocation();
+  const [collapsed, setCollapsed] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
-  const currentNav = NAV_ITEMS.find((item) =>
-    item.path === "/" ? location.pathname === "/" : location.pathname.startsWith(item.path)
-  ) || NAV_ITEMS[0];
+  const currentNav =
+    NAV_ITEMS.find((item) =>
+      item.path === "/" ? location.pathname === "/" : location.pathname.startsWith(item.path)
+    ) || NAV_ITEMS[0];
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-[#080B11] text-[#F8FAFC]">
-      {/* Sidebar */}
-      <aside className="w-64 flex-shrink-0 bg-[#0E131F] border-r border-[#1E293B] flex flex-col justify-between z-20">
+    <div className="flex h-screen w-screen overflow-hidden bg-[#080D14] text-[#F8FAFC]">
+      {/* Mobile Backdrop Overlay */}
+      {mobileOpen && (
+        <div
+          onClick={() => setMobileOpen(false)}
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
+        />
+      )}
+
+      {/* Sidebar (Desktop Collapsible & Mobile Drawer) */}
+      <aside
+        className={clsx(
+          "flex-shrink-0 glass-sidebar flex flex-col justify-between z-50 border-r border-[#1E2B3E] transition-all duration-200 shadow-2xl",
+          // Mobile drawer positioning
+          "fixed inset-y-0 left-0 lg:static",
+          mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0",
+          collapsed ? "lg:w-16" : "lg:w-64 w-64"
+        )}
+      >
         <div>
           {/* Brand Header */}
-          <div className="h-14 px-4 flex items-center gap-2.5 border-b border-[#1E293B]">
-            <div className="w-7 h-7 rounded bg-[#00E5FF]/10 border border-[#00E5FF]/40 flex items-center justify-center text-[#00E5FF]">
-              <Crosshair size={18} />
-            </div>
-            <div>
-              <div className="text-sm font-bold tracking-wider font-mono text-[#F8FAFC]">
-                LILA <span className="text-[#00E5FF]">BLACK</span>
+          <div className={clsx("h-14 px-3.5 flex items-center border-b border-[#1E2B3E] bg-[#0A101A]", collapsed ? "justify-center" : "justify-between")}>
+            <div className="flex items-center gap-2.5 overflow-hidden">
+              <div className="h-8 w-10 rounded bg-black border border-[#1E2B3E] p-1 flex items-center justify-center flex-shrink-0 shadow-sm">
+                <img
+                  src="/lila-logo.png"
+                  alt="LILA Logo"
+                  className="h-full w-full object-contain"
+                />
               </div>
-              <div className="text-[10px] text-[#94A3B8] font-mono tracking-widest uppercase">
-                PLAYER INTELLIGENCE
-              </div>
+              {!collapsed && (
+                <div className="overflow-hidden">
+                  <div className="text-sm font-bold tracking-wider font-mono text-[#F8FAFC] flex items-center gap-1.5">
+                    <span>LILA</span>
+                    <span className="text-[#00D9F5] px-1 py-0.2 text-[9px] rounded bg-cyan-950/60 border border-cyan-500/30 uppercase tracking-widest font-semibold">
+                      BLACK
+                    </span>
+                  </div>
+                  <div className="text-[9px] text-[#94A3B8] font-mono tracking-wider uppercase truncate">
+                    INTELLIGENCE
+                  </div>
+                </div>
+              )}
             </div>
+
+            {/* Desktop Collapse Toggle */}
+            {!collapsed && (
+              <button
+                type="button"
+                onClick={() => setCollapsed(true)}
+                className="hidden lg:flex p-1 rounded text-slate-400 hover:text-[#00D9F5] hover:bg-white/5 transition-colors"
+                title="Collapse Sidebar"
+                aria-label="Collapse Sidebar"
+              >
+                <PanelLeftClose size={15} />
+              </button>
+            )}
+
+            {/* Mobile Close Button */}
+            <button
+              type="button"
+              onClick={() => setMobileOpen(false)}
+              className="lg:hidden p-1 rounded text-slate-400 hover:text-white"
+              aria-label="Close Navigation"
+            >
+              <X size={18} />
+            </button>
           </div>
 
-          {/* Navigation Items */}
-          <nav className="p-3 space-y-1">
-            <div className="px-2 py-1.5 text-[10px] font-mono uppercase tracking-wider text-[#64748B]">
-              Core Telemetry
+          {/* Collapsed Expand Toggle Button */}
+          {collapsed && (
+            <div className="hidden lg:flex justify-center py-2 border-b border-[#1E2B3E]">
+              <button
+                type="button"
+                onClick={() => setCollapsed(false)}
+                className="p-1.5 rounded text-slate-400 hover:text-[#00D9F5] hover:bg-white/5 transition-colors"
+                title="Expand Sidebar"
+                aria-label="Expand Sidebar"
+              >
+                <PanelLeftOpen size={15} />
+              </button>
             </div>
+          )}
+
+          {/* Navigation Items */}
+          <nav className="p-2.5 space-y-1">
+            {!collapsed && (
+              <div className="px-2 py-1 text-[10px] font-mono uppercase tracking-wider text-[#64748B]">
+                Navigation
+              </div>
+            )}
             {NAV_ITEMS.map((item) => (
               <NavLink
                 key={item.path}
                 to={item.path}
                 end={item.path === "/"}
+                onClick={() => setMobileOpen(false)}
+                title={collapsed ? item.label : undefined}
                 className={({ isActive }) =>
                   clsx(
-                    "flex items-center justify-between px-3 py-2 rounded text-xs font-mono tracking-wide transition-colors",
+                    "flex items-center rounded-lg text-xs font-mono transition-all duration-150",
+                    collapsed ? "justify-center p-2.5" : "justify-between px-3 py-2",
                     isActive
-                      ? "bg-[#151D2E] text-[#00E5FF] font-semibold border-l-2 border-[#00E5FF]"
-                      : "text-[#94A3B8] hover:text-[#F8FAFC] hover:bg-[#151D2E]/60 border-l-2 border-transparent"
+                      ? "bg-cyan-500/10 text-[#00D9F5] font-semibold border-l-2 border-[#00D9F5]"
+                      : "text-[#94A3B8] hover:text-[#F8FAFC] hover:bg-white/5 border-l-2 border-transparent"
                   )
                 }
               >
                 <div className="flex items-center gap-2.5">
-                  {item.icon}
-                  <span>{item.label}</span>
+                  <span className="flex-shrink-0">{item.icon}</span>
+                  {!collapsed && <span className="truncate">{item.label}</span>}
                 </div>
               </NavLink>
             ))}
           </nav>
         </div>
 
-        {/* Footer / System Health */}
-        <div className="p-3 border-t border-[#1E293B] bg-[#0A0E17] text-xs font-mono space-y-2">
-          <div className="flex items-center justify-between text-[#94A3B8]">
-            <span className="flex items-center gap-1.5">
-              <Server size={12} className="text-[#10B981]" />
-              <span>Nakama Cluster</span>
-            </span>
-            <Badge variant="green" size="sm">ONLINE</Badge>
+        {/* Footer / Dataset Metadata */}
+        {!collapsed ? (
+          <div className="p-3 border-t border-[#1E2B3E] bg-[#0A101A] text-xs font-mono space-y-1.5">
+            <div className="flex items-center justify-between text-[#94A3B8] text-[11px]">
+              <span className="flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#14C995]" />
+                <span>Dataset v1.0</span>
+              </span>
+              <span className="text-[#64748B]">87.6k records</span>
+            </div>
+            <div className="text-[10px] text-[#64748B] truncate">
+              Feb 10 – 14, 2026 UTC
+            </div>
           </div>
-          <div className="flex items-center justify-between text-[#64748B] text-[10px]">
-            <span>Build v1.0.0 (Audited)</span>
-            <span>5 Days Telemetry</span>
+        ) : (
+          <div className="p-2 border-t border-[#1E2B3E] bg-[#0A101A] flex justify-center">
+            <span className="w-2 h-2 rounded-full bg-[#14C995]" title="Telemetry Dataset v1.0 Loaded" />
           </div>
-        </div>
+        )}
       </aside>
 
       {/* Main Content Shell */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+      <div className="flex-1 flex flex-col min-w-0 overflow-hidden relative">
         {/* Top Navbar */}
-        <header className="h-14 bg-[#0E131F]/90 backdrop-blur border-b border-[#1E293B] px-6 flex items-center justify-between z-10">
-          <div className="flex items-center gap-4">
-            <h1 className="text-base font-bold font-mono tracking-wide text-[#F8FAFC]">
-              {currentNav.label}
-            </h1>
-            <Badge variant="cyan" size="sm">
-              <Activity size={10} className="inline mr-1 animate-pulse" />
-              LIVE TELEMETRY
+        <header className="h-14 glass-header px-4 sm:px-6 flex items-center justify-between z-10 border-b border-[#1E2B3E]">
+          <div className="flex items-center gap-3">
+            {/* Mobile Menu Hamburger */}
+            <button
+              type="button"
+              onClick={() => setMobileOpen(true)}
+              className="lg:hidden p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/5"
+              aria-label="Open Navigation Drawer"
+            >
+              <Menu size={18} />
+            </button>
+
+            {/* Breadcrumb Navigation */}
+            <div className="flex items-center gap-1.5 text-xs font-mono text-slate-400">
+              <span className="hidden sm:inline text-slate-400">LILA BLACK</span>
+              <ChevronRight size={12} className="hidden sm:inline text-slate-400" />
+              <h1 className="text-sm font-bold text-[#F8FAFC]">
+                {currentNav.label}
+              </h1>
+            </div>
+
+            <Badge variant="slate" size="sm" className="hidden sm:inline-flex">
+              TELEMETRY DATASET
             </Badge>
           </div>
 
-          <div className="flex items-center gap-4 text-xs font-mono">
-            <div className="flex items-center gap-1.5 text-[#94A3B8] bg-[#151D2E] px-3 py-1 rounded border border-[#1E293B]">
-              <Calendar size={13} className="text-[#00E5FF]" />
-              <span>Feb 10 – 14, 2026 (UTC)</span>
+          <div className="flex items-center gap-2 sm:gap-3 text-xs font-mono">
+            <div className="flex items-center gap-1.5 text-[#94A3B8] bg-[#101925] border border-[#1E2B3E] px-2.5 py-1.5 rounded-lg">
+              <Calendar size={13} className="text-[#00D9F5]" />
+              <span className="hidden md:inline">Feb 10 – 14, 2026 (UTC)</span>
+              <span className="md:hidden">Feb 10–14</span>
             </div>
-            <div className="flex items-center gap-1.5 text-[#94A3B8] bg-[#151D2E] px-3 py-1 rounded border border-[#1E293B]">
-              <Database size={13} className="text-[#10B981]" />
-              <span>87,599 Events</span>
+            <div className="flex items-center gap-1.5 text-[#94A3B8] bg-[#101925] border border-[#1E2B3E] px-2.5 py-1.5 rounded-lg">
+              <Database size={13} className="text-[#14C995]" />
+              <span>87,599 Records</span>
             </div>
           </div>
         </header>
 
-        {/* Main Viewport — Suspense is scoped here so the sidebar nav stays
-            visible while a lazy route chunk is being fetched. */}
-        <main className="flex-1 overflow-y-auto p-6 bg-[#080B11]">
+        {/* Main Viewport */}
+        <main className="flex-1 overflow-y-auto p-4 sm:p-6 bg-transparent relative">
           <Suspense fallback={<PageLoadingFallback />}>
-            <Outlet />
+            <div key={location.pathname} className="animate-screen-enter h-full">
+              <Outlet />
+            </div>
           </Suspense>
         </main>
       </div>
