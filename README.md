@@ -3,7 +3,7 @@
 > Tactical Game Telemetry & Spatial Intelligence Platform for Production Gameplay Analytics
 
 ---
-# Live url - https://www.linkedin.com/company/lilagames
+# Live url - https://lilablack-two.vercel.app
 
 ## A. Project Introduction
 
