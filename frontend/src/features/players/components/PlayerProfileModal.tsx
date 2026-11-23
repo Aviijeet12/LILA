@@ -60,9 +60,9 @@ export const PlayerProfileModal: React.FC<PlayerProfileModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-in fade-in duration-150">
-      <div className="bg-[#101623] border border-[#1E293B] rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-hidden flex flex-col shadow-2xl">
+      <div className="bg-[#111111] border border-[#292929] rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-hidden flex flex-col shadow-2xl">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[#1E293B] bg-[#0D121D]">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[#292929] bg-[#090909]">
           <div className="flex items-center gap-3 min-w-0">
             <div className={`p-2.5 rounded-xl border ${
               isHuman
@@ -95,7 +95,7 @@ export const PlayerProfileModal: React.FC<PlayerProfileModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-[#1E293B] transition-colors"
+            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-[#292929] transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -105,7 +105,7 @@ export const PlayerProfileModal: React.FC<PlayerProfileModalProps> = ({
         <div className="p-6 overflow-y-auto space-y-6">
           {/* Key Metric Summary Cards */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            <div className="bg-[#0B0F17] border border-[#1E293B] rounded-xl p-3 space-y-1">
+            <div className="bg-[#090909] border border-[#292929] rounded-xl p-3 space-y-1">
               <span className="text-[10px] uppercase font-semibold text-slate-400 flex items-center gap-1">
                 <Route className="w-3 h-3 text-cyan-400" />
                 Total Distance
@@ -118,7 +118,7 @@ export const PlayerProfileModal: React.FC<PlayerProfileModalProps> = ({
               </span>
             </div>
 
-            <div className="bg-[#0B0F17] border border-[#1E293B] rounded-xl p-3 space-y-1">
+            <div className="bg-[#090909] border border-[#292929] rounded-xl p-3 space-y-1">
               <span className="text-[10px] uppercase font-semibold text-slate-400 flex items-center gap-1">
                 <Clock className="w-3 h-3 text-amber-400" />
                 Total Duration
@@ -131,7 +131,7 @@ export const PlayerProfileModal: React.FC<PlayerProfileModalProps> = ({
               </span>
             </div>
 
-            <div className="bg-[#0B0F17] border border-[#1E293B] rounded-xl p-3 space-y-1">
+            <div className="bg-[#090909] border border-[#292929] rounded-xl p-3 space-y-1">
               <span className="text-[10px] uppercase font-semibold text-slate-400 flex items-center gap-1">
                 <Flame className="w-3 h-3 text-rose-400" />
                 BotKill Events
@@ -144,7 +144,7 @@ export const PlayerProfileModal: React.FC<PlayerProfileModalProps> = ({
               </span>
             </div>
 
-            <div className="bg-[#0B0F17] border border-[#1E293B] rounded-xl p-3 space-y-1">
+            <div className="bg-[#090909] border border-[#292929] rounded-xl p-3 space-y-1">
               <span className="text-[10px] uppercase font-semibold text-slate-400 flex items-center gap-1">
                 <Activity className="w-3 h-3 text-emerald-400" />
                 Loot Events
@@ -161,7 +161,7 @@ export const PlayerProfileModal: React.FC<PlayerProfileModalProps> = ({
           {/* Outcome & Map Distributions */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Terminal Outcomes */}
-            <div className="bg-[#0B0F17] border border-[#1E293B] rounded-xl p-4 space-y-3">
+            <div className="bg-[#090909] border border-[#292929] rounded-xl p-4 space-y-3">
               <h3 className="text-xs font-semibold text-slate-200 uppercase tracking-wider flex items-center gap-1.5">
                 <Award className="w-4 h-4 text-emerald-400" />
                 Recorded Terminal Outcomes
@@ -175,7 +175,7 @@ export const PlayerProfileModal: React.FC<PlayerProfileModalProps> = ({
                       {player.outcomes?.SURVIVED_PRESUMED || 0} ({survPercent}%)
                     </span>
                   </div>
-                  <div className="w-full bg-[#1A2234] h-2 rounded-full overflow-hidden">
+                  <div className="w-full bg-[#191919] h-2 rounded-full overflow-hidden">
                     <div
                       className="bg-emerald-500 h-full rounded-full"
                       style={{ width: `${survPercent}%` }}
@@ -190,7 +190,7 @@ export const PlayerProfileModal: React.FC<PlayerProfileModalProps> = ({
                       {player.outcomes?.ELIMINATED || 0} ({elimPercent}%)
                     </span>
                   </div>
-                  <div className="w-full bg-[#1A2234] h-2 rounded-full overflow-hidden">
+                  <div className="w-full bg-[#191919] h-2 rounded-full overflow-hidden">
                     <div
                       className="bg-rose-500 h-full rounded-full"
                       style={{ width: `${elimPercent}%` }}
@@ -199,7 +199,7 @@ export const PlayerProfileModal: React.FC<PlayerProfileModalProps> = ({
                 </div>
               </div>
 
-              <div className="pt-2 border-t border-[#1E293B] flex items-center justify-between text-[11px] font-mono text-slate-400">
+              <div className="pt-2 border-t border-[#292929] flex items-center justify-between text-[11px] font-mono text-slate-400">
                 <span title="Sum of BotKilled, Killed, and KilledByStorm events">
                   Elimination Events: <strong className="text-slate-200">{player.total_death_events}</strong>
                 </span>
@@ -210,7 +210,7 @@ export const PlayerProfileModal: React.FC<PlayerProfileModalProps> = ({
             </div>
 
             {/* Maps Played */}
-            <div className="bg-[#0B0F17] border border-[#1E293B] rounded-xl p-4 space-y-3">
+            <div className="bg-[#090909] border border-[#292929] rounded-xl p-4 space-y-3">
               <h3 className="text-xs font-semibold text-slate-200 uppercase tracking-wider flex items-center gap-1.5">
                 <MapPin className="w-4 h-4 text-cyan-400" />
                 Map Deployment Frequency
@@ -229,7 +229,7 @@ export const PlayerProfileModal: React.FC<PlayerProfileModalProps> = ({
                           {count} matches ({pct}%)
                         </span>
                       </div>
-                      <div className="w-full bg-[#1A2234] h-1.5 rounded-full overflow-hidden">
+                      <div className="w-full bg-[#191919] h-1.5 rounded-full overflow-hidden">
                         <div
                           className="bg-cyan-500 h-full rounded-full"
                           style={{ width: `${pct}%` }}
@@ -243,8 +243,8 @@ export const PlayerProfileModal: React.FC<PlayerProfileModalProps> = ({
           </div>
 
           {/* Recorded Match Sessions List */}
-          <div className="bg-[#0B0F17] border border-[#1E293B] rounded-xl overflow-hidden">
-            <div className="px-4 py-3 border-b border-[#1E293B] bg-[#0E1420] flex items-center justify-between">
+          <div className="bg-[#090909] border border-[#292929] rounded-xl overflow-hidden">
+            <div className="px-4 py-3 border-b border-[#292929] bg-[#090909] flex items-center justify-between">
               <h3 className="text-xs font-semibold text-slate-200 uppercase tracking-wider">
                 Distinct Match Participations ({new Set(player.matches || []).size})
               </h3>
@@ -253,13 +253,13 @@ export const PlayerProfileModal: React.FC<PlayerProfileModalProps> = ({
               </span>
             </div>
 
-            <div className="divide-y divide-[#1A2333] max-h-52 overflow-y-auto font-mono text-xs">
+            <div className="divide-y divide-[#191919] max-h-52 overflow-y-auto font-mono text-xs">
               {(player.matches || []).map((mItem, idx) => {
                 const mId = typeof mItem === 'string' ? mItem : (mItem as any)?.match_id || `match-${idx + 1}`;
                 return (
                   <div
                     key={mId}
-                    className="px-4 py-2 flex items-center justify-between hover:bg-[#151D2C] transition-colors"
+                    className="px-4 py-2 flex items-center justify-between hover:bg-[#191919] transition-colors"
                   >
                     <div className="flex items-center gap-2">
                       <span className="text-slate-500 w-6">#{idx + 1}</span>
@@ -282,7 +282,7 @@ export const PlayerProfileModal: React.FC<PlayerProfileModalProps> = ({
           </div>
 
           {/* Integrity Disclosure */}
-          <div className="text-[10px] text-slate-500 leading-relaxed bg-[#0A0D15] p-3 rounded-lg border border-[#1A2333]">
+          <div className="text-[10px] text-slate-500 leading-relaxed bg-[#090909] p-3 rounded-lg border border-[#191919]">
             <strong>Telemetry Integrity Notice:</strong> All metrics are derived from Nakama server logs. Match counts reflect distinct match IDs. Event counts (BotKill, Loot) reflect unilateral client emissions without killer-victim linkage. Survival status is defined as <code>SURVIVED_PRESUMED</code> because telemetry stops without an explicit extraction confirmation. No player skill, strategy, or personality inferences are made.
           </div>
         </div>

@@ -26,10 +26,10 @@ export const AnalystOverviewBar: React.FC<AnalystOverviewBarProps> = ({
             onChange={(e) => onSelectMap(e.target.value as MapId | 'all')}
             className="bg-transparent text-slate-100 outline-none cursor-pointer font-bold font-mono text-xs pr-1"
           >
-            <option value="AmbroseValley" className="bg-[#0E131F] text-slate-100">Ambrose Valley</option>
-            <option value="GrandRift" className="bg-[#0E131F] text-slate-100">Grand Rift</option>
-            <option value="Lockdown" className="bg-[#0E131F] text-slate-100">Lockdown</option>
-            <option value="all" className="bg-[#0E131F] text-slate-100">All Maps Combined</option>
+            <option value="AmbroseValley" className="bg-[#090909] text-slate-100">Ambrose Valley</option>
+            <option value="GrandRift" className="bg-[#090909] text-slate-100">Grand Rift</option>
+            <option value="Lockdown" className="bg-[#090909] text-slate-100">Lockdown</option>
+            <option value="all" className="bg-[#090909] text-slate-100">All Maps Combined</option>
           </select>
         </div>
 

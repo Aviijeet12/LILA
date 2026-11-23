@@ -240,7 +240,7 @@ export const RegionIntelligencePage: React.FC = () => {
     if (imgRef.current && imgRef.current.complete) {
       ctx.drawImage(imgRef.current, 0, 0, canvas.width, canvas.height);
     } else {
-      ctx.fillStyle = '#080D14';
+      ctx.fillStyle = '#050505';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
 
@@ -420,9 +420,9 @@ export const RegionIntelligencePage: React.FC = () => {
   const handleMouseUp = () => setIsDragging(false);
 
   return (
-    <div className="flex-1 flex flex-col h-full overflow-hidden bg-[#080B11] text-[#F8FAFC]">
+    <div className="flex-1 flex flex-col h-full overflow-hidden bg-transparent text-[#F8FAFC]">
       {/* Header Bar */}
-      <div className="px-6 py-4 border-b border-[#1E293B] bg-[#101925] flex flex-wrap items-center justify-between gap-4">
+      <div className="px-6 py-4 border-b border-[#292929] bg-[#111111] flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className="p-2 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20">
             <Layers className="w-5 h-5" />
@@ -438,7 +438,7 @@ export const RegionIntelligencePage: React.FC = () => {
         </div>
 
         {/* Individual Map Selector Pills */}
-        <div className="flex items-center bg-[#151D2E] border border-[#1E293B] rounded-lg p-0.5 text-xs font-mono">
+        <div className="flex items-center bg-[#111111] border border-[#292929] rounded-lg p-0.5 text-xs font-mono">
           {(['AmbroseValley', 'GrandRift', 'Lockdown'] as MapId[]).map((mId) => (
             <button
               key={mId}
@@ -461,7 +461,7 @@ export const RegionIntelligencePage: React.FC = () => {
         {/* Top Grid: Interactive Satellite Heatmap Visualizer (Left) + Sector Dossier (Right) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Interactive Heatmap Map Canvas (Left - 7 Cols) */}
-          <div className="lg:col-span-7 bg-[#0B0F17] border border-[#1E293B] rounded-xl p-4 space-y-3 flex flex-col shadow-xl">
+          <div className="lg:col-span-7 bg-[#090909] border border-[#292929] rounded-xl p-4 space-y-3 flex flex-col shadow-xl">
             {/* Map Controls Bar */}
             <div className="flex items-center justify-between text-xs font-mono flex-wrap gap-2">
               <div className="flex items-center gap-2">
@@ -469,7 +469,7 @@ export const RegionIntelligencePage: React.FC = () => {
                   <Flame className="w-4 h-4 text-amber-400" />
                   Tactical Heatmap Canvas
                 </span>
-                <span className="text-[10px] text-slate-400 font-mono bg-[#162030] px-2 py-0.5 rounded border border-[#1E2B3E]">
+                <span className="text-[10px] text-slate-400 font-mono bg-[#111111] px-2 py-0.5 rounded border border-[#292929]">
                   {selectedMap}
                 </span>
               </div>
@@ -481,7 +481,7 @@ export const RegionIntelligencePage: React.FC = () => {
                   onClick={() => setZoom((z) => Math.min(z + 0.5, 4))}
                   title="Zoom In"
                   aria-label="Zoom In"
-                  className="p-1.5 rounded bg-[#172435] border border-[#1E2B3E] text-slate-300 hover:text-[#00D9F5] hover:bg-[#1E2B3E] transition-colors"
+                  className="p-1.5 rounded bg-[#191919] border border-[#292929] text-slate-300 hover:text-[#00D9F5] hover:bg-[#292929] transition-colors"
                 >
                   <ZoomIn size={14} />
                 </button>
@@ -490,7 +490,7 @@ export const RegionIntelligencePage: React.FC = () => {
                   onClick={() => setZoom((z) => Math.max(z - 0.5, 1))}
                   title="Zoom Out"
                   aria-label="Zoom Out"
-                  className="p-1.5 rounded bg-[#172435] border border-[#1E2B3E] text-slate-300 hover:text-[#00D9F5] hover:bg-[#1E2B3E] transition-colors"
+                  className="p-1.5 rounded bg-[#191919] border border-[#292929] text-slate-300 hover:text-[#00D9F5] hover:bg-[#292929] transition-colors"
                 >
                   <ZoomOut size={14} />
                 </button>
@@ -502,7 +502,7 @@ export const RegionIntelligencePage: React.FC = () => {
                   }}
                   title="Reset View"
                   aria-label="Reset View"
-                  className="p-1.5 rounded bg-[#172435] border border-[#1E2B3E] text-slate-300 hover:text-[#00D9F5] hover:bg-[#1E2B3E] transition-colors"
+                  className="p-1.5 rounded bg-[#191919] border border-[#292929] text-slate-300 hover:text-[#00D9F5] hover:bg-[#292929] transition-colors"
                 >
                   <RotateCcw size={14} />
                 </button>
@@ -513,14 +513,14 @@ export const RegionIntelligencePage: React.FC = () => {
             </div>
 
             {/* Heatmap & Event Overlay Settings Bar */}
-            <div className="bg-[#0A101A] border border-[#1A2538] rounded-lg p-2.5 flex items-center justify-between text-xs font-mono flex-wrap gap-2">
+            <div className="bg-[#090909] border border-[#191919] rounded-lg p-2.5 flex items-center justify-between text-xs font-mono flex-wrap gap-2">
               {/* Heatmap Layer Selector */}
               <div className="flex items-center gap-1.5">
                 <span className="text-slate-400 text-[11px]">Layer:</span>
                 <select
                   value={activeLayer}
                   onChange={(e) => setActiveLayer(e.target.value as HeatmapLayerKey)}
-                  className="bg-[#121A28] border border-[#1E2B3E] rounded px-2 py-1 text-slate-200 text-xs outline-none"
+                  className="bg-[#111111] border border-[#292929] rounded px-2 py-1 text-slate-200 text-xs outline-none"
                 >
                   {layerKeys.map((k) => (
                     <option key={k} value={k}>
@@ -531,7 +531,7 @@ export const RegionIntelligencePage: React.FC = () => {
               </div>
 
               {/* Thermal Mode Toggle */}
-              <div className="flex items-center gap-1 bg-[#121A28] border border-[#1E2B3E] rounded p-0.5 text-[11px]">
+              <div className="flex items-center gap-1 bg-[#111111] border border-[#292929] rounded p-0.5 text-[11px]">
                 <button
                   type="button"
                   onClick={() => setColorMode('thermal_spectrum')}
@@ -560,7 +560,7 @@ export const RegionIntelligencePage: React.FC = () => {
                   className={`flex items-center gap-1 px-2 py-1 rounded text-xs border transition-colors ${
                     showEvents
                       ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
-                      : 'bg-[#121A28] text-slate-500 border-[#1E2B3E]'
+                      : 'bg-[#111111] text-slate-500 border-[#292929]'
                   }`}
                 >
                   {showEvents ? <Eye size={12} /> : <EyeOff size={12} />}
@@ -571,7 +571,7 @@ export const RegionIntelligencePage: React.FC = () => {
                   <select
                     value={selectedEventCategory}
                     onChange={(e) => setSelectedEventCategory(e.target.value)}
-                    className="bg-[#121A28] border border-[#1E2B3E] rounded px-2 py-1 text-slate-300 text-xs outline-none"
+                    className="bg-[#111111] border border-[#292929] rounded px-2 py-1 text-slate-300 text-xs outline-none"
                   >
                     <option value="all">All Events</option>
                     <option value="combat">Combat Only</option>
@@ -588,7 +588,7 @@ export const RegionIntelligencePage: React.FC = () => {
             {/* Map Canvas Viewport */}
             <div
               style={{ touchAction: 'none' }}
-              className="relative aspect-square w-full rounded-lg overflow-hidden border border-[#1E2B3E] bg-[#0A0D15] cursor-crosshair select-none"
+              className="relative aspect-square w-full rounded-lg overflow-hidden border border-[#292929] bg-[#090909] cursor-crosshair select-none"
             >
               <canvas
                 id="region-heatmap-canvas"
@@ -605,7 +605,7 @@ export const RegionIntelligencePage: React.FC = () => {
               />
 
               {/* Hover Coordinates Badge */}
-              <div className="absolute top-2 left-2 px-2.5 py-1 rounded bg-[#0A0D15]/90 border border-[#1E293B] text-[10px] font-mono text-slate-300 flex items-center gap-2">
+              <div className="absolute top-2 left-2 px-2.5 py-1 rounded bg-[#090909]/90 border border-[#292929] text-[10px] font-mono text-slate-300 flex items-center gap-2">
                 <span className="text-cyan-400 font-semibold">
                   Cursor: [{hoverCoords ? `R${hoverCoords.row}, C${hoverCoords.col}` : 'Hover map'}]
                 </span>
@@ -617,7 +617,7 @@ export const RegionIntelligencePage: React.FC = () => {
 
               {/* Event Color Legend Overlay */}
               {showEvents && (
-                <div className="absolute bottom-2 left-2 bg-[#0A0D15]/95 border border-[#1E2B3E] rounded-lg p-2 text-[10px] font-mono flex items-center gap-3 backdrop-blur-sm">
+                <div className="absolute bottom-2 left-2 bg-[#090909]/95 border border-[#292929] rounded-lg p-2 text-[10px] font-mono flex items-center gap-3 backdrop-blur-sm">
                   <div className="flex items-center gap-1.5">
                     <span className="w-2 h-2 rounded-full bg-[#F5A623]" />
                     <span className="text-slate-300">Loot</span>
@@ -650,10 +650,10 @@ export const RegionIntelligencePage: React.FC = () => {
           </div>
 
           {/* Selected Sector Comprehensive Dossier (Right - 5 Cols) */}
-          <div className="lg:col-span-5 bg-[#0B0F17] border border-[#1E293B] rounded-xl p-5 space-y-4 shadow-xl flex flex-col justify-between">
+          <div className="lg:col-span-5 bg-[#090909] border border-[#292929] rounded-xl p-5 space-y-4 shadow-xl flex flex-col justify-between">
             <div className="space-y-4">
               {/* Sector Header */}
-              <div className="flex items-center justify-between border-b border-[#1E293B] pb-3">
+              <div className="flex items-center justify-between border-b border-[#292929] pb-3">
                 <div className="flex items-center gap-2.5">
                   <div className="p-2 rounded-lg bg-cyan-500/20 text-[#00D9F5] border border-cyan-500/30">
                     <Compass className="w-4 h-4" />
@@ -678,7 +678,7 @@ export const RegionIntelligencePage: React.FC = () => {
 
               {/* Spatial Bounds Cards */}
               <div className="grid grid-cols-2 gap-3 text-xs font-mono">
-                <div className="bg-[#121826] border border-[#1E293B] rounded-lg p-2.5 space-y-1">
+                <div className="bg-[#111111] border border-[#292929] rounded-lg p-2.5 space-y-1">
                   <span className="text-slate-400 text-[10px] uppercase font-semibold flex items-center gap-1">
                     <Compass className="w-3 h-3 text-cyan-400" />
                     World Coordinate Bounds (m)
@@ -689,7 +689,7 @@ export const RegionIntelligencePage: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="bg-[#121826] border border-[#1E293B] rounded-lg p-2.5 space-y-1">
+                <div className="bg-[#111111] border border-[#292929] rounded-lg p-2.5 space-y-1">
                   <span className="text-slate-400 text-[10px] uppercase font-semibold flex items-center gap-1">
                     <Layers className="w-3 h-3 text-purple-400" />
                     Normalized UV Bounds
@@ -710,11 +710,11 @@ export const RegionIntelligencePage: React.FC = () => {
                   </span>
                 </div>
 
-                <div className="divide-y divide-[#1A2333] border border-[#1E293B] rounded-lg overflow-hidden bg-[#121826] text-xs font-mono">
+                <div className="divide-y divide-[#191919] border border-[#292929] rounded-lg overflow-hidden bg-[#111111] text-xs font-mono">
                   {cellBreakdown.items?.map((item) => (
                     <div
                       key={item.key}
-                      className="px-3 py-2 flex items-center justify-between hover:bg-[#182338] transition-colors"
+                      className="px-3 py-2 flex items-center justify-between hover:bg-[#191919] transition-colors"
                     >
                       <div className="flex items-center gap-2">
                         <div
@@ -726,7 +726,7 @@ export const RegionIntelligencePage: React.FC = () => {
 
                       <div className="flex items-center gap-3">
                         <span className={`px-1.5 py-0.2 rounded text-[10px] uppercase font-semibold ${
-                          item.isActive ? 'text-emerald-400 bg-emerald-950/40' : 'text-slate-600 bg-slate-900'
+                          item.isActive ? 'text-emerald-400 bg-emerald-950/40' : 'text-slate-600 bg-neutral-900'
                         }`}>
                           {item.isActive ? 'Active' : 'Empty'}
                         </span>
@@ -756,7 +756,7 @@ export const RegionIntelligencePage: React.FC = () => {
 
                 <div className="max-h-36 overflow-y-auto space-y-1.5 pr-1 font-mono text-[11px]">
                   {sectorEvents.length === 0 ? (
-                    <div className="bg-[#0A0D15] p-3 rounded-lg border border-[#1A2333] text-center text-slate-500 text-xs">
+                    <div className="bg-[#090909] p-3 rounded-lg border border-[#191919] text-center text-slate-500 text-xs">
                       No discrete interaction events recorded in this 14m² sector.
                     </div>
                   ) : (
@@ -765,7 +765,7 @@ export const RegionIntelligencePage: React.FC = () => {
                       return (
                         <div
                           key={`${ev.match_id}_${ev.ts}_${i}`}
-                          className="bg-[#0A0D15] p-2 rounded-lg border border-[#1A2333] flex items-center justify-between hover:border-cyan-500/30 transition-colors"
+                          className="bg-[#090909] p-2 rounded-lg border border-[#191919] flex items-center justify-between hover:border-cyan-500/30 transition-colors"
                         >
                           <div className="flex items-center gap-2">
                             <span
@@ -790,15 +790,15 @@ export const RegionIntelligencePage: React.FC = () => {
               </div>
             </div>
 
-            <div className="text-[10px] text-slate-500 font-mono leading-tight bg-[#0A0D15] p-2.5 rounded-lg border border-[#1A2333]">
+            <div className="text-[10px] text-slate-500 font-mono leading-tight bg-[#090909] p-2.5 rounded-lg border border-[#191919]">
               * Aggregated pings represent total periodic movement samples and discrete event interaction logs recorded in this sector across the 5-day deployment.
             </div>
           </div>
         </div>
 
         {/* Layer-Specific Top Hotspots Table (Clicking row selects sector directly) */}
-        <div className="bg-[#0B0F17] border border-[#1E293B] rounded-xl overflow-hidden shadow-xl">
-          <div className="px-6 py-3.5 border-b border-[#1E293B] bg-[#0E1420] flex flex-wrap items-center justify-between gap-3">
+        <div className="bg-[#090909] border border-[#292929] rounded-xl overflow-hidden shadow-xl">
+          <div className="px-6 py-3.5 border-b border-[#292929] bg-[#090909] flex flex-wrap items-center justify-between gap-3">
             <div>
               <h2 className="text-xs font-bold text-slate-100 uppercase tracking-wider flex items-center gap-2">
                 <Flame className="w-4 h-4 text-amber-400" />
@@ -822,7 +822,7 @@ export const RegionIntelligencePage: React.FC = () => {
                     className={`px-2.5 py-1 rounded-lg text-xs font-mono transition-all border ${
                       isSelected
                         ? 'bg-amber-500/20 border-amber-500/40 text-amber-300 font-semibold shadow-sm'
-                        : 'bg-[#121826] border-[#1E293B] text-slate-400 hover:text-slate-200'
+                        : 'bg-[#111111] border-[#292929] text-slate-400 hover:text-slate-200'
                     }`}
                   >
                     {info.label}
@@ -835,7 +835,7 @@ export const RegionIntelligencePage: React.FC = () => {
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs font-mono">
               <thead>
-                <tr className="border-b border-[#1E293B] bg-[#0A0D15] text-[10px] uppercase tracking-wider text-slate-400">
+                <tr className="border-b border-[#292929] bg-[#090909] text-[10px] uppercase tracking-wider text-slate-400">
                   <th className="px-6 py-2.5">Rank</th>
                   <th className="px-4 py-2.5">Grid Sector</th>
                   <th className="px-4 py-2.5">World Coordinate Box [X, Z]</th>
@@ -845,7 +845,7 @@ export const RegionIntelligencePage: React.FC = () => {
                   <th className="px-6 py-2.5 text-center">Status</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#161F30]">
+              <tbody className="divide-y divide-[#191919]">
                 {hotspots.length === 0 ? (
                   <tr>
                     <td colSpan={7} className="px-6 py-8 text-center text-slate-500">
@@ -860,7 +860,7 @@ export const RegionIntelligencePage: React.FC = () => {
                       <tr
                         key={`${h.row}-${h.col}`}
                         className={`transition-colors cursor-pointer select-none ${
-                          isSelected ? 'bg-amber-950/30 ring-1 ring-amber-500/50' : 'hover:bg-[#121A2A]'
+                          isSelected ? 'bg-amber-950/30 ring-1 ring-amber-500/50' : 'hover:bg-[#111111]'
                         }`}
                         onClick={() => setSelectedCell({ row: h.row, col: h.col })}
                       >
@@ -903,7 +903,7 @@ export const RegionIntelligencePage: React.FC = () => {
         </div>
 
         {/* Cross-Map Regional Comparisons Section */}
-        <div className="bg-[#0B0F17] border border-[#1E293B] rounded-xl p-5 space-y-4 shadow-xl">
+        <div className="bg-[#090909] border border-[#292929] rounded-xl p-5 space-y-4 shadow-xl">
           <div className="flex items-center gap-2">
             <TrendingUp className="w-5 h-5 text-cyan-400" />
             <div>
@@ -938,7 +938,7 @@ export const RegionIntelligencePage: React.FC = () => {
               const unionCoveragePercent = Number(((unionActive / (gSize * gSize)) * 100).toFixed(2));
 
               return (
-                <div key={mId} className="bg-[#121826] border border-[#1E293B] rounded-xl p-4 space-y-2">
+                <div key={mId} className="bg-[#111111] border border-[#292929] rounded-xl p-4 space-y-2">
                   <div className="flex items-center justify-between text-xs">
                     <strong className="text-slate-100 font-sans">{mId}</strong>
                     <span className="text-[10px] text-slate-400">
@@ -974,21 +974,21 @@ export const RegionIntelligencePage: React.FC = () => {
           </div>
 
           {/* Spatial Coverage Mathematical Definition */}
-          <div className="text-[11px] text-slate-300 leading-relaxed bg-[#0A0D15] p-4 rounded-xl border border-[#1A2333] space-y-2.5">
+          <div className="text-[11px] text-slate-300 leading-relaxed bg-[#090909] p-4 rounded-xl border border-[#191919] space-y-2.5">
             <div className="flex items-center gap-1.5 text-amber-400 font-bold uppercase tracking-wider text-xs">
               <Info className="w-4 h-4 text-amber-400 shrink-0" />
               Spatial Coverage Mathematical Definition
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs font-mono text-slate-400">
-              <div className="bg-[#121826] p-2.5 rounded-lg border border-[#1E293B]">
+              <div className="bg-[#111111] p-2.5 rounded-lg border border-[#292929]">
                 <strong className="text-slate-200 block mb-1">Numerator:</strong>
                 Count of grid sectors where recorded event count &gt; 0 in the designated layer(s).
               </div>
-              <div className="bg-[#121826] p-2.5 rounded-lg border border-[#1E293B]">
+              <div className="bg-[#111111] p-2.5 rounded-lg border border-[#292929]">
                 <strong className="text-slate-200 block mb-1">Denominator:</strong>
                 Fixed 4,096 total sectors (64×64 uniform spatial partition matrix).
               </div>
-              <div className="bg-[#121826] p-2.5 rounded-lg border border-[#1E293B]">
+              <div className="bg-[#111111] p-2.5 rounded-lg border border-[#292929]">
                 <strong className="text-slate-200 block mb-1">Layer Scope:</strong>
                 Calculated separately for Human Traffic (movement corridor footprint) and Multi-Layer Union (any telemetry across 6 layers).
               </div>

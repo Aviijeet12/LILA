@@ -19,7 +19,7 @@ export const Badge: React.FC<BadgeProps> = ({
     green: "bg-[#14C995]/10 text-[#14C995] border-[#14C995]/30",
     amber: "bg-[#F5A623]/10 text-[#F5A623] border-[#F5A623]/30",
     rose: "bg-[#EF4444]/10 text-[#EF4444] border-[#EF4444]/30",
-    slate: "bg-[#1E2B3E]/60 text-[#94A3B8] border-[#1E2B3E]",
+    slate: "bg-[#292929]/60 text-[#94A3B8] border-[#292929]",
     blue: "bg-[#3B82F6]/10 text-[#3B82F6] border-[#3B82F6]/30"
   };
 
@@ -63,7 +63,7 @@ export const StatWidget: React.FC<StatWidgetProps> = ({
   return (
     <div
       className={clsx(
-        "bg-[#101925] border border-[#1E2B3E] rounded-xl p-3.5 transition-all duration-150 hover:border-[#2A3C55] group relative",
+        "glass-card rounded-xl p-4 transition-all duration-200 group relative overflow-hidden",
         className
       )}
     >

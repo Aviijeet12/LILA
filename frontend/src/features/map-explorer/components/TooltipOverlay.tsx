@@ -34,10 +34,10 @@ export const TooltipOverlay: React.FC<TooltipOverlayProps> = ({
 
     return (
       <div
-        className="absolute pointer-events-none z-30 bg-[#0E131F]/95 backdrop-blur-sm border border-[#1E293B] rounded-lg p-2.5 text-xs font-mono shadow-2xl shadow-black/80"
+        className="absolute pointer-events-none z-30 bg-[#090909]/95 backdrop-blur-sm border border-[#292929] rounded-lg p-2.5 text-xs font-mono shadow-2xl shadow-black/80"
         style={{ left, top, width: tooltipWidth }}
       >
-        <div className="flex items-center justify-between pb-1.5 mb-1.5 border-b border-[#1E293B]">
+        <div className="flex items-center justify-between pb-1.5 mb-1.5 border-b border-[#292929]">
           <span className="flex items-center gap-1.5 font-bold" style={{ color: style.color }}>
             <span className="w-2 h-2 rounded-full" style={{ background: style.color }} />
             {style.label}
@@ -71,10 +71,10 @@ export const TooltipOverlay: React.FC<TooltipOverlayProps> = ({
 
     return (
       <div
-        className="absolute pointer-events-none z-30 bg-[#0E131F]/95 backdrop-blur-sm border border-[#1E293B] rounded-lg p-2.5 text-xs font-mono shadow-2xl shadow-black/80"
+        className="absolute pointer-events-none z-30 bg-[#090909]/95 backdrop-blur-sm border border-[#292929] rounded-lg p-2.5 text-xs font-mono shadow-2xl shadow-black/80"
         style={{ left, top, width: tooltipWidth }}
       >
-        <div className="flex items-center justify-between pb-1.5 mb-1.5 border-b border-[#1E293B]">
+        <div className="flex items-center justify-between pb-1.5 mb-1.5 border-b border-[#292929]">
           <span className={`font-bold flex items-center gap-1.5 ${isHuman ? 'text-[#00E5FF]' : 'text-[#C084FC]'}`}>
             <span className={`w-2 h-2 rounded-full ${isHuman ? 'bg-[#00E5FF]' : 'bg-[#C084FC]'}`} />
             {isHuman ? 'Human Journey' : 'Bot Journey'}
@@ -98,7 +98,7 @@ export const TooltipOverlay: React.FC<TooltipOverlayProps> = ({
             <span className="text-[#F8FAFC]">{j.positions_count} pts</span>
           </div>
         </div>
-        <div className="mt-2 pt-1 border-t border-[#1E293B] text-[9px] text-[#00E5FF]/70 text-center">
+        <div className="mt-2 pt-1 border-t border-[#292929] text-[9px] text-[#00E5FF]/70 text-center">
           Click to inspect full telemetry
         </div>
       </div>
@@ -110,10 +110,10 @@ export const TooltipOverlay: React.FC<TooltipOverlayProps> = ({
 
     return (
       <div
-        className="absolute pointer-events-none z-30 bg-[#0E131F]/95 backdrop-blur-sm border border-amber-500/30 rounded-lg p-2.5 text-xs font-mono shadow-2xl shadow-black/80"
+        className="absolute pointer-events-none z-30 bg-[#090909]/95 backdrop-blur-sm border border-amber-500/30 rounded-lg p-2.5 text-xs font-mono shadow-2xl shadow-black/80"
         style={{ left, top, width: tooltipWidth }}
       >
-        <div className="flex items-center justify-between pb-1.5 mb-1.5 border-b border-[#1E293B]">
+        <div className="flex items-center justify-between pb-1.5 mb-1.5 border-b border-[#292929]">
           <span className="font-bold flex items-center gap-1.5 text-amber-400">
             <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
             Sector [{row}, {col}]
@@ -141,7 +141,7 @@ export const TooltipOverlay: React.FC<TooltipOverlayProps> = ({
             </span>
           </div>
         </div>
-        <div className="mt-2 pt-1 border-t border-[#1E293B] text-[9px] text-amber-400/80 text-center font-sans">
+        <div className="mt-2 pt-1 border-t border-[#292929] text-[9px] text-amber-400/80 text-center font-sans">
           Click cell to open Sector Details
         </div>
       </div>

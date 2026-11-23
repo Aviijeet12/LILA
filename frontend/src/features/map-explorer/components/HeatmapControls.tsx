@@ -75,13 +75,13 @@ export const HeatmapControls: React.FC<HeatmapControlsProps> = ({
   }
 
   return (
-    <div className="bg-[#121826] border border-[#1E293B] rounded-xl p-3.5 space-y-3.5">
+    <div className="bg-[#111111] border border-[#292929] rounded-xl p-3.5 space-y-3.5">
       {/* Header and Master Toggle */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className={clsx(
             "p-1.5 rounded-lg transition-colors",
-            config.enabled ? "bg-amber-500/20 text-amber-400" : "bg-[#1E293B] text-slate-400"
+            config.enabled ? "bg-amber-500/20 text-amber-400" : "bg-[#292929] text-slate-400"
           )}>
             <Flame className="w-4 h-4" />
           </div>
@@ -97,7 +97,7 @@ export const HeatmapControls: React.FC<HeatmapControlsProps> = ({
           <button
             type="button"
             onClick={onOpenAnalytics}
-            className="px-2 py-1 text-[10px] font-medium bg-[#1E293B] hover:bg-[#2A374D] text-cyan-400 hover:text-cyan-300 rounded border border-[#334155] transition-colors"
+            className="px-2 py-1 text-[10px] font-medium bg-[#292929] hover:bg-[#383838] text-cyan-400 hover:text-cyan-300 rounded border border-[#334155] transition-colors"
             title="Open comprehensive spatial metrics dashboard"
           >
             Analytics
@@ -109,7 +109,7 @@ export const HeatmapControls: React.FC<HeatmapControlsProps> = ({
               "flex items-center gap-1 px-2.5 py-1 text-xs font-semibold rounded-lg transition-all border",
               config.enabled
                 ? "bg-amber-500/20 border-amber-500/40 text-amber-300 shadow-[0_0_12px_rgba(245,158,11,0.2)]"
-                : "bg-[#1A2234] border-[#2A374D] text-slate-400 hover:text-slate-200"
+                : "bg-[#191919] border-[#383838] text-slate-400 hover:text-slate-200"
             )}
           >
             {config.enabled ? (
@@ -170,8 +170,8 @@ export const HeatmapControls: React.FC<HeatmapControlsProps> = ({
                     className={clsx(
                       "flex items-center justify-between px-2 py-1.5 rounded-lg border text-left transition-all",
                       isActive
-                        ? "bg-[#161F30] border-cyan-500/30 text-slate-100 shadow-sm"
-                        : "bg-[#0F1420] border-[#1E293B] text-slate-500 hover:text-slate-300"
+                        ? "bg-[#191919] border-cyan-500/30 text-slate-100 shadow-sm"
+                        : "bg-[#090909] border-[#292929] text-slate-500 hover:text-slate-300"
                     )}
                   >
                     <div className="flex items-center gap-1.5 min-w-0">
@@ -193,7 +193,7 @@ export const HeatmapControls: React.FC<HeatmapControlsProps> = ({
           </div>
 
           {/* Controls: Opacity & Style */}
-          <div className="space-y-2 pt-1 border-t border-[#1E293B]">
+          <div className="space-y-2 pt-1 border-t border-[#292929]">
             {/* Opacity slider */}
             <div className="space-y-1">
               <div className="flex items-center justify-between text-[11px]">
@@ -212,14 +212,14 @@ export const HeatmapControls: React.FC<HeatmapControlsProps> = ({
                 step="0.05"
                 value={config.opacity}
                 onChange={setOpacity}
-                className="w-full h-1 bg-[#1E293B] rounded-lg appearance-none cursor-pointer accent-amber-500"
+                className="w-full h-1 bg-[#292929] rounded-lg appearance-none cursor-pointer accent-amber-500"
               />
             </div>
 
             {/* Render Style & Normalization Toggles */}
             <div className="grid grid-cols-2 gap-1.5 text-[10px]">
               {/* Style */}
-              <div className="bg-[#0F1420] border border-[#1E293B] rounded-lg p-1.5 flex items-center justify-between">
+              <div className="bg-[#090909] border border-[#292929] rounded-lg p-1.5 flex items-center justify-between">
                 <span className="text-slate-400">Style</span>
                 <button
                   type="button"
@@ -229,14 +229,14 @@ export const HeatmapControls: React.FC<HeatmapControlsProps> = ({
                       renderStyle: config.renderStyle === 'smooth' ? 'grid' : 'smooth',
                     })
                   }
-                  className="px-1.5 py-0.5 rounded bg-[#1A2234] text-cyan-400 hover:text-cyan-300 font-medium"
+                  className="px-1.5 py-0.5 rounded bg-[#191919] text-cyan-400 hover:text-cyan-300 font-medium"
                 >
                   {config.renderStyle === 'smooth' ? 'Thermal' : 'Grid'}
                 </button>
               </div>
 
               {/* Normalization */}
-              <div className="bg-[#0F1420] border border-[#1E293B] rounded-lg p-1.5 flex items-center justify-between">
+              <div className="bg-[#090909] border border-[#292929] rounded-lg p-1.5 flex items-center justify-between">
                 <span className="text-slate-400">Scale</span>
                 <button
                   type="button"
@@ -247,7 +247,7 @@ export const HeatmapControls: React.FC<HeatmapControlsProps> = ({
                         config.normalizationMode === 'relative' ? 'absolute' : 'relative',
                     })
                   }
-                  className="px-1.5 py-0.5 rounded bg-[#1A2234] text-amber-400 hover:text-amber-300 font-medium"
+                  className="px-1.5 py-0.5 rounded bg-[#191919] text-amber-400 hover:text-amber-300 font-medium"
                   title={
                     config.normalizationMode === 'relative'
                       ? 'Relative: Normalized to active layer max (highlights rare events)'
@@ -261,7 +261,7 @@ export const HeatmapControls: React.FC<HeatmapControlsProps> = ({
           </div>
 
           {/* Visual Heatmap Intensity Legend */}
-          <div className="bg-[#0F1420] border border-[#1E293B] rounded-lg p-2 space-y-1">
+          <div className="bg-[#090909] border border-[#292929] rounded-lg p-2 space-y-1">
             <div className="flex items-center justify-between text-[10px] text-slate-400">
               <span>Heatmap Intensity</span>
               <span className="font-mono text-slate-300">

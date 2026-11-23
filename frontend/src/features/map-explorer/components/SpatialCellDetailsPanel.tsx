@@ -66,9 +66,9 @@ export const SpatialCellDetailsPanel: React.FC<SpatialCellDetailsPanelProps> = (
   });
 
   return (
-    <div className="bg-[#121826]/95 backdrop-blur-md border border-[#1E293B] rounded-xl p-4 shadow-2xl space-y-3.5 text-slate-200">
+    <div className="bg-[#111111]/95 backdrop-blur-md border border-[#292929] rounded-xl p-4 shadow-2xl space-y-3.5 text-slate-200">
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-[#1E293B] pb-2.5">
+      <div className="flex items-center justify-between border-b border-[#292929] pb-2.5">
         <div className="flex items-center gap-2">
           <div className="p-1.5 rounded-lg bg-amber-500/20 text-amber-400">
             <MapPin className="w-4 h-4" />
@@ -86,7 +86,7 @@ export const SpatialCellDetailsPanel: React.FC<SpatialCellDetailsPanelProps> = (
         <button
           type="button"
           onClick={onClose}
-          className="p-1 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-[#1E293B] transition-colors"
+          className="p-1 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-[#292929] transition-colors"
           title="Close cell inspection"
         >
           <X className="w-4 h-4" />
@@ -96,7 +96,7 @@ export const SpatialCellDetailsPanel: React.FC<SpatialCellDetailsPanelProps> = (
       {/* Coordinate Readouts */}
       <div className="grid grid-cols-2 gap-2 text-[10px]">
         {/* World Bounding Box */}
-        <div className="bg-[#0B0F17] border border-[#1E293B] rounded-lg p-2 space-y-1">
+        <div className="bg-[#090909] border border-[#292929] rounded-lg p-2 space-y-1">
           <div className="flex items-center gap-1 text-slate-400 font-medium">
             <Compass className="w-3 h-3 text-cyan-400" />
             <span>World Bounding Box (m)</span>
@@ -108,7 +108,7 @@ export const SpatialCellDetailsPanel: React.FC<SpatialCellDetailsPanelProps> = (
         </div>
 
         {/* UV Range */}
-        <div className="bg-[#0B0F17] border border-[#1E293B] rounded-lg p-2 space-y-1">
+        <div className="bg-[#090909] border border-[#292929] rounded-lg p-2 space-y-1">
           <div className="flex items-center gap-1 text-slate-400 font-medium">
             <Layers className="w-3 h-3 text-purple-400" />
             <span>Normalized UV Bounds</span>
@@ -132,11 +132,11 @@ export const SpatialCellDetailsPanel: React.FC<SpatialCellDetailsPanelProps> = (
           </span>
         </div>
 
-        <div className="divide-y divide-[#1E293B] border border-[#1E293B] rounded-lg overflow-hidden bg-[#0B0F17]">
+        <div className="divide-y divide-[#292929] border border-[#292929] rounded-lg overflow-hidden bg-[#090909]">
           {breakdown.map((item) => (
             <div
               key={item.key}
-              className="flex items-center justify-between px-2.5 py-1.5 text-[11px] hover:bg-[#161F30] transition-colors"
+              className="flex items-center justify-between px-2.5 py-1.5 text-[11px] hover:bg-[#191919] transition-colors"
             >
               <div className="flex items-center gap-2">
                 <div

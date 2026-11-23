@@ -20,6 +20,7 @@ import {
   MapPin,
   TrendingUp,
 } from 'lucide-react';
+import { AnalystMapScreen } from './AnalystMapScreen';
 
 interface MessageItemProps {
   message: ChatMessage;
@@ -30,12 +31,21 @@ export const MessageItem: React.FC<MessageItemProps> = ({ message, onSelectFollo
   const navigate = useNavigate();
   const [showMethodology, setShowMethodology] = useState(false);
   const [showLimitations, setShowLimitations] = useState(false);
+  const [showMapScreen, setShowMapScreen] = useState(false);
+
+  const openAction = (url: string) => {
+    if (url.startsWith('/map-explorer')) {
+      setShowMapScreen(true);
+    } else {
+      navigate(url);
+    }
+  };
 
   // User Message
   if (message.sender === 'user') {
     return (
       <div className="flex items-start justify-end gap-3 text-xs font-mono my-4 animate-message-enter">
-        <div className="max-w-[80%] bg-[#1E293B]/80 backdrop-blur-md border border-white/10 rounded-2xl rounded-tr-sm px-5 py-3.5 text-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.3)]">
+        <div className="max-w-[80%] bg-[#292929]/80 backdrop-blur-md border border-white/10 rounded-2xl rounded-tr-sm px-5 py-3.5 text-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.3)]">
           <p className="leading-relaxed whitespace-pre-wrap text-sm font-sans">{message.text}</p>
         </div>
         <div className="w-9 h-9 rounded-full bg-[#00E5FF]/20 border border-[#00E5FF]/50 flex items-center justify-center text-[#00E5FF] flex-shrink-0 shadow-[0_0_15px_rgba(0,229,255,0.25)]">
@@ -87,7 +97,7 @@ export const MessageItem: React.FC<MessageItemProps> = ({ message, onSelectFollo
               {result.intent.replace(/_/g, ' ')}
             </span>
           </div>
-          <span className="text-[10px] text-slate-400 bg-slate-900/40 px-2.5 py-1 rounded-md border border-white/5 font-sans">
+          <span className="text-[10px] text-slate-400 bg-neutral-900/40 px-2.5 py-1 rounded-md border border-white/5 font-sans">
             {result.dataScope}
           </span>
         </div>
@@ -235,8 +245,8 @@ export const MessageItem: React.FC<MessageItemProps> = ({ message, onSelectFollo
 
                       {result.mapId && (
                         <button
-                          onClick={() => navigate(`/map-explorer?map=${result.mapId}&heatmap=1&cell=${h.row},${h.col}`)}
-                          className="px-3 py-1.5 rounded-lg bg-[#1E293B] hover:bg-cyan-500/20 text-slate-200 hover:text-cyan-300 border border-white/10 hover:border-cyan-500/40 flex items-center gap-1.5 transition-all text-xs font-sans font-medium shadow-sm"
+                          onClick={() => openAction(`/map-explorer?map=${result.mapId}&heatmap=1&cell=${h.row},${h.col}`)}
+                          className="px-3 py-1.5 rounded-lg bg-[#292929] hover:bg-cyan-500/20 text-slate-200 hover:text-cyan-300 border border-white/10 hover:border-cyan-500/40 flex items-center gap-1.5 transition-all text-xs font-sans font-medium shadow-sm"
                         >
                           <Compass size={12} className="text-cyan-400" />
                           <span>Focus Map</span>
@@ -254,7 +264,7 @@ export const MessageItem: React.FC<MessageItemProps> = ({ message, onSelectFollo
         {result.deepLink && (
           <div className="pt-2">
             <button
-              onClick={() => navigate(result.deepLink!.url)}
+              onClick={() => openAction(result.deepLink!.url)}
               className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-cyan-600/30 via-blue-600/20 to-cyan-600/30 hover:from-cyan-600/40 hover:to-blue-600/40 border border-cyan-500/50 text-[#00E5FF] font-bold text-xs flex items-center justify-center gap-2.5 transition-all shadow-[0_4px_20px_rgba(0,229,255,0.15)] group"
             >
               <Compass size={16} className="text-cyan-400 group-hover:rotate-45 transition-transform duration-300" />
@@ -263,6 +273,8 @@ export const MessageItem: React.FC<MessageItemProps> = ({ message, onSelectFollo
             </button>
           </div>
         )}
+
+        {showMapScreen && <AnalystMapScreen result={result} onClose={() => setShowMapScreen(false)} />}
 
         {/* Collapsible Methodology Disclosure */}
         <div className="pt-2 border-t border-white/10">
@@ -277,7 +289,7 @@ export const MessageItem: React.FC<MessageItemProps> = ({ message, onSelectFollo
             {showMethodology ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
           </button>
           {showMethodology && (
-            <div className="mt-2 p-3 bg-slate-900/60 backdrop-blur-md rounded-lg border border-white/5 text-[11px] text-slate-300 font-sans leading-relaxed">
+            <div className="mt-2 p-3 bg-neutral-900/60 backdrop-blur-md rounded-lg border border-white/5 text-[11px] text-slate-300 font-sans leading-relaxed">
               {result.methodology}
             </div>
           )}
@@ -318,7 +330,7 @@ export const MessageItem: React.FC<MessageItemProps> = ({ message, onSelectFollo
                 <button
                   key={idx}
                   onClick={() => onSelectFollowUp(q)}
-                  className="px-3 py-1.5 rounded-lg bg-slate-900/50 hover:bg-cyan-500/15 border border-white/10 hover:border-cyan-500/40 text-slate-300 hover:text-cyan-300 text-xs text-left transition-all font-sans"
+                  className="px-3 py-1.5 rounded-lg bg-neutral-900/50 hover:bg-cyan-500/15 border border-white/10 hover:border-cyan-500/40 text-slate-300 hover:text-cyan-300 text-xs text-left transition-all font-sans"
                 >
                   {q}
                 </button>

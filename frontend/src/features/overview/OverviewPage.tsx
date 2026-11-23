@@ -50,8 +50,8 @@ const EVENT_COLOURS = [CYAN, GREEN, AMBER, ROSE, PURPLE, SLATE, "#6366F1", "#F97
 
 // ─── Custom tooltip shared style ─────────────────────────────────────────────
 const TooltipStyle: React.CSSProperties = {
-  background:   "#101925",
-  border:       "1px solid #1E2B3E",
+  background:   "#111111",
+  border:       "1px solid #292929",
   borderRadius: 6,
   fontSize:     11,
   fontFamily:   "ui-monospace, monospace",
@@ -92,7 +92,7 @@ const Section: React.FC<{ title: string; sub?: string; children: React.ReactNode
       <div className="w-1 h-3.5 bg-[#00D9F5] rounded-sm" />
       <span className="text-xs font-semibold uppercase tracking-wider text-slate-200">{title}</span>
       {sub && <span className="text-[10px] text-slate-400 font-mono">({sub})</span>}
-      <div className="flex-1 h-px bg-[#1E2B3E]" />
+      <div className="flex-1 h-px bg-[#292929]" />
     </div>
     {children}
   </div>
@@ -100,7 +100,7 @@ const Section: React.FC<{ title: string; sub?: string; children: React.ReactNode
 
 // ─── Loading skeleton ────────────────────────────────────────────────────────
 const Skeleton: React.FC<{ className?: string }> = ({ className = "" }) => (
-  <div className={`animate-pulse rounded-lg bg-[#101925] border border-[#1E2B3E] ${className}`} />
+  <div className={`animate-pulse rounded-lg bg-[#111111] border border-[#292929] ${className}`} />
 );
 
 // ─── Main component ──────────────────────────────────────────────────────────
@@ -170,9 +170,9 @@ export const OverviewPage: React.FC = () => {
   return (
     <div className="space-y-5">
       {/* Compact Tactical Intelligence Header */}
-      <div className="bg-[#101925] border border-[#1E2B3E] rounded-xl px-4 py-3 flex flex-col md:flex-row md:items-center justify-between gap-3 shadow-md">
+      <div className="bg-[#111111] border border-[#292929] rounded-xl px-4 py-3 flex flex-col md:flex-row md:items-center justify-between gap-3 shadow-md">
         <div className="flex items-center gap-3">
-          <div className="h-8 w-11 rounded bg-black border border-[#1E2B3E] p-1 flex items-center justify-center flex-shrink-0">
+          <div className="h-8 w-11 rounded bg-black border border-[#292929] p-1 flex items-center justify-center flex-shrink-0">
             <img src="/lila-logo.png" alt="LILA" className="h-full w-full object-contain" />
           </div>
           <div>
@@ -180,7 +180,7 @@ export const OverviewPage: React.FC = () => {
               <h2 className="text-sm font-bold font-mono text-[#F8FAFC] tracking-wide">
                 LILA BLACK <span className="text-[#00D9F5]">INTELLIGENCE</span>
               </h2>
-              <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#1E2B3E] text-slate-300">
+              <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#292929] text-slate-300">
                 DATASET v1.0
               </span>
             </div>
@@ -195,11 +195,11 @@ export const OverviewPage: React.FC = () => {
         </div>
 
         <div className="flex items-center gap-2 text-xs font-mono">
-          <div className="px-2.5 py-1 rounded bg-[#080D14] border border-[#1E2B3E] text-slate-300">
+          <div className="px-2.5 py-1 rounded bg-[#050505] border border-[#292929] text-slate-300">
             <span className="text-slate-500 mr-1.5">RECORDS:</span>
             <strong className="text-[#F8FAFC]">87,599</strong>
           </div>
-          <div className="px-2.5 py-1 rounded bg-[#080D14] border border-[#1E2B3E] text-slate-300">
+          <div className="px-2.5 py-1 rounded bg-[#050505] border border-[#292929] text-slate-300">
             <span className="text-slate-500 mr-1.5">EVENTS:</span>
             <strong className="text-[#00D9F5]">14,750</strong>
           </div>
@@ -256,7 +256,7 @@ export const OverviewPage: React.FC = () => {
         {/* Daily Match & Journey Velocity (7 cols) */}
         <div className="lg:col-span-7">
           <Section title="Operational Velocity" sub="Matches & Journeys by Day">
-            <div className="bg-[#101925] border border-[#1E2B3E] rounded-xl p-4 shadow-sm">
+            <div className="bg-[#111111] border border-[#292929] rounded-xl p-4 shadow-sm">
               <ResponsiveContainer width="100%" height={210}>
                 <BarChart data={dailyMatchData} barGap={4}>
                   <XAxis
@@ -271,7 +271,7 @@ export const OverviewPage: React.FC = () => {
                     tickLine={false}
                     width={32}
                   />
-                  <Tooltip content={<ChartTooltip />} cursor={{ fill: "#1E2B3E33" }} />
+                  <Tooltip content={<ChartTooltip />} cursor={{ fill: "#29292933" }} />
                   <Legend
                     wrapperStyle={{ fontSize: 11, fontFamily: "ui-monospace,monospace", color: "#94A3B8" }}
                   />
@@ -291,12 +291,12 @@ export const OverviewPage: React.FC = () => {
         <div className="lg:col-span-5 space-y-4">
           {/* Map Distribution */}
           <Section title="Map Distribution" sub="Matches & Journeys per Map">
-            <div className="bg-[#101925] border border-[#1E2B3E] rounded-xl p-4 shadow-sm">
+            <div className="bg-[#111111] border border-[#292929] rounded-xl p-4 shadow-sm">
               <ResponsiveContainer width="100%" height={105}>
                 <BarChart data={mapMatchData} layout="vertical" barGap={2} margin={{ left: 0, right: 10, top: 0, bottom: 0 }}>
                   <XAxis type="number" tick={{ fill: "#64748B", fontSize: 10 }} axisLine={false} tickLine={false} />
                   <YAxis dataKey="name" type="category" tick={{ fill: "#94A3B8", fontSize: 11, fontFamily: "ui-monospace,monospace" }} axisLine={false} tickLine={false} width={105} />
-                  <Tooltip content={<ChartTooltip />} cursor={{ fill: "#1E2B3E33" }} />
+                  <Tooltip content={<ChartTooltip />} cursor={{ fill: "#29292933" }} />
                   <Bar isAnimationActive={false} dataKey="matches" name="Matches" radius={[0, 2, 2, 0]} maxBarSize={12}>
                     {mapMatchData.map((entry) => (
                       <Cell key={entry.rawName} fill={MAP_COLOURS[entry.rawName] ?? SLATE} />
@@ -310,7 +310,7 @@ export const OverviewPage: React.FC = () => {
 
           {/* Outcome Distribution */}
           <Section title="Outcome Distribution" sub="Presumed Survival vs Elimination">
-            <div className="bg-[#101925] border border-[#1E2B3E] rounded-xl p-3.5 shadow-sm">
+            <div className="bg-[#111111] border border-[#292929] rounded-xl p-3.5 shadow-sm">
               <div className="flex items-center gap-4">
                 <ResponsiveContainer width="45%" height={100}>
                   <PieChart>
@@ -348,7 +348,7 @@ export const OverviewPage: React.FC = () => {
                           </span>
                           <span className="text-white font-semibold">{entry.value.toLocaleString()}</span>
                         </div>
-                        <div className="h-1 rounded-full bg-[#1E2B3E]">
+                        <div className="h-1 rounded-full bg-[#292929]">
                           <div
                             className="h-full rounded-full"
                             style={{
@@ -370,7 +370,7 @@ export const OverviewPage: React.FC = () => {
 
       {/* Discrete Event Distribution */}
       <Section title="Discrete Event Distribution" sub="14,750 discrete events recorded">
-        <div className="bg-[#101925] border border-[#1E2B3E] rounded-xl p-4 shadow-sm">
+        <div className="bg-[#111111] border border-[#292929] rounded-xl p-4 shadow-sm">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <ResponsiveContainer width="100%" height={210}>
               <BarChart data={eventData}>
@@ -391,7 +391,7 @@ export const OverviewPage: React.FC = () => {
                   width={40}
                   tickFormatter={(v: number) => (v >= 1000 ? `${(v / 1000).toFixed(0)}k` : String(v))}
                 />
-                <Tooltip content={<ChartTooltip />} cursor={{ fill: "#1E2B3E33" }} />
+                <Tooltip content={<ChartTooltip />} cursor={{ fill: "#29292933" }} />
                 <Bar isAnimationActive={false} dataKey="count" name="Events" radius={[2, 2, 0, 0]} maxBarSize={32}>
                   {eventData.map((entry, i) => (
                     <Cell key={entry.name} fill={EVENT_COLOURS[i % EVENT_COLOURS.length]} />
@@ -410,7 +410,7 @@ export const OverviewPage: React.FC = () => {
                       style={{ background: EVENT_COLOURS[i % EVENT_COLOURS.length] }}
                     />
                     <span className="text-slate-300 w-28 truncate">{entry.name}</span>
-                    <div className="flex-1 h-1 rounded-full bg-[#172435]">
+                    <div className="flex-1 h-1 rounded-full bg-[#191919]">
                       <div
                         className="h-full rounded-full"
                         style={{
@@ -439,7 +439,7 @@ export const OverviewPage: React.FC = () => {
             const entries = Object.entries(data).sort(([, a], [, b]) => b - a);
             const total = entries.reduce((s, [, v]) => s + v, 0);
             return (
-              <div key={label} className="bg-[#101925] border border-[#1E2B3E] rounded-xl p-4 shadow-sm">
+              <div key={label} className="bg-[#111111] border border-[#292929] rounded-xl p-4 shadow-sm">
                 <div className="text-xs font-mono text-slate-300 mb-3 flex items-center justify-between">
                   <span className="flex items-center gap-1.5 font-semibold">
                     <span className="w-2 h-2 rounded-full" style={{ background: colour }} />
@@ -453,7 +453,7 @@ export const OverviewPage: React.FC = () => {
                     return (
                       <div key={name} className="flex items-center gap-2 text-xs font-mono">
                         <span className="text-slate-400 w-28 truncate">{name}</span>
-                        <div className="flex-1 h-1 rounded-full bg-[#172435]">
+                        <div className="flex-1 h-1 rounded-full bg-[#191919]">
                           <div className="h-full rounded-full" style={{ width: `${pct}%`, background: colour }} />
                         </div>
                         <span className="text-slate-500 text-[10px] w-10 text-right">{pct}%</span>
@@ -470,7 +470,7 @@ export const OverviewPage: React.FC = () => {
 
       {/* Dataset Limitations & Assumptions */}
       <Section title="Dataset Limitations & Assumptions">
-        <div className="bg-[#101925] border border-[#1E2B3E] rounded-xl p-4 space-y-2">
+        <div className="bg-[#111111] border border-[#292929] rounded-xl p-4 space-y-2">
           {[
             { icon: <Info size={12} className="text-[#00D9F5] mt-0.5 flex-shrink-0" />, text: 'No extraction event exists in the telemetry schema. "SURVIVED_PRESUMED" indicates the journey concluded without an observed Killed or KilledByStorm event.' },
             { icon: <Info size={12} className="text-[#F5A623] mt-0.5 flex-shrink-0" />, text: 'Timestamps are stored as Unix epoch seconds (int64). The Parquet schema declares timestamp[ms] but values are seconds — corrected in the Python ETL pipeline.' },

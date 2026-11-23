@@ -294,7 +294,7 @@ export const MapExplorerPage: React.FC = () => {
       {/* Sidebar Controls */}
       <aside className="w-full lg:w-64 flex-shrink-0 flex flex-col gap-3 overflow-y-auto max-h-full custom-scrollbar pr-1">
         {/* Map Selector */}
-        <div className="bg-[#101925] border border-[#1E2B3E] rounded-lg p-3">
+        <div className="bg-[#111111] border border-[#292929] rounded-lg p-3">
           <div className="text-[10px] font-mono uppercase tracking-widest text-[#64748B] mb-2 flex items-center justify-between">
             <span className="flex items-center gap-1.5"><Map size={11} /> Active Map</span>
             {metadata && (
@@ -309,8 +309,8 @@ export const MapExplorerPage: React.FC = () => {
                 className={clsx(
                   'w-full text-left px-3 py-2 rounded text-xs font-mono transition-colors flex items-center justify-between',
                   mapId === m.id
-                    ? 'bg-[#172435] text-[#00D9F5] font-semibold border-l-2 border-[#00D9F5]'
-                    : 'text-[#94A3B8] hover:bg-[#172435]/60 border-l-2 border-transparent'
+                    ? 'bg-[#191919] text-[#00D9F5] font-semibold border-l-2 border-[#00D9F5]'
+                    : 'text-[#94A3B8] hover:bg-[#191919]/60 border-l-2 border-transparent'
                 )}
               >
                 <span>{m.label}</span>
@@ -323,7 +323,7 @@ export const MapExplorerPage: React.FC = () => {
         </div>
 
         {/* Entity Filter */}
-        <div className="bg-[#101925] border border-[#1E2B3E] rounded-lg p-3">
+        <div className="bg-[#111111] border border-[#292929] rounded-lg p-3">
           <div className="text-[10px] font-mono uppercase tracking-widest text-[#64748B] mb-2 flex items-center gap-1.5">
             <Users size={11} /> Entity Type
           </div>
@@ -335,8 +335,8 @@ export const MapExplorerPage: React.FC = () => {
                 className={clsx(
                   'py-1.5 rounded text-[10px] font-mono uppercase transition-colors text-center font-medium',
                   entityFilter === f
-                    ? 'bg-[#172435] text-[#00D9F5] border border-[#00D9F5]/40'
-                    : 'text-[#64748B] border border-[#1E2B3E] hover:text-[#94A3B8] hover:bg-[#172435]/40'
+                    ? 'bg-[#191919] text-[#00D9F5] border border-[#00D9F5]/40'
+                    : 'text-[#64748B] border border-[#292929] hover:text-[#94A3B8] hover:bg-[#191919]/40'
                 )}
               >
                 {f === 'all' ? 'All' : f === 'human' ? 'Human' : 'Bot'}
@@ -346,7 +346,7 @@ export const MapExplorerPage: React.FC = () => {
         </div>
 
         {/* Date Filter */}
-        <div className="bg-[#101925] border border-[#1E2B3E] rounded-lg p-3">
+        <div className="bg-[#111111] border border-[#292929] rounded-lg p-3">
           <div className="text-[10px] font-mono uppercase tracking-widest text-[#64748B] mb-2 flex items-center justify-between">
             <span className="flex items-center gap-1.5"><Calendar size={11} /> Date</span>
             {selectedDate && (
@@ -360,7 +360,7 @@ export const MapExplorerPage: React.FC = () => {
           </div>
           <div className="relative">
             <select
-              className="w-full bg-[#172435] border border-[#1E2B3E] rounded px-2.5 py-1.5 text-xs font-mono text-[#F8FAFC] appearance-none cursor-pointer focus:outline-none focus:border-[#00D9F5]/60"
+              className="w-full bg-[#191919] border border-[#292929] rounded px-2.5 py-1.5 text-xs font-mono text-[#F8FAFC] appearance-none cursor-pointer focus:outline-none focus:border-[#00D9F5]/60"
               value={selectedDate ?? ''}
               onChange={(e) => handleSelectDate(e.target.value || null)}
             >
@@ -374,7 +374,7 @@ export const MapExplorerPage: React.FC = () => {
         </div>
 
         {/* Match Selector */}
-        <div className="bg-[#101925] border border-[#1E2B3E] rounded-lg p-3 flex flex-col gap-2">
+        <div className="bg-[#111111] border border-[#292929] rounded-lg p-3 flex flex-col gap-2">
           <div className="text-[10px] font-mono uppercase tracking-widest text-[#64748B] flex items-center justify-between">
             <span className="flex items-center gap-1.5"><Crosshair size={11} /> Select Match</span>
             <span className="text-[#64748B]">{filteredMatches.length}</span>
@@ -384,7 +384,7 @@ export const MapExplorerPage: React.FC = () => {
           <div className="relative">
             <select
               aria-label="Select Match"
-              className="w-full bg-[#172435] border border-[#1E2B3E] rounded px-2.5 py-1.5 text-xs font-mono text-[#F8FAFC] appearance-none cursor-pointer focus:outline-none focus:border-[#00D9F5]/60"
+              className="w-full bg-[#191919] border border-[#292929] rounded px-2.5 py-1.5 text-xs font-mono text-[#F8FAFC] appearance-none cursor-pointer focus:outline-none focus:border-[#00D9F5]/60"
               value={selectedMatchId ?? ''}
               onChange={(e) => handleSelectMatch(e.target.value || null)}
             >
@@ -399,14 +399,14 @@ export const MapExplorerPage: React.FC = () => {
           </div>
 
           {/* Quick Search & Scrollable Match Roster */}
-          <div className="pt-1 border-t border-[#1E2B3E]/60 flex flex-col gap-1.5">
+          <div className="pt-1 border-t border-[#292929]/60 flex flex-col gap-1.5">
             <div className="relative">
               <input
                 type="text"
                 value={matchSearch}
                 onChange={(e) => setMatchSearch(e.target.value)}
                 placeholder="Filter match ID..."
-                className="w-full bg-[#172435] border border-[#1E2B3E] rounded pl-6 pr-2 py-1 text-[10px] font-mono text-[#F8FAFC] placeholder-[#64748B] focus:outline-none focus:border-[#00D9F5]/60"
+                className="w-full bg-[#191919] border border-[#292929] rounded pl-6 pr-2 py-1 text-[10px] font-mono text-[#F8FAFC] placeholder-[#64748B] focus:outline-none focus:border-[#00D9F5]/60"
               />
               <Search size={10} className="absolute left-2 top-2 text-[#64748B] pointer-events-none" />
             </div>
@@ -417,8 +417,8 @@ export const MapExplorerPage: React.FC = () => {
                 className={clsx(
                   'w-full text-left px-2 py-1 rounded text-[10px] font-mono transition-colors',
                   !selectedMatchId
-                    ? 'bg-[#172435] text-[#00D9F5] font-semibold'
-                    : 'text-[#64748B] hover:text-[#94A3B8] hover:bg-[#172435]/40'
+                    ? 'bg-[#191919] text-[#00D9F5] font-semibold'
+                    : 'text-[#64748B] hover:text-[#94A3B8] hover:bg-[#191919]/40'
                 )}
               >
                 All matches ({filteredMatches.length})
@@ -430,8 +430,8 @@ export const MapExplorerPage: React.FC = () => {
                   className={clsx(
                     'w-full text-left px-2 py-1 rounded text-[10px] font-mono transition-colors truncate flex items-center justify-between',
                     selectedMatchId === m.match_id
-                      ? 'bg-[#172435] text-[#00D9F5] font-semibold'
-                      : 'text-[#64748B] hover:text-[#94A3B8] hover:bg-[#172435]/40'
+                      ? 'bg-[#191919] text-[#00D9F5] font-semibold'
+                      : 'text-[#64748B] hover:text-[#94A3B8] hover:bg-[#191919]/40'
                   )}
                   title={`${m.match_id} (${m.total_participants} participants, ${formatDuration(m.duration_seconds)})`}
                 >
@@ -447,7 +447,7 @@ export const MapExplorerPage: React.FC = () => {
         </div>
 
         {/* Layers & Event Toggles */}
-        <div className="bg-[#101925] border border-[#1E2B3E] rounded-lg p-3">
+        <div className="bg-[#111111] border border-[#292929] rounded-lg p-3">
           <div className="text-[10px] font-mono uppercase tracking-widest text-[#64748B] mb-2 flex items-center justify-between">
             <span className="flex items-center gap-1.5"><Layers size={11} /> Layer Toggles</span>
             <div className="flex gap-1.5 text-[9px]">
@@ -458,7 +458,7 @@ export const MapExplorerPage: React.FC = () => {
               >
                 All On
               </button>
-              <span className="text-[#1E2B3E]">|</span>
+              <span className="text-[#292929]">|</span>
               <button
                 onClick={() => setAllLayers(false)}
                 className="text-[#64748B] hover:text-[#00D9F5]"
@@ -478,13 +478,13 @@ export const MapExplorerPage: React.FC = () => {
                   onClick={() => setActiveLayer(key, !on)}
                   className={clsx(
                     'w-full flex items-center justify-between px-2 py-1.5 rounded text-[10px] font-mono transition-colors',
-                    on ? 'text-[#F8FAFC] hover:bg-[#172435]' : 'text-[#475569] hover:bg-[#172435]/40'
+                    on ? 'text-[#F8FAFC] hover:bg-[#191919]' : 'text-[#475569] hover:bg-[#191919]/40'
                   )}
                 >
                   <span className="flex items-center gap-2">
                     <span
                       className="w-2 h-2 rounded-full flex-shrink-0"
-                      style={{ background: on ? color : '#1E2B3E' }}
+                      style={{ background: on ? color : '#292929' }}
                     />
                     <span>{label}</span>
                   </span>
@@ -502,7 +502,7 @@ export const MapExplorerPage: React.FC = () => {
         {/* Reset Filters Action */}
         <button
           onClick={resetFilters}
-          className="w-full py-2 px-3 rounded-lg border border-[#1E2B3E] hover:border-[#334155] bg-[#101925] hover:bg-[#172435] text-xs font-mono text-[#94A3B8] hover:text-[#00D9F5] flex items-center justify-center gap-2 transition-colors"
+          className="w-full py-2 px-3 rounded-lg border border-[#292929] hover:border-[#334155] bg-[#111111] hover:bg-[#191919] text-xs font-mono text-[#94A3B8] hover:text-[#00D9F5] flex items-center justify-center gap-2 transition-colors"
         >
           <RotateCcw size={12} />
           Reset All Filters
@@ -560,8 +560,8 @@ export const MapExplorerPage: React.FC = () => {
 
         {/* Match Intelligence Card (when a match is selected) */}
         {selectedMatch && (
-          <div className="bg-[#101925]/95 backdrop-blur-md border border-[#00D9F5]/40 rounded-xl p-3 font-mono text-xs shadow-2xl animate-in fade-in duration-150 min-w-0">
-            <div className="flex items-center justify-between gap-2 flex-wrap border-b border-[#1E2B3E] pb-2 mb-2 min-w-0">
+          <div className="bg-[#111111]/95 backdrop-blur-md border border-[#00D9F5]/40 rounded-xl p-3 font-mono text-xs shadow-2xl animate-in fade-in duration-150 min-w-0">
+            <div className="flex items-center justify-between gap-2 flex-wrap border-b border-[#292929] pb-2 mb-2 min-w-0">
               <div className="flex items-center gap-2 min-w-0">
                 <span className="w-2 h-2 rounded-full bg-[#00D9F5] animate-pulse flex-shrink-0" />
                 <span className="text-[#64748B] text-[10px] uppercase tracking-wider flex-shrink-0">Active Match:</span>
@@ -587,7 +587,7 @@ export const MapExplorerPage: React.FC = () => {
                 </button>
                 <button
                   onClick={() => handleSelectMatch(null)}
-                  className="px-2.5 py-1 rounded bg-[#172435] text-[#94A3B8] hover:text-[#F8FAFC] border border-[#1E2B3E] hover:border-[#334155] text-[10px] flex items-center gap-1.5 transition-colors flex-shrink-0"
+                  className="px-2.5 py-1 rounded bg-[#191919] text-[#94A3B8] hover:text-[#F8FAFC] border border-[#292929] hover:border-[#334155] text-[10px] flex items-center gap-1.5 transition-colors flex-shrink-0"
                   title={`Return to viewing all matches for ${selectedMatch.date}`}
                 >
                   <RotateCcw size={11} />
@@ -599,31 +599,31 @@ export const MapExplorerPage: React.FC = () => {
 
             {/* Match KPIs */}
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1.5 sm:gap-2 mb-2 text-[11px]">
-              <div className="bg-[#0A0E17] border border-[#1E2B3E] rounded p-1.5 min-w-0">
+              <div className="bg-[#090909] border border-[#292929] rounded p-1.5 min-w-0">
                 <span className="text-[10px] text-[#64748B] block truncate">Date</span>
                 <span className="text-[#F8FAFC] font-semibold block truncate">{selectedMatch.date}</span>
               </div>
-              <div className="bg-[#0A0E17] border border-[#1E2B3E] rounded p-1.5 min-w-0">
+              <div className="bg-[#090909] border border-[#292929] rounded p-1.5 min-w-0">
                 <span className="text-[10px] text-[#64748B] block truncate">Duration</span>
                 <span className="text-[#F8FAFC] font-semibold block truncate">{formatDuration(selectedMatch.duration_seconds)}</span>
               </div>
-              <div className="bg-[#0A0E17] border border-[#1E2B3E] rounded p-1.5 min-w-0">
+              <div className="bg-[#090909] border border-[#292929] rounded p-1.5 min-w-0">
                 <span className="text-[10px] text-[#64748B] block truncate">Participants</span>
                 <span className="text-[#00D9F5] font-semibold block truncate" title={`${selectedMatch.total_participants} (${selectedMatch.human_count}H / ${selectedMatch.bot_count}B)`}>
                   {selectedMatch.total_participants} ({selectedMatch.human_count}H / {selectedMatch.bot_count}B)
                 </span>
               </div>
-              <div className="bg-[#0A0E17] border border-[#1E2B3E] rounded p-1.5 min-w-0">
+              <div className="bg-[#090909] border border-[#292929] rounded p-1.5 min-w-0">
                 <span className="text-[10px] text-[#64748B] block truncate">Total Distance</span>
                 <span className="text-[#F8FAFC] font-semibold block truncate">
                   {(selectedMatch.total_distance_travelled_meters / 1000).toFixed(2)} km
                 </span>
               </div>
-              <div className="bg-[#0A0E17] border border-[#1E2B3E] rounded p-1.5 min-w-0">
+              <div className="bg-[#090909] border border-[#292929] rounded p-1.5 min-w-0">
                 <span className="text-[10px] text-[#64748B] block truncate">Loot Events</span>
                 <span className="text-[#10B981] font-semibold block truncate">{selectedMatch.total_loot_events}</span>
               </div>
-              <div className="bg-[#0A0E17] border border-[#1E2B3E] rounded p-1.5 min-w-0">
+              <div className="bg-[#090909] border border-[#292929] rounded p-1.5 min-w-0">
                 <span className="text-[10px] text-[#64748B] block truncate">Casualties</span>
                 <span className="text-[#EF4444] font-semibold block truncate" title={`${selectedMatch.total_deaths} (${selectedMatch.total_bot_kills} BotKills)`}>
                   {selectedMatch.total_deaths} ({selectedMatch.total_bot_kills} BotKills)
@@ -672,12 +672,12 @@ export const MapExplorerPage: React.FC = () => {
 
         {/* Date Operational Summary Banner (when viewing all matches for a date) */}
         {!selectedMatch && selectedDate && (
-          <div className="bg-[#101925]/90 backdrop-blur-sm border border-[#1E2B3E] rounded-lg px-3 py-2 font-mono text-xs flex items-center justify-between gap-3 shadow-md animate-in fade-in duration-150">
+          <div className="bg-[#111111]/90 backdrop-blur-sm border border-[#292929] rounded-lg px-3 py-2 font-mono text-xs flex items-center justify-between gap-3 shadow-md animate-in fade-in duration-150">
             <div className="flex items-center gap-2 text-[11px] flex-wrap">
               <Calendar size={13} className="text-[#00D9F5]" />
               <span className="text-[#64748B]">Operational Date:</span>
               <span className="text-[#F8FAFC] font-bold">{selectedDate}</span>
-              <span className="text-[#1E2B3E]">|</span>
+              <span className="text-[#292929]">|</span>
               <span className="text-[#94A3B8]">
                 <strong className="text-[#F8FAFC]">{filteredMatches.length}</strong> matches
               </span>
@@ -700,9 +700,9 @@ export const MapExplorerPage: React.FC = () => {
         )}
 
         {/* Map Canvas with Overlays */}
-        <div className="flex-1 min-h-[300px] min-w-0 relative rounded-lg overflow-hidden border border-[#1E2B3E] bg-[#080D14]">
+        <div className="flex-1 min-h-[300px] min-w-0 relative rounded-lg overflow-hidden border border-[#292929] bg-[#050505]">
           {loading && (
-            <div className="absolute inset-0 z-40 flex items-center justify-center bg-[#080D14]/80 backdrop-blur-sm">
+            <div className="absolute inset-0 z-40 flex items-center justify-center bg-[#050505]/80 backdrop-blur-sm">
               <div className="text-xs font-mono text-[#00D9F5] flex items-center gap-2 animate-pulse">
                 <Route size={14} className="animate-spin" />
                 <span>Loading map telemetry...</span>

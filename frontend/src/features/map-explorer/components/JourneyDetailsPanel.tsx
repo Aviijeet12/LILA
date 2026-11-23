@@ -20,9 +20,9 @@ export const JourneyDetailsPanel: React.FC<JourneyDetailsPanelProps> = ({
   const durationFormatted = `${mins}m ${secs}s`;
 
   return (
-    <div className="absolute top-3 left-3 z-20 w-80 bg-[#0E131F]/95 backdrop-blur-md border border-[#1E293B] rounded-xl shadow-2xl overflow-hidden font-mono text-xs flex flex-col max-h-[calc(100%-24px)]">
+    <div className="absolute top-3 left-3 z-20 w-80 bg-[#090909]/95 backdrop-blur-md border border-[#292929] rounded-xl shadow-2xl overflow-hidden font-mono text-xs flex flex-col max-h-[calc(100%-24px)]">
       {/* Header */}
-      <div className="px-3.5 py-3 border-b border-[#1E293B] flex items-center justify-between bg-[#151D2E]/60">
+      <div className="px-3.5 py-3 border-b border-[#292929] flex items-center justify-between bg-[#111111]/60">
         <div className="flex items-center gap-2">
           {isHuman ? (
             <div className="w-6 h-6 rounded bg-[#00E5FF]/10 border border-[#00E5FF]/40 flex items-center justify-center text-[#00E5FF]">
@@ -45,7 +45,7 @@ export const JourneyDetailsPanel: React.FC<JourneyDetailsPanelProps> = ({
 
         <button
           onClick={onClose}
-          className="p-1 rounded text-[#64748B] hover:text-[#F8FAFC] hover:bg-[#1E293B]"
+          className="p-1 rounded text-[#64748B] hover:text-[#F8FAFC] hover:bg-[#292929]"
           title="Deselect Journey"
         >
           <X size={15} />
@@ -71,7 +71,7 @@ export const JourneyDetailsPanel: React.FC<JourneyDetailsPanelProps> = ({
 
         {/* Core Metrics Grid */}
         <div className="grid grid-cols-2 gap-2 text-[11px]">
-          <div className="bg-[#151D2E]/80 border border-[#1E293B] rounded-lg p-2">
+          <div className="bg-[#111111]/80 border border-[#292929] rounded-lg p-2">
             <div className="text-[10px] text-[#64748B] flex items-center gap-1 mb-0.5">
               <Route size={10} className="text-[#00E5FF]" /> Distance
             </div>
@@ -80,7 +80,7 @@ export const JourneyDetailsPanel: React.FC<JourneyDetailsPanelProps> = ({
             </div>
           </div>
 
-          <div className="bg-[#151D2E]/80 border border-[#1E293B] rounded-lg p-2">
+          <div className="bg-[#111111]/80 border border-[#292929] rounded-lg p-2">
             <div className="text-[10px] text-[#64748B] flex items-center gap-1 mb-0.5">
               <Clock size={10} className="text-[#10B981]" /> Duration
             </div>
@@ -89,7 +89,7 @@ export const JourneyDetailsPanel: React.FC<JourneyDetailsPanelProps> = ({
             </div>
           </div>
 
-          <div className="bg-[#151D2E]/80 border border-[#1E293B] rounded-lg p-2">
+          <div className="bg-[#111111]/80 border border-[#292929] rounded-lg p-2">
             <div className="text-[10px] text-[#64748B] flex items-center gap-1 mb-0.5">
               <Activity size={10} className="text-[#F59E0B]" /> Waypoints
             </div>
@@ -98,7 +98,7 @@ export const JourneyDetailsPanel: React.FC<JourneyDetailsPanelProps> = ({
             </div>
           </div>
 
-          <div className="bg-[#151D2E]/80 border border-[#1E293B] rounded-lg p-2">
+          <div className="bg-[#111111]/80 border border-[#292929] rounded-lg p-2">
             <div className="text-[10px] text-[#64748B] flex items-center gap-1 mb-0.5">
               <Compass size={10} className="text-[#C084FC]" /> Map
             </div>
@@ -109,7 +109,7 @@ export const JourneyDetailsPanel: React.FC<JourneyDetailsPanelProps> = ({
         </div>
 
         {/* Timestamps & Session */}
-        <div className="bg-[#151D2E]/40 border border-[#1E293B] rounded-lg p-2.5 space-y-1.5 text-[11px]">
+        <div className="bg-[#111111]/40 border border-[#292929] rounded-lg p-2.5 space-y-1.5 text-[11px]">
           <div className="text-[10px] uppercase tracking-wider text-[#64748B] mb-1">Session Data</div>
           <div className="flex justify-between text-[#94A3B8]">
             <span className="text-[#64748B]">Match:</span>
@@ -139,7 +139,7 @@ export const JourneyDetailsPanel: React.FC<JourneyDetailsPanelProps> = ({
               {Object.entries(journey.event_counts).map(([evName, count]) => {
                 const style = EVENT_STYLES[evName] ?? { label: evName, color: '#94A3B8' };
                 return (
-                  <div key={evName} className="flex items-center justify-between px-2 py-1 rounded bg-[#151D2E]/40 border border-[#1E293B] text-[11px]">
+                  <div key={evName} className="flex items-center justify-between px-2 py-1 rounded bg-[#111111]/40 border border-[#292929] text-[11px]">
                     <span className="flex items-center gap-1.5">
                       <span className="w-2 h-2 rounded-full" style={{ background: style.color }} />
                       <span className="text-[#94A3B8]">{style.label}</span>
@@ -155,7 +155,7 @@ export const JourneyDetailsPanel: React.FC<JourneyDetailsPanelProps> = ({
         {/* Deselect Button */}
         <button
           onClick={onClose}
-          className="w-full py-1.5 rounded-lg border border-[#1E293B] hover:border-[#334155] bg-[#151D2E] hover:bg-[#1E293B] text-xs font-mono text-[#94A3B8] hover:text-[#F8FAFC] transition-colors"
+          className="w-full py-1.5 rounded-lg border border-[#292929] hover:border-[#334155] bg-[#111111] hover:bg-[#292929] text-xs font-mono text-[#94A3B8] hover:text-[#F8FAFC] transition-colors"
         >
           Deselect Journey
         </button>

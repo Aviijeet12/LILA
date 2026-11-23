@@ -1,4 +1,4 @@
-import React, { lazy } from "react";
+import React, { lazy, useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { MainLayout } from "./layouts/MainLayout";
 
@@ -28,22 +28,54 @@ const AnalystPage = lazy(() =>
 );
 
 function App() {
+  const [splashPhase, setSplashPhase] = useState<"showing" | "leaving" | "done">("showing");
+
+  useEffect(() => {
+    const leaveTimer = window.setTimeout(() => setSplashPhase("leaving"), 1000);
+    const finishTimer = window.setTimeout(() => setSplashPhase("done"), 1350);
+
+    return () => {
+      window.clearTimeout(leaveTimer);
+      window.clearTimeout(finishTimer);
+    };
+  }, []);
+
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* MainLayout renders the sidebar shell and wraps <Outlet /> in its own Suspense,
-            so the nav is always visible while a lazy page chunk loads. */}
-        <Route element={<MainLayout />}>
-          <Route index element={<OverviewPage />} />
-          <Route path="/map-explorer" element={<MapExplorerPage />} />
-          <Route path="/players" element={<PlayerIntelligencePage />} />
-          <Route path="/player-game" element={<PlayerGamePage />} />
-          <Route path="/combat" element={<CombatAnalysisPage />} />
-          <Route path="/regions" element={<RegionIntelligencePage />} />
-          <Route path="/analyst" element={<AnalystPage />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <>
+      <BrowserRouter>
+        <Routes>
+          {/* MainLayout renders the sidebar shell and wraps <Outlet /> in its own Suspense,
+              so the nav is always visible while a lazy page chunk loads. */}
+          <Route element={<MainLayout />}>
+            <Route index element={<OverviewPage />} />
+            <Route path="/map-explorer" element={<MapExplorerPage />} />
+            <Route path="/players" element={<PlayerIntelligencePage />} />
+            <Route path="/player-game" element={<PlayerGamePage />} />
+            <Route path="/combat" element={<CombatAnalysisPage />} />
+            <Route path="/regions" element={<RegionIntelligencePage />} />
+            <Route path="/analyst" element={<AnalystPage />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+
+      {splashPhase !== "done" && (
+        <div
+          className={`lila-splash${splashPhase === "leaving" ? " lila-splash--leaving" : ""}`}
+          role="status"
+          aria-label="Loading Lila dashboard"
+        >
+          <div className="lila-splash__content">
+            <img className="lila-splash__logo" src="/lila-logo.png" alt="LILA" />
+            <div className="lila-splash__caption">
+              <span>LILA</span>
+              <span className="lila-splash__divider" />
+              <span className="lila-splash__subtitle">INTELLIGENCE</span>
+            </div>
+            <div className="lila-splash__progress" />
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 

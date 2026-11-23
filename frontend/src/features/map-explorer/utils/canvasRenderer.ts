@@ -95,7 +95,7 @@ export function renderHumanEmote(
   ctx.lineTo(cx - d, cy);        // Left apex
   ctx.closePath();
 
-  ctx.fillStyle = '#061320';     // Dark tactical navy core
+  ctx.fillStyle = '#090909';     // Dark neutral core
   ctx.fill();
   ctx.strokeStyle = '#00D9F5';   // Glowing Cyan perimeter
   ctx.lineWidth = Math.max(1.5, 2.0 / zoom);
@@ -116,7 +116,7 @@ export function renderHumanEmote(
   ctx.beginPath();
   ctx.moveTo(cx - headR * 0.85, headY);
   ctx.lineTo(cx + headR * 0.85, headY);
-  ctx.strokeStyle = '#061320';
+  ctx.strokeStyle = '#090909';
   ctx.lineWidth = Math.max(1, 1.8 / zoom);
   ctx.lineCap = 'round';
   ctx.stroke();
@@ -195,7 +195,7 @@ export function renderBotEmote(
   const radius = size * 0.18;
 
   drawRoundedRect(ctx, boxX, boxY, boxW, boxH, radius);
-  ctx.fillStyle = '#1A1207';     // Dark titanium bronze core
+  ctx.fillStyle = '#191919';     // Dark neutral core
   ctx.fill();
   ctx.strokeStyle = '#FF9F1C';   // Vibrant Amber perimeter
   ctx.lineWidth = Math.max(1.5, 2.0 / zoom);

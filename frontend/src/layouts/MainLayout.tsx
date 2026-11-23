@@ -40,7 +40,23 @@ export const MainLayout: React.FC = () => {
     ) || NAV_ITEMS[0];
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-[#080D14] text-[#F8FAFC]">
+    <div className="relative isolate flex h-screen w-screen overflow-hidden bg-[#050505] text-[#F8FAFC]">
+      <div className="game-world" aria-hidden="true">
+        <span className="game-world__orb game-world__orb--cyan" />
+        <span className="game-world__orb game-world__orb--violet" />
+        <span className="game-world__horizon" />
+        <span className="game-world__ring game-world__ring--one" />
+        <span className="game-world__ring game-world__ring--two" />
+        <span className="game-world__terrain game-world__terrain--far" />
+        <span className="game-world__terrain game-world__terrain--near" />
+        <span className="game-world__scanline" />
+        <span className="game-world__cube game-world__cube--large">
+          <i /><i /><i /><i /><i /><i />
+        </span>
+        <span className="game-world__cube game-world__cube--small">
+          <i /><i /><i /><i /><i /><i />
+        </span>
+      </div>
       {/* Mobile Backdrop Overlay */}
       {mobileOpen && (
         <div
@@ -52,7 +68,7 @@ export const MainLayout: React.FC = () => {
       {/* Sidebar (Desktop Collapsible & Mobile Drawer) */}
       <aside
         className={clsx(
-          "flex-shrink-0 glass-sidebar flex flex-col justify-between z-50 border-r border-[#1E2B3E] transition-all duration-200 shadow-2xl",
+          "flex-shrink-0 glass-sidebar flex flex-col justify-between z-50 border-r border-[#292929] transition-all duration-200 shadow-2xl",
           // Mobile drawer positioning
           "fixed inset-y-0 left-0 lg:static",
           mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0",
@@ -61,9 +77,9 @@ export const MainLayout: React.FC = () => {
       >
         <div>
           {/* Brand Header */}
-          <div className={clsx("h-14 px-3.5 flex items-center border-b border-[#1E2B3E] bg-[#0A101A]", collapsed ? "justify-center" : "justify-between")}>
+          <div className={clsx("h-14 px-3.5 flex items-center border-b border-[#292929] bg-[#090909]", collapsed ? "justify-center" : "justify-between")}>
             <div className="flex items-center gap-2.5 overflow-hidden">
-              <div className="h-8 w-10 rounded bg-black border border-[#1E2B3E] p-1 flex items-center justify-center flex-shrink-0 shadow-sm">
+              <div className="h-8 w-10 rounded bg-black border border-[#292929] p-1 flex items-center justify-center flex-shrink-0 shadow-sm">
                 <img
                   src="/lila-logo.png"
                   alt="LILA Logo"
@@ -111,7 +127,7 @@ export const MainLayout: React.FC = () => {
 
           {/* Collapsed Expand Toggle Button */}
           {collapsed && (
-            <div className="hidden lg:flex justify-center py-2 border-b border-[#1E2B3E]">
+            <div className="hidden lg:flex justify-center py-2 border-b border-[#292929]">
               <button
                 type="button"
                 onClick={() => setCollapsed(false)}
@@ -159,7 +175,7 @@ export const MainLayout: React.FC = () => {
 
         {/* Footer / Dataset Metadata */}
         {!collapsed ? (
-          <div className="p-3 border-t border-[#1E2B3E] bg-[#0A101A] text-xs font-mono space-y-1.5">
+          <div className="p-3 border-t border-[#292929] bg-[#090909] text-xs font-mono space-y-1.5">
             <div className="flex items-center justify-between text-[#94A3B8] text-[11px]">
               <span className="flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#14C995]" />
@@ -172,16 +188,16 @@ export const MainLayout: React.FC = () => {
             </div>
           </div>
         ) : (
-          <div className="p-2 border-t border-[#1E2B3E] bg-[#0A101A] flex justify-center">
+          <div className="p-2 border-t border-[#292929] bg-[#090909] flex justify-center">
             <span className="w-2 h-2 rounded-full bg-[#14C995]" title="Telemetry Dataset v1.0 Loaded" />
           </div>
         )}
       </aside>
 
       {/* Main Content Shell */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden relative">
+      <div className="relative z-10 flex-1 flex flex-col min-w-0 overflow-hidden">
         {/* Top Navbar */}
-        <header className="h-14 glass-header px-4 sm:px-6 flex items-center justify-between z-10 border-b border-[#1E2B3E]">
+        <header className="h-14 glass-header px-4 sm:px-6 flex items-center justify-between z-10 border-b border-[#292929]">
           <div className="flex items-center gap-3">
             {/* Mobile Menu Hamburger */}
             <button
@@ -208,12 +224,12 @@ export const MainLayout: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3 text-xs font-mono">
-            <div className="flex items-center gap-1.5 text-[#94A3B8] bg-[#101925] border border-[#1E2B3E] px-2.5 py-1.5 rounded-lg">
+            <div className="flex items-center gap-1.5 text-[#94A3B8] bg-[#111111] border border-[#292929] px-2.5 py-1.5 rounded-lg">
               <Calendar size={13} className="text-[#00D9F5]" />
               <span className="hidden md:inline">Feb 10 – 14, 2026 (UTC)</span>
               <span className="md:hidden">Feb 10–14</span>
             </div>
-            <div className="flex items-center gap-1.5 text-[#94A3B8] bg-[#101925] border border-[#1E2B3E] px-2.5 py-1.5 rounded-lg">
+            <div className="flex items-center gap-1.5 text-[#94A3B8] bg-[#111111] border border-[#292929] px-2.5 py-1.5 rounded-lg">
               <Database size={13} className="text-[#14C995]" />
               <span>87,599 Records</span>
             </div>

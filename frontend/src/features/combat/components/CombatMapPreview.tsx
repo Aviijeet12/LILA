@@ -68,7 +68,7 @@ export const CombatMapPreview: React.FC<CombatMapPreviewProps> = ({
     if (imgRef.current && imgRef.current.complete) {
       ctx.drawImage(imgRef.current, 0, 0, canvas.width, canvas.height);
     } else {
-      ctx.fillStyle = '#080D14';
+      ctx.fillStyle = '#050505';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
 
@@ -227,7 +227,7 @@ export const CombatMapPreview: React.FC<CombatMapPreviewProps> = ({
   return (
     <div
       style={{ touchAction: 'none' }}
-      className="relative rounded-xl overflow-hidden border border-[#1E2B3E] bg-[#101925] flex items-center justify-center select-none shadow-md max-h-60"
+      className="relative rounded-xl overflow-hidden border border-[#292929] bg-[#111111] flex items-center justify-center select-none shadow-md max-h-60"
     >
       <canvas
         ref={canvasRef}
@@ -242,13 +242,13 @@ export const CombatMapPreview: React.FC<CombatMapPreviewProps> = ({
       />
 
       {/* Floating Tactical Zoom In / Out Buttons */}
-      <div className="absolute top-2.5 right-2.5 z-10 flex items-center gap-1 bg-[#101925]/90 backdrop-blur-md border border-[#1E2B3E] rounded-lg p-1 shadow-xl">
+      <div className="absolute top-2.5 right-2.5 z-10 flex items-center gap-1 bg-[#111111]/90 backdrop-blur-md border border-[#292929] rounded-lg p-1 shadow-xl">
         <button
           type="button"
           onClick={handleZoomIn}
           title="Zoom In"
           aria-label="Zoom In"
-          className="flex items-center gap-1 px-2 py-1 rounded text-slate-300 hover:text-[#00D9F5] hover:bg-[#172435] transition-colors font-mono text-[11px] font-semibold"
+          className="flex items-center gap-1 px-2 py-1 rounded text-slate-300 hover:text-[#00D9F5] hover:bg-[#191919] transition-colors font-mono text-[11px] font-semibold"
         >
           <ZoomIn size={13} className="text-[#00D9F5]" />
           <span>Zoom In</span>
@@ -259,13 +259,13 @@ export const CombatMapPreview: React.FC<CombatMapPreviewProps> = ({
           onClick={handleZoomOut}
           title="Zoom Out"
           aria-label="Zoom Out"
-          className="flex items-center gap-1 px-2 py-1 rounded text-slate-300 hover:text-[#00D9F5] hover:bg-[#172435] transition-colors font-mono text-[11px] font-semibold"
+          className="flex items-center gap-1 px-2 py-1 rounded text-slate-300 hover:text-[#00D9F5] hover:bg-[#191919] transition-colors font-mono text-[11px] font-semibold"
         >
           <ZoomOut size={13} className="text-[#00D9F5]" />
           <span>Zoom Out</span>
         </button>
 
-        <div className="px-1.5 py-0.5 text-[10px] font-mono text-slate-400 select-none min-w-[38px] text-center border-x border-[#1E2B3E]">
+        <div className="px-1.5 py-0.5 text-[10px] font-mono text-slate-400 select-none min-w-[38px] text-center border-x border-[#292929]">
           {Math.round(zoom * 100)}%
         </div>
 
@@ -274,14 +274,14 @@ export const CombatMapPreview: React.FC<CombatMapPreviewProps> = ({
           onClick={handleResetZoom}
           title="Reset Zoom"
           aria-label="Reset Zoom"
-          className="p-1 rounded text-slate-400 hover:text-[#00D9F5] hover:bg-[#172435] transition-colors"
+          className="p-1 rounded text-slate-400 hover:text-[#00D9F5] hover:bg-[#191919] transition-colors"
         >
           <RotateCcw size={13} />
         </button>
       </div>
 
       {/* Map Metadata Pill */}
-      <div className="absolute bottom-2.5 left-2.5 px-2.5 py-1 rounded bg-[#080D14]/90 border border-[#1E2B3E] text-[10px] font-mono text-slate-300 shadow-md">
+      <div className="absolute bottom-2.5 left-2.5 px-2.5 py-1 rounded bg-[#050505]/90 border border-[#292929] text-[10px] font-mono text-slate-300 shadow-md">
         <span>{mapId === 'AmbroseValley' ? 'Ambrose Valley' : mapId === 'GrandRift' ? 'Grand Rift' : 'Lockdown'}</span>
         <span className="text-slate-500 mx-1.5">•</span>
         <span className="text-[#00D9F5]">{events.filter((e) => e.map_id === mapId).length} Combat Events</span>

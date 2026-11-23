@@ -335,7 +335,7 @@ export const PlayerGameView: React.FC<PlayerGameViewProps> = ({
     if (img && img.complete) {
       ctx.drawImage(img, 0, 0, dims.w, dims.h);
     } else {
-      ctx.fillStyle = '#080D14';
+      ctx.fillStyle = '#050505';
       ctx.fillRect(0, 0, dims.w, dims.h);
     }
 
@@ -479,7 +479,7 @@ export const PlayerGameView: React.FC<PlayerGameViewProps> = ({
         ctx.arc(evX, evY, 4 / zoom, 0, Math.PI * 2);
         ctx.fillStyle = color;
         ctx.fill();
-        ctx.strokeStyle = '#080D14';
+        ctx.strokeStyle = '#050505';
         ctx.lineWidth = 1 / zoom;
         ctx.stroke();
         ctx.restore();
@@ -594,7 +594,7 @@ export const PlayerGameView: React.FC<PlayerGameViewProps> = ({
   return (
     <div className="flex flex-col h-full max-h-full w-full overflow-hidden gap-2 text-[#F8FAFC]">
       {/* Top Tactical Command Header */}
-      <div className="flex-shrink-0 bg-[#101925] border border-[#1E2B3E] rounded-xl px-4 py-2.5 flex items-center justify-between gap-3 flex-wrap shadow-lg">
+      <div className="flex-shrink-0 bg-[#111111] border border-[#292929] rounded-xl px-4 py-2.5 flex items-center justify-between gap-3 flex-wrap shadow-lg">
         <div className="flex items-center gap-3">
           <button
             type="button"
@@ -605,14 +605,14 @@ export const PlayerGameView: React.FC<PlayerGameViewProps> = ({
                 navigate('/players');
               }
             }}
-            className="px-2.5 py-1.5 rounded-lg bg-[#172435] text-[#94A3B8] hover:text-[#00D9F5] border border-[#1E2B3E] hover:border-[#00D9F5]/40 transition-colors flex items-center gap-1.5 text-xs font-mono font-medium"
+            className="px-2.5 py-1.5 rounded-lg bg-[#191919] text-[#94A3B8] hover:text-[#00D9F5] border border-[#292929] hover:border-[#00D9F5]/40 transition-colors flex items-center gap-1.5 text-xs font-mono font-medium"
             title="Return to Player Intelligence Directory"
           >
             <ArrowLeft size={14} />
             <span>Back to Players</span>
           </button>
 
-          <div className="h-4 w-px bg-[#1E2B3E]" />
+          <div className="h-4 w-px bg-[#292929]" />
 
           {/* Player Selector */}
           <div className="flex items-center gap-2">
@@ -629,7 +629,7 @@ export const PlayerGameView: React.FC<PlayerGameViewProps> = ({
                   setSelectedPlayerId(e.target.value);
                   setSelectedMatchId('');
                 }}
-                className="bg-[#172435] border border-[#1E2B3E] rounded px-2 py-0.5 text-xs font-mono font-bold text-[#F8FAFC] focus:outline-none focus:border-[#00D9F5]"
+                className="bg-[#191919] border border-[#292929] rounded px-2 py-0.5 text-xs font-mono font-bold text-[#F8FAFC] focus:outline-none focus:border-[#00D9F5]"
               >
                 {players.map((p) => (
                   <option key={p.user_id} value={p.user_id}>
@@ -651,7 +651,7 @@ export const PlayerGameView: React.FC<PlayerGameViewProps> = ({
             <select
               value={selectedMatchId}
               onChange={(e) => setSelectedMatchId(e.target.value)}
-              className="bg-[#172435] border border-[#1E2B3E] rounded px-2 py-0.5 text-xs font-mono text-[#F8FAFC] focus:outline-none focus:border-[#00D9F5] max-w-[200px] truncate"
+              className="bg-[#191919] border border-[#292929] rounded px-2 py-0.5 text-xs font-mono text-[#F8FAFC] focus:outline-none focus:border-[#00D9F5] max-w-[200px] truncate"
             >
               {(activePlayer?.matches || []).map((mItem, idx) => {
                 const mId = typeof mItem === 'string' ? mItem : (mItem as any)?.match_id || `match-${idx}`;
@@ -672,7 +672,7 @@ export const PlayerGameView: React.FC<PlayerGameViewProps> = ({
             <select
               value={selectedMapId}
               onChange={(e) => setSelectedMapId(e.target.value as MapId)}
-              className="bg-[#172435] border border-[#1E2B3E] rounded px-2 py-0.5 text-xs font-mono text-[#F8FAFC] focus:outline-none focus:border-[#00D9F5]"
+              className="bg-[#191919] border border-[#292929] rounded px-2 py-0.5 text-xs font-mono text-[#F8FAFC] focus:outline-none focus:border-[#00D9F5]"
             >
               <option value="AmbroseValley">Ambrose Valley</option>
               <option value="GrandRift">Grand Rift</option>
@@ -688,7 +688,7 @@ export const PlayerGameView: React.FC<PlayerGameViewProps> = ({
               'mt-3 px-2 py-1 rounded text-xs font-mono transition-colors border flex items-center gap-1.5',
               showMatchContext
                 ? 'bg-[#00D9F5]/15 text-[#00D9F5] border-[#00D9F5]/40'
-                : 'bg-[#172435] text-[#64748B] border-[#1E2B3E] hover:text-[#94A3B8]'
+                : 'bg-[#191919] text-[#64748B] border-[#292929] hover:text-[#94A3B8]'
             )}
             title="Toggle ghost trajectories of other match participants"
           >
@@ -700,7 +700,7 @@ export const PlayerGameView: React.FC<PlayerGameViewProps> = ({
 
       {/* Player Game Summary Dossier Bar */}
       {playerJourney && (
-        <div className="flex-shrink-0 bg-[#101925]/95 border border-[#1E2B3E] rounded-xl px-4 py-2 font-mono text-xs flex items-center justify-between gap-3 flex-wrap shadow-md">
+        <div className="flex-shrink-0 bg-[#111111]/95 border border-[#292929] rounded-xl px-4 py-2 font-mono text-xs flex items-center justify-between gap-3 flex-wrap shadow-md">
           <div className="flex items-center gap-4 flex-wrap">
             <div>
               <span className="text-[9px] text-[#64748B] block">Outcome</span>
@@ -765,7 +765,7 @@ export const PlayerGameView: React.FC<PlayerGameViewProps> = ({
         {/* Left Map Viewport */}
         <div
           ref={containerRef}
-          className="flex-1 min-w-0 min-h-0 relative rounded-xl overflow-hidden border border-[#1E2B3E] bg-[#080D14] shadow-2xl select-none"
+          className="flex-1 min-w-0 min-h-0 relative rounded-xl overflow-hidden border border-[#292929] bg-[#050505] shadow-2xl select-none"
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
@@ -775,11 +775,11 @@ export const PlayerGameView: React.FC<PlayerGameViewProps> = ({
           <canvas ref={canvasRef} className="w-full h-full block cursor-grab active:cursor-grabbing" />
 
           {/* Quick Zoom Pill HUD */}
-          <div className="absolute top-2.5 left-2.5 z-20 flex items-center gap-1 bg-[#0A0E17]/90 backdrop-blur-md border border-[#1E2B3E] rounded-lg p-1 font-mono text-[11px] shadow-lg">
+          <div className="absolute top-2.5 left-2.5 z-20 flex items-center gap-1 bg-[#090909]/90 backdrop-blur-md border border-[#292929] rounded-lg p-1 font-mono text-[11px] shadow-lg">
             <button
               type="button"
               onClick={() => setZoom((z) => Math.min(8.0, z * 1.25))}
-              className="w-6 h-6 flex items-center justify-center rounded text-[#94A3B8] hover:text-[#00D9F5] hover:bg-[#101925] transition-colors"
+              className="w-6 h-6 flex items-center justify-center rounded text-[#94A3B8] hover:text-[#00D9F5] hover:bg-[#111111] transition-colors"
               title="Zoom In (+)"
             >
               <ZoomIn size={13} />
@@ -787,16 +787,16 @@ export const PlayerGameView: React.FC<PlayerGameViewProps> = ({
             <button
               type="button"
               onClick={() => setZoom((z) => Math.max(0.2, z / 1.25))}
-              className="w-6 h-6 flex items-center justify-center rounded text-[#94A3B8] hover:text-[#00D9F5] hover:bg-[#101925] transition-colors"
+              className="w-6 h-6 flex items-center justify-center rounded text-[#94A3B8] hover:text-[#00D9F5] hover:bg-[#111111] transition-colors"
               title="Zoom Out (-)"
             >
               <ZoomOut size={13} />
             </button>
-            <div className="h-3.5 w-px bg-[#1E2B3E] mx-0.5" />
+            <div className="h-3.5 w-px bg-[#292929] mx-0.5" />
             <button
               type="button"
               onClick={fitToPlayer}
-              className="px-1.5 h-6 flex items-center justify-center rounded text-[#94A3B8] hover:text-[#00D9F5] hover:bg-[#101925] transition-colors text-[10px] font-semibold"
+              className="px-1.5 h-6 flex items-center justify-center rounded text-[#94A3B8] hover:text-[#00D9F5] hover:bg-[#111111] transition-colors text-[10px] font-semibold"
               title="Fit to Player's Path"
             >
               FIT
@@ -806,7 +806,7 @@ export const PlayerGameView: React.FC<PlayerGameViewProps> = ({
 
           {/* Coordinates HUD */}
           {cursorCoord && (
-            <div className="absolute bottom-2.5 left-2.5 z-20 bg-[#0A0E17]/90 backdrop-blur-md border border-[#1E2B3E] rounded px-2 py-0.5 font-mono text-[10px] text-[#64748B] flex items-center gap-2">
+            <div className="absolute bottom-2.5 left-2.5 z-20 bg-[#090909]/90 backdrop-blur-md border border-[#292929] rounded px-2 py-0.5 font-mono text-[10px] text-[#64748B] flex items-center gap-2">
               <span>World: <strong className="text-[#F8FAFC]">[{cursorCoord.x}, {cursorCoord.z}]</strong></span>
               <span>•</span>
               <span>UV: <strong className="text-[#00D9F5]">[{cursorCoord.u.toFixed(3)}, {cursorCoord.v.toFixed(3)}]</strong></span>
@@ -815,8 +815,8 @@ export const PlayerGameView: React.FC<PlayerGameViewProps> = ({
         </div>
 
         {/* Right Sidebar: Chronological Game Event Feed */}
-        <aside className="w-72 flex-shrink-0 flex flex-col min-h-0 bg-[#101925] border border-[#1E2B3E] rounded-xl p-3 shadow-xl overflow-hidden">
-          <div className="flex-shrink-0 text-[11px] font-mono uppercase tracking-wider text-[#64748B] border-b border-[#1E2B3E] pb-2 flex items-center justify-between">
+        <aside className="w-72 flex-shrink-0 flex flex-col min-h-0 bg-[#111111] border border-[#292929] rounded-xl p-3 shadow-xl overflow-hidden">
+          <div className="flex-shrink-0 text-[11px] font-mono uppercase tracking-wider text-[#64748B] border-b border-[#292929] pb-2 flex items-center justify-between">
             <span className="flex items-center gap-1.5">
               <Activity size={12} className="text-[#00D9F5]" /> Game Event Feed
             </span>
@@ -845,8 +845,8 @@ export const PlayerGameView: React.FC<PlayerGameViewProps> = ({
                     className={clsx(
                       'p-2 rounded-lg border cursor-pointer transition-all flex items-center justify-between',
                       isPast
-                        ? 'bg-[#172435] border-[#00D9F5]/30 text-[#F8FAFC]'
-                        : 'bg-[#0A0E17]/60 border-[#1E2B3E] text-[#64748B] hover:bg-[#172435]/60 hover:text-[#94A3B8]'
+                        ? 'bg-[#191919] border-[#00D9F5]/30 text-[#F8FAFC]'
+                        : 'bg-[#090909]/60 border-[#292929] text-[#64748B] hover:bg-[#191919]/60 hover:text-[#94A3B8]'
                     )}
                   >
                     <div className="flex items-center gap-2 truncate">
@@ -875,7 +875,7 @@ export const PlayerGameView: React.FC<PlayerGameViewProps> = ({
       </div>
 
       {/* Bottom Timeline Playback Bar */}
-      <div className="flex-shrink-0 bg-[#0A0E17]/95 backdrop-blur-md border border-[#1E2B3E] rounded-xl px-3.5 py-2 font-mono text-xs select-none shadow-xl">
+      <div className="flex-shrink-0 bg-[#090909]/95 backdrop-blur-md border border-[#292929] rounded-xl px-3.5 py-2 font-mono text-xs select-none shadow-xl">
         <div className="flex items-center justify-between gap-3 mb-1.5 flex-wrap">
           <div className="flex items-center gap-2">
             <button
@@ -900,7 +900,7 @@ export const PlayerGameView: React.FC<PlayerGameViewProps> = ({
                 setIsPlaying(false);
                 setIsCompleted(false);
               }}
-              className="p-1.5 rounded-lg text-[#94A3B8] border border-[#1E2B3E] hover:text-[#F8FAFC] hover:bg-[#101925] transition-colors"
+              className="p-1.5 rounded-lg text-[#94A3B8] border border-[#292929] hover:text-[#F8FAFC] hover:bg-[#111111] transition-colors"
               title="Restart from beginning"
             >
               <RotateCcw size={12} />
@@ -935,7 +935,7 @@ export const PlayerGameView: React.FC<PlayerGameViewProps> = ({
               {Math.round(progressPercent)}%
             </div>
 
-            <div className="flex items-center gap-0.5 bg-[#101925] border border-[#1E2B3E] rounded-lg p-0.5">
+            <div className="flex items-center gap-0.5 bg-[#111111] border border-[#292929] rounded-lg p-0.5">
               {[0.5, 1, 2, 4].map((s) => (
                 <button
                   key={s}
@@ -944,8 +944,8 @@ export const PlayerGameView: React.FC<PlayerGameViewProps> = ({
                   className={clsx(
                     'px-1.5 py-0.5 rounded text-[10px] font-mono font-semibold transition-colors',
                     speed === s
-                      ? 'bg-[#00D9F5] text-[#080B11]'
-                      : 'text-[#64748B] hover:text-[#94A3B8] hover:bg-[#1E2B3E]'
+                      ? 'bg-[#00D9F5] text-[#050505]'
+                      : 'text-[#64748B] hover:text-[#94A3B8] hover:bg-[#292929]'
                   )}
                 >
                   {s}×
@@ -959,7 +959,7 @@ export const PlayerGameView: React.FC<PlayerGameViewProps> = ({
         <div
           ref={scrubberTrackRef}
           onClick={handleScrubberClick}
-          className="relative h-2 bg-[#172435] border border-[#1E2B3E] rounded-full cursor-pointer overflow-hidden"
+          className="relative h-2 bg-[#191919] border border-[#292929] rounded-full cursor-pointer overflow-hidden"
         >
           <div
             className="h-full bg-[#00D9F5] rounded-full transition-all duration-75"

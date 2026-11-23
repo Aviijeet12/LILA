@@ -59,9 +59,9 @@ export const SpatialAnalyticsModal: React.FC<SpatialAnalyticsModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-in fade-in duration-150">
-      <div className="bg-[#101623] border border-[#1E293B] rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col shadow-2xl">
+      <div className="bg-[#111111] border border-[#292929] rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col shadow-2xl">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[#1E293B] bg-[#0D121D]">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[#292929] bg-[#090909]">
           <div className="flex items-center gap-3">
             <div className="p-2 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
               <Flame className="w-5 h-5" />
@@ -69,7 +69,7 @@ export const SpatialAnalyticsModal: React.FC<SpatialAnalyticsModalProps> = ({
             <div>
               <h2 className="text-base font-bold text-slate-100 flex items-center gap-2">
                 Spatial Intelligence & Telemetry Analytics
-                <span className="text-xs px-2 py-0.5 rounded-full bg-[#1E293B] text-amber-400 font-mono">
+                <span className="text-xs px-2 py-0.5 rounded-full bg-[#292929] text-amber-400 font-mono">
                   {mapId}
                 </span>
               </h2>
@@ -82,7 +82,7 @@ export const SpatialAnalyticsModal: React.FC<SpatialAnalyticsModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-[#1E293B] transition-colors"
+            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-[#292929] transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -105,8 +105,8 @@ export const SpatialAnalyticsModal: React.FC<SpatialAnalyticsModalProps> = ({
                   onClick={() => setSelectedLayer(key)}
                   className={`p-3 rounded-xl border text-left transition-all ${
                     isSelected
-                      ? 'bg-[#182338] border-cyan-500/50 shadow-md ring-1 ring-cyan-500/30'
-                      : 'bg-[#0B0F17] border-[#1E293B] hover:border-slate-700'
+                      ? 'bg-[#191919] border-cyan-500/50 shadow-md ring-1 ring-cyan-500/30'
+                      : 'bg-[#090909] border-[#292929] hover:border-slate-700'
                   }`}
                 >
                   <div className="flex items-center gap-1.5 mb-1">
@@ -132,7 +132,7 @@ export const SpatialAnalyticsModal: React.FC<SpatialAnalyticsModalProps> = ({
           {/* Selected Layer Deep Dive */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Active Cells Coverage Card */}
-            <div className="bg-[#0B0F17] border border-[#1E293B] rounded-xl p-4 space-y-2">
+            <div className="bg-[#090909] border border-[#292929] rounded-xl p-4 space-y-2">
               <div className="flex items-center gap-2 text-slate-400 text-xs font-semibold uppercase tracking-wider">
                 <Layers className="w-4 h-4 text-cyan-400" />
                 Spatial Coverage
@@ -143,7 +143,7 @@ export const SpatialAnalyticsModal: React.FC<SpatialAnalyticsModalProps> = ({
               <p className="text-xs text-slate-400">
                 <strong className="text-slate-200">{coverage.activeCells.toLocaleString()}</strong> of {coverage.totalCells.toLocaleString()} sectors recorded {LAYER_THEME_COLORS[selectedLayer].label.toLowerCase()}.
               </p>
-              <div className="w-full bg-[#1A2234] h-1.5 rounded-full overflow-hidden mt-2">
+              <div className="w-full bg-[#191919] h-1.5 rounded-full overflow-hidden mt-2">
                 <div
                   className="bg-cyan-500 h-full rounded-full transition-all duration-300"
                   style={{ width: `${Math.min(100, coverage.coveragePercent)}%` }}
@@ -152,7 +152,7 @@ export const SpatialAnalyticsModal: React.FC<SpatialAnalyticsModalProps> = ({
             </div>
 
             {/* Mean Sector Intensity */}
-            <div className="bg-[#0B0F17] border border-[#1E293B] rounded-xl p-4 space-y-2">
+            <div className="bg-[#090909] border border-[#292929] rounded-xl p-4 space-y-2">
               <div className="flex items-center gap-2 text-slate-400 text-xs font-semibold uppercase tracking-wider">
                 <Activity className="w-4 h-4 text-purple-400" />
                 Active Sector Average
@@ -167,7 +167,7 @@ export const SpatialAnalyticsModal: React.FC<SpatialAnalyticsModalProps> = ({
             </div>
 
             {/* Density Concentration Ratio */}
-            <div className="bg-[#0B0F17] border border-[#1E293B] rounded-xl p-4 space-y-2">
+            <div className="bg-[#090909] border border-[#292929] rounded-xl p-4 space-y-2">
               <div className="flex items-center gap-2 text-slate-400 text-xs font-semibold uppercase tracking-wider">
                 <TrendingUp className="w-4 h-4 text-amber-400" />
                 Peak Concentration
@@ -185,8 +185,8 @@ export const SpatialAnalyticsModal: React.FC<SpatialAnalyticsModalProps> = ({
           </div>
 
           {/* Top 8 Hotspot Sectors Table */}
-          <div className="bg-[#0B0F17] border border-[#1E293B] rounded-xl overflow-hidden">
-            <div className="px-4 py-3 border-b border-[#1E293B] bg-[#0E1420] flex items-center justify-between">
+          <div className="bg-[#090909] border border-[#292929] rounded-xl overflow-hidden">
+            <div className="px-4 py-3 border-b border-[#292929] bg-[#090909] flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Crosshair className="w-4 h-4 text-amber-400" />
                 <h3 className="text-xs font-semibold text-slate-200 uppercase tracking-wider">
@@ -201,7 +201,7 @@ export const SpatialAnalyticsModal: React.FC<SpatialAnalyticsModalProps> = ({
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
                 <thead>
-                  <tr className="border-b border-[#1E293B] text-[10px] uppercase font-semibold text-slate-400 bg-[#0A0D15]">
+                  <tr className="border-b border-[#292929] text-[10px] uppercase font-semibold text-slate-400 bg-[#090909]">
                     <th className="px-4 py-2.5">Rank</th>
                     <th className="px-4 py-2.5">Sector (Grid)</th>
                     <th className="px-4 py-2.5">World Coords [X, Z]</th>
@@ -211,7 +211,7 @@ export const SpatialAnalyticsModal: React.FC<SpatialAnalyticsModalProps> = ({
                     <th className="px-4 py-2.5 text-center">Action</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#1A2333] font-mono">
+                <tbody className="divide-y divide-[#191919] font-mono">
                   {hotspots.map((h) => {
                     const share = layer?.total_points
                       ? ((h.count / layer.total_points) * 100).toFixed(2)
@@ -219,7 +219,7 @@ export const SpatialAnalyticsModal: React.FC<SpatialAnalyticsModalProps> = ({
                     return (
                       <tr
                         key={`${h.row}-${h.col}`}
-                        className="hover:bg-[#151D2C] transition-colors cursor-pointer"
+                        className="hover:bg-[#191919] transition-colors cursor-pointer"
                         onClick={() => {
                           onSelectCell({ row: h.row, col: h.col });
                           onClose();
@@ -260,7 +260,7 @@ export const SpatialAnalyticsModal: React.FC<SpatialAnalyticsModalProps> = ({
           </div>
 
           {/* Metric Definitions and Telemetry Sample Sizes */}
-          <div className="bg-[#0A0E18] border border-[#1E293B] rounded-xl p-4 space-y-2 text-xs text-slate-400">
+          <div className="bg-[#090909] border border-[#292929] rounded-xl p-4 space-y-2 text-xs text-slate-400">
             <div className="flex items-center gap-1.5 text-slate-200 font-semibold text-xs">
               <Info className="w-4 h-4 text-cyan-400" />
               Metric Definitions & Telemetry Methodology

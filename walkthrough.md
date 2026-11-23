@@ -114,7 +114,7 @@ This document guides technical reviewers through the **LILA BLACK — Player Int
     - **Conclusion**: Plain-language executive finding generated from exact formulas.
     - **Supporting Metrics**: Cards citing raw integer counts, denominators, and units.
     - **Top Ground-Truth Sectors**: Coordinates in meters and UV space.
-    - **Spatial Deep-Link**: Click to open Map Explorer centered on the hotspot cell.
+  - **Question Map**: Open the analyst-specific map screen with only heatmap layers supported by the answer; the relevant hotspot or inspected sector is highlighted. When no matching raster exists for an event type, the map explains that and avoids displaying an unrelated layer.
     - **Calculation Methodology & Semantic Boundaries**: Collapsible disclosures detailing mathematical formulas and data limitations.
   - Boundary testing: Type *"Who is the best player?"* or *"What is the best weapon tier?"* to observe strict out-of-scope handling.
 - **Capability Demonstrated**: Controlled natural-language intent parsing, deterministic insight computation, immutable numerical grounding, and fallback resilience.
@@ -124,7 +124,7 @@ This document guides technical reviewers through the **LILA BLACK — Player Int
 
 ## Step 9: Reviewing the Three Ground-Truth Insights
 
-- **Document**: [`INSIGHTS.md`](file:///c:/Users/Avijit%20Singh/Downloads/lila-player/INSIGHTS.md)
+- **Document**: [`INSIGHTS.md`](INSIGHTS.md)
 - **What to Review**:
   1. **Finding 1 (Operational Asymmetry)**: Ambrose Valley concentrates 76.4% of discrete events (11,266 / 14,750), 67.3% of journeys (836 / 1,242), and 70.2% of human position samples (35,429 / 50,501).
   2. **Finding 2 (Human vs. Bot Spatial Distribution)**: Grand Rift exhibits 45.7% human-active sectors without recorded bot samples (448 / 981 human-active sectors), 2.4× higher than Ambrose Valley (19.2%) and 2.2× higher than Lockdown (20.6%). Telemetry confirms observed spatial co-occurrence divergence without establishing underlying causation.

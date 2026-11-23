@@ -23,8 +23,8 @@ Multiplayer match telemetry often arrives as massive, fragmented Parquet files w
 | **Allow filtering by map, date, and match** | **100% COMPLETE** | Dynamic filter dock supporting map switching with atomic filter resets, operational date selection (Feb 10–14, 2026), entity type filtering (Human/Bot/All), and match-specific filtering with auto-framing camera. |
 | **Timeline playback to watch a match unfold over time** | **100% COMPLETE** | Temporal playback controller with variable speeds (0.5×, 1×, 2×, 4×), sub-second interpolation between 1 Hz waypoints, progressive path reveal, scrub bar with color-coded event ticks, and elimination pulse FX. |
 | **Heatmap overlays showing kill zones, death zones, or high-traffic areas** | **100% COMPLETE** | 64×64 uniform grid rasters (4,096 sectors per map) across 6 discrete density layers: `Human Movement`, `Bot Movement`, `Loot Events`, `BotKill Events`, `BotKilled Events`, and `Storm Deaths`, with custom color ramps and micro-sector inspection. |
-| **Hosted and accessible via a shareable link** | **100% COMPLETE** | Built as a zero-dependency static production bundle (`dist/`) deployable to any static hosting provider (Vercel, Netlify, Cloudflare Pages, GitHub Pages) with instant offline client execution. |
-| **One-page Architecture Documentation** | **100% COMPLETE** | Comprehensive single-page [`ARCHITECTURE.md`](ARCHITECTURE.md) covering tech stack rationale, data flow diagram, coordinate transformation math, assumptions/ambiguities, and tradeoffs table. |
+| **Hosted and accessible via a shareable link** | **Deployment pending verification** | Static hosting configuration is in `frontend/vercel.json`. A public production URL will be listed here once deployment is confirmed. |
+| **One-page Architecture Documentation** | **COMPLETE** | Concise [`ARCHITECTURE.md`](ARCHITECTURE.md) covers stack, data flow, coordinate mapping, assumptions, tradeoffs, and three observations from the tool. |
 | **Analytical Insights with Level Designer Takeaways** | **100% COMPLETE** | Complete [`INSIGHTS.md`](INSIGHTS.md) document analyzing 3 evidence-backed findings with concrete statistics, actionable metrics, and level designer implications. |
 
 ---
@@ -40,7 +40,7 @@ Multiplayer match telemetry often arrives as massive, fragmented Parquet files w
 5. **Spatial Heatmaps & Hotspot Inspection**: High-performance 64×64 density rasters across 6 discrete layers, offscreen canvas caching, micro-sector dossier inspection with exact world coordinates, and map-wide cell rankings.
 6. **In-Page Player Game Replay**: Seamless match replay directly inside Player Intelligence—no jarring page reloads or broken state navigation.
 7. **Region Intelligence**: Granular 64×64 grid analytics evaluating human vs. bot territorial coverage, multi-spectral layer diversity, and cross-map comparative footprints with satellite imagery overlays.
-8. **Deterministic AI Map Analyst**: Conversational intelligence assistant querying 12 deterministic insight routines with strictly grounded metrics, exact formulas, immutable conclusions, and contextual Map Explorer navigation.
+8. **Deterministic AI Map Analyst**: Conversational query routing to supported data-backed analyses, with grounded metrics, explicit limitations, and an analyst-specific spatial map view when a matching heatmap exists.
 
 ---
 
@@ -82,7 +82,7 @@ Multiplayer match telemetry often arrives as massive, fragmented Parquet files w
 
 ## E. Architecture & Engineering Documentation
 
-- [`ARCHITECTURE.md`](ARCHITECTURE.md) — One-page comprehensive system architecture specification and pipeline diagram.
+- [`ARCHITECTURE.md`](ARCHITECTURE.md) — One-page system architecture, coordinate mapping, assumptions, tradeoffs, and observations.
 - [`INSIGHTS.md`](INSIGHTS.md) — Three substantive, evidence-backed analytical findings derived from processed telemetry.
 - [`docs/DATA_DICTIONARY.md`](docs/DATA_DICTIONARY.md) — Telemetry schema definitions, field types, and neutral semantic boundaries.
 - [`docs/DATA_AUDIT.md`](docs/DATA_AUDIT.md) — Initial data audit findings, timestamp anomaly discovery, and deduplication rules.
@@ -100,12 +100,12 @@ Multiplayer match telemetry often arrives as massive, fragmented Parquet files w
 
 ## F. Technology Stack
 
-- **Frontend Core**: React 18, TypeScript 5, Vite 5.
-- **State Management**: Zustand 5 (synchronized multi-layer caching, filter states, and playback clocks).
-- **Styling & UI**: Tailwind CSS 3, Lucide React (tactical dark theme design system).
+- **Frontend Core**: React 19, TypeScript 7, Vite 8.
+- **State Management**: Zustand 5 (shared filter and playback state).
+- **Styling & UI**: Tailwind CSS 4, Lucide React.
 - **Graphics & Rendering**: Native HTML5 Canvas 2D API (custom high-DPI viewport transform and offscreen caching).
 - **Routing**: React Router 7 (route-level code splitting via `React.lazy()` and isolated `<Suspense>` boundaries).
-- **Testing**: Vitest 1.4, React Testing Library, JSDOM.
+- **Testing**: Vitest 5, React Testing Library, JSDOM.
 - **Backend ETL**: Python 3.10+, PyArrow (Parquet decoding), Pandas, NumPy, Pillow (Pillow-SIMD), Pytest.
 
 ---
@@ -113,8 +113,11 @@ Multiplayer match telemetry often arrives as massive, fragmented Parquet files w
 ## G. Setup & Reproduction Instructions
 
 ### Prerequisites
-- **Node.js**: v18.0.0 or higher
+- **Node.js**: v20.19+ or v22.12+
 - **Python**: v3.10 or higher with virtual environment support
+
+### Environment variables
+- Frontend: none required for local or static deployment. Optional `VITE_ANALYST_API_URL` points to a server-side explanation endpoint; without it, the analyst uses its deterministic local explanation. Never put API secrets in `VITE_*` variables.
 
 ### 1. Install Frontend Dependencies
 ```bash
@@ -141,6 +144,9 @@ npm run preview
 ### 3. Run the Backend ETL Pipeline (If Raw Parquet Data Is Available)
 ```bash
 # In the project root:
+python -m venv .venv
+# Activate the environment, then install dependencies:
+python -m pip install -r requirements.txt
 python scripts/process_telemetry.py
 ```
 *Processes 1,243 raw Parquet files in ~11 seconds, generating all JSON datasets and WebP minimaps.*
@@ -157,7 +163,7 @@ npm test -- --run
 # In the project root:
 pytest tests/ -v
 ```
-*Executes 52 tests covering coordinate mappings, UV bounds, and schema conformity.*
+*The backend suite contains coordinate mapping, UV bounds, ingestion, and schema checks. Run it with a local Python environment and the project dependencies installed.*
 
 ### 6. Create Production Build
 ```bash
@@ -201,8 +207,8 @@ The production dataset represents 5 operational days of multiplayer gameplay:
 | Test Suite | Framework | Passing Tests | Suites | Coverage Focus |
 |---|---|:---:|:---:|---|
 | **Frontend Suite** | Vitest + Testing Library | **150** | 18 | Canvas rendering, timeline math, heatmap math, player dossiers, combat preview, region metrics, insight engine determinism, query classification, analyst grounding, map switch filter reset, and match selection. |
-| **Backend Suite** | Pytest | **52** | 4 | Coordinate calibration round-trip, UV boundary clamping, Parquet ingestion, and JSON schema compliance. |
-| **Total Automated Tests** | | **202** | 22 test files/modules | **0 failing tests (100% pass rate)** |
+| **Backend Suite** | Pytest | 52 (documented) | 4 | Coordinate calibration round-trip, UV boundary clamping, Parquet ingestion, and JSON schema compliance. Not rerun in the current environment (Python unavailable). |
+| **Total Automated Tests** | | **150 verified + 52 documented** | 18 frontend suites + backend modules | Frontend: 0 failures. Backend: not verified in the current environment. |
 
 ---
 

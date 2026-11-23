@@ -213,7 +213,7 @@ export const MapCanvas: React.FC<MapCanvasProps> = ({
     if (img && img.complete) {
       ctx.drawImage(img, 0, 0, dims.w, dims.h);
     } else {
-      ctx.fillStyle = '#0E131F';
+      ctx.fillStyle = '#090909';
       ctx.fillRect(0, 0, dims.w, dims.h);
     }
 
@@ -592,7 +592,7 @@ export const MapCanvas: React.FC<MapCanvasProps> = ({
     <div
       ref={containerRef}
       style={{ touchAction: 'none' }}
-      className="relative w-full h-full min-h-[300px] bg-[#080D14] rounded-lg overflow-hidden border border-[#1E2B3E] select-none"
+      className="relative w-full h-full min-h-[300px] bg-[#050505] rounded-lg overflow-hidden border border-[#292929] select-none"
     >
       <canvas
         ref={canvasRef}
@@ -606,33 +606,33 @@ export const MapCanvas: React.FC<MapCanvasProps> = ({
       />
 
       {/* Tactical Quick Zoom Dock (Top-Left) */}
-      <div className="absolute top-4 left-4 z-20 flex flex-col gap-1 bg-[#101925]/95 backdrop-blur-md border border-[#1E2B3E] rounded-lg p-1 shadow-2xl">
+      <div className="absolute top-4 left-4 z-20 flex flex-col gap-1 bg-[#111111]/95 backdrop-blur-md border border-[#292929] rounded-lg p-1 shadow-2xl">
         <button
           type="button"
           onClick={handleZoomIn}
           title="Zoom In (+) - Map Viewport Only"
           aria-label="Zoom In Map"
-          className="w-8 h-8 flex items-center justify-center rounded text-slate-200 hover:text-[#00D9F5] hover:bg-[#172435] transition-colors font-mono font-bold text-lg select-none"
+          className="w-8 h-8 flex items-center justify-center rounded text-slate-200 hover:text-[#00D9F5] hover:bg-[#191919] transition-colors font-mono font-bold text-lg select-none"
         >
           +
         </button>
-        <div className="w-full h-px bg-[#1E2B3E]" />
+        <div className="w-full h-px bg-[#292929]" />
         <button
           type="button"
           onClick={handleZoomOut}
           title="Zoom Out (-) - Map Viewport Only"
           aria-label="Zoom Out Map"
-          className="w-8 h-8 flex items-center justify-center rounded text-slate-200 hover:text-[#00D9F5] hover:bg-[#172435] transition-colors font-mono font-bold text-lg select-none"
+          className="w-8 h-8 flex items-center justify-center rounded text-slate-200 hover:text-[#00D9F5] hover:bg-[#191919] transition-colors font-mono font-bold text-lg select-none"
         >
           -
         </button>
-        <div className="w-full h-px bg-[#1E2B3E]" />
+        <div className="w-full h-px bg-[#292929]" />
         <button
           type="button"
           onClick={handleReset}
           title="Reset Zoom / Fit Map"
           aria-label="Fit Map"
-          className="w-8 h-8 flex items-center justify-center rounded text-slate-400 hover:text-[#00D9F5] hover:bg-[#172435] transition-colors font-mono text-[9px] font-bold select-none"
+          className="w-8 h-8 flex items-center justify-center rounded text-slate-400 hover:text-[#00D9F5] hover:bg-[#191919] transition-colors font-mono text-[9px] font-bold select-none"
         >
           FIT
         </button>

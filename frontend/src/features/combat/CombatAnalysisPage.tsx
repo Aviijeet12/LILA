@@ -117,9 +117,9 @@ export const CombatAnalysisPage: React.FC = () => {
   }, [events, selectedCategory, selectedMap, selectedDate, searchEntity]);
 
   return (
-    <div className="flex-1 flex flex-col h-full overflow-hidden bg-[#080B11] text-[#F8FAFC]">
+    <div className="flex-1 flex flex-col h-full overflow-hidden bg-transparent text-[#F8FAFC]">
       {/* Header Bar */}
-      <div className="px-6 py-4 border-b border-[#1E2B3E] bg-[#101925] flex flex-wrap items-center justify-between gap-4">
+      <div className="px-6 py-4 border-b border-[#292929] bg-[#111111] flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className="p-2 rounded-xl bg-[#EF4444]/10 text-[#EF4444] border border-[#EF4444]/20">
             <Swords className="w-5 h-5" />
@@ -136,27 +136,27 @@ export const CombatAnalysisPage: React.FC = () => {
 
         {/* Top Summary Stat Widgets */}
         <div className="flex items-center gap-2 text-xs font-mono flex-wrap">
-          <div className="bg-[#080D14] border border-[#1E2B3E] px-3 py-1.5 rounded-lg flex items-center gap-1.5">
+          <div className="bg-[#050505] border border-[#292929] px-3 py-1.5 rounded-lg flex items-center gap-1.5">
             <span className="text-[#EF4444] font-bold">BotKill:</span>
             <strong className="text-slate-100">{tallies.botKill.toLocaleString()}</strong>
           </div>
-          <div className="bg-[#080D14] border border-[#1E2B3E] px-3 py-1.5 rounded-lg flex items-center gap-1.5">
+          <div className="bg-[#050505] border border-[#292929] px-3 py-1.5 rounded-lg flex items-center gap-1.5">
             <span className="text-red-400 font-bold">BotKilled:</span>
             <strong className="text-slate-100">{tallies.botKilled.toLocaleString()}</strong>
           </div>
-          <div className="bg-[#080D14] border border-[#1E2B3E] px-3 py-1.5 rounded-lg flex items-center gap-1.5">
+          <div className="bg-[#050505] border border-[#292929] px-3 py-1.5 rounded-lg flex items-center gap-1.5">
             <span className="text-orange-400 font-bold">Kill:</span>
             <strong className="text-slate-100">{tallies.kill}</strong>
           </div>
-          <div className="bg-[#080D14] border border-[#1E2B3E] px-3 py-1.5 rounded-lg flex items-center gap-1.5">
+          <div className="bg-[#050505] border border-[#292929] px-3 py-1.5 rounded-lg flex items-center gap-1.5">
             <span className="text-purple-400 font-bold">Killed:</span>
             <strong className="text-slate-100">{tallies.killed}</strong>
           </div>
-          <div className="bg-[#080D14] border border-[#1E2B3E] px-3 py-1.5 rounded-lg flex items-center gap-1.5">
+          <div className="bg-[#050505] border border-[#292929] px-3 py-1.5 rounded-lg flex items-center gap-1.5">
             <span className="text-indigo-400 font-bold">Storm:</span>
             <strong className="text-slate-100">{tallies.storm}</strong>
           </div>
-          <div className="bg-[#080D14] border border-[#1E2B3E] px-3 py-1.5 rounded-lg flex items-center gap-1.5">
+          <div className="bg-[#050505] border border-[#292929] px-3 py-1.5 rounded-lg flex items-center gap-1.5">
             <span className="text-[#F5A623] font-bold">Loot:</span>
             <strong className="text-slate-100">{tallies.loot.toLocaleString()}</strong>
           </div>
@@ -164,10 +164,10 @@ export const CombatAnalysisPage: React.FC = () => {
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="px-6 py-3 border-b border-[#1E2B3E] bg-[#0A101A] flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+      <div className="px-6 py-3 border-b border-[#292929] bg-[#090909] flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
         <div className="flex items-center gap-2.5 flex-wrap">
           {/* Individual Map Filter - No "All Maps" */}
-          <div className="flex items-center gap-1 bg-[#101925] border border-[#1E2B3E] rounded-lg p-0.5">
+          <div className="flex items-center gap-1 bg-[#111111] border border-[#292929] rounded-lg p-0.5">
             {(['AmbroseValley', 'GrandRift', 'Lockdown'] as MapId[]).map((mId) => (
               <button
                 key={mId}
@@ -193,7 +193,7 @@ export const CombatAnalysisPage: React.FC = () => {
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="bg-[#121826] border border-[#1E293B] rounded-lg px-2.5 py-1.5 text-xs text-slate-300 outline-none"
+            className="bg-[#111111] border border-[#292929] rounded-lg px-2.5 py-1.5 text-xs text-slate-300 outline-none"
           >
             <option value="all_combat">All Combat Events (Excl. Loot)</option>
             <option value="BotKill">BotKill Events ({tallies.botKill})</option>
@@ -209,7 +209,7 @@ export const CombatAnalysisPage: React.FC = () => {
           <select
             value={selectedDate}
             onChange={(e) => setSelectedDate(e.target.value)}
-            className="bg-[#121826] border border-[#1E293B] rounded-lg px-2.5 py-1.5 text-xs text-slate-300 outline-none"
+            className="bg-[#111111] border border-[#292929] rounded-lg px-2.5 py-1.5 text-xs text-slate-300 outline-none"
           >
             <option value="all">All Dates</option>
             {availableDates.map((d) => (
@@ -220,7 +220,7 @@ export const CombatAnalysisPage: React.FC = () => {
           </select>
 
           {/* Entity Search */}
-          <div className="flex items-center gap-2 bg-[#101925] border border-[#1E2B3E] rounded-lg px-3 py-1.5 w-56">
+          <div className="flex items-center gap-2 bg-[#111111] border border-[#292929] rounded-lg px-3 py-1.5 w-56">
             <Search className="w-3.5 h-3.5 text-slate-400 shrink-0" />
             <input
               type="text"
@@ -242,10 +242,10 @@ export const CombatAnalysisPage: React.FC = () => {
       {/* Main Content: Split Grid with Events Table & Map Preview */}
       <div className="flex-1 flex overflow-hidden p-4 gap-4 min-h-0">
         {/* Left: Events Table (Action column removed, row selection with active feedback) */}
-        <div className="flex-1 flex flex-col bg-[#0B0F17] border border-[#1E293B] rounded-xl overflow-hidden shadow-xl min-w-0 min-h-0">
+        <div className="flex-1 flex flex-col bg-[#090909] border border-[#292929] rounded-xl overflow-hidden shadow-xl min-w-0 min-h-0">
           <div className="overflow-x-auto flex-1">
             <table className="w-full text-left text-xs font-mono">
-              <thead className="sticky top-0 z-10 bg-[#0E1420] border-b border-[#1E293B] text-[11px] uppercase tracking-wider text-slate-400">
+              <thead className="sticky top-0 z-10 bg-[#090909] border-b border-[#292929] text-[11px] uppercase tracking-wider text-slate-400">
                 <tr>
                   <th className="px-4 py-3">Event Type</th>
                   <th className="px-3 py-3">Entity ID</th>
@@ -256,7 +256,7 @@ export const CombatAnalysisPage: React.FC = () => {
                   <th className="px-3 py-3">UV [U, V]</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#161F30]">
+              <tbody className="divide-y divide-[#191919]">
                 {loading ? (
                   <tr>
                     <td colSpan={7} className="px-6 py-12 text-center text-slate-500 animate-pulse">
@@ -279,7 +279,7 @@ export const CombatAnalysisPage: React.FC = () => {
                         className={`transition-all duration-200 cursor-pointer select-none ${
                           isSelected
                             ? 'bg-cyan-950/60 ring-2 ring-cyan-400/80 border-l-4 border-l-[#00D9F5] shadow-lg shadow-cyan-950/50'
-                            : 'hover:bg-[#121A2A]'
+                            : 'hover:bg-[#111111]'
                         }`}
                         onClick={() => setSelectedEvent(ev)}
                       >
@@ -327,7 +327,7 @@ export const CombatAnalysisPage: React.FC = () => {
             </table>
           </div>
 
-          <div className="px-4 py-2.5 bg-[#0E1420] border-t border-[#1E293B] text-[10px] text-slate-500 flex justify-between items-center">
+          <div className="px-4 py-2.5 bg-[#090909] border-t border-[#292929] text-[10px] text-slate-500 flex justify-between items-center">
             <span>Showing top {Math.min(200, filteredEvents.length)} of {filteredEvents.length.toLocaleString()} matching rows</span>
             <span className="flex items-center gap-1.5 text-slate-400">
               <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400" />
@@ -338,7 +338,7 @@ export const CombatAnalysisPage: React.FC = () => {
 
         {/* Right: Spatial Combat Preview & Animated Selected Event Dossier */}
         <div className="w-96 flex flex-col gap-3.5 shrink-0 overflow-y-auto custom-scrollbar min-h-0 max-h-full pr-1">
-          <div className="bg-[#0B0F17] border border-[#1E293B] rounded-xl p-3.5 space-y-3 shadow-xl">
+          <div className="bg-[#090909] border border-[#292929] rounded-xl p-3.5 space-y-3 shadow-xl">
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold uppercase tracking-wider text-slate-200 flex items-center gap-1.5">
                 <Crosshair className="w-4 h-4 text-cyan-400" />
@@ -360,9 +360,9 @@ export const CombatAnalysisPage: React.FC = () => {
             {selectedEvent ? (
               <div
                 key={`${selectedEvent.match_id}_${selectedEvent.ts}`}
-                className="bg-[#121826] border border-cyan-500/40 rounded-xl p-3.5 text-xs font-mono space-y-2.5 shadow-lg shadow-cyan-950/30 transition-all duration-300 ease-out transform translate-y-0 opacity-100 animate-in fade-in slide-in-from-top-2"
+                className="bg-[#111111] border border-cyan-500/40 rounded-xl p-3.5 text-xs font-mono space-y-2.5 shadow-lg shadow-cyan-950/30 transition-all duration-300 ease-out transform translate-y-0 opacity-100 animate-in fade-in slide-in-from-top-2"
               >
-                <div className="flex items-center justify-between border-b border-[#1E2B3E] pb-2">
+                <div className="flex items-center justify-between border-b border-[#292929] pb-2">
                   <div className="flex items-center gap-1.5">
                     <span
                       className="w-2.5 h-2.5 rounded-full animate-pulse"
@@ -378,7 +378,7 @@ export const CombatAnalysisPage: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setSelectedEvent(null)}
-                    className="p-1 rounded text-slate-400 hover:text-slate-200 hover:bg-[#1A2538] transition-colors"
+                    className="p-1 rounded text-slate-400 hover:text-slate-200 hover:bg-[#191919] transition-colors"
                     title="Deselect event"
                   >
                     <X className="w-3.5 h-3.5" />
@@ -386,13 +386,13 @@ export const CombatAnalysisPage: React.FC = () => {
                 </div>
 
                 <div className="grid grid-cols-2 gap-2 text-[11px]">
-                  <div className="bg-[#0A0D15] p-2 rounded border border-[#1A2333] space-y-0.5">
+                  <div className="bg-[#090909] p-2 rounded border border-[#191919] space-y-0.5">
                     <span className="text-slate-500 uppercase text-[9px] block">Entity ID</span>
                     <span className="text-slate-200 font-semibold truncate block" title={selectedEvent.user_id}>
                       {selectedEvent.user_id}
                     </span>
                   </div>
-                  <div className="bg-[#0A0D15] p-2 rounded border border-[#1A2333] space-y-0.5">
+                  <div className="bg-[#090909] p-2 rounded border border-[#191919] space-y-0.5">
                     <span className="text-slate-500 uppercase text-[9px] block">Entity Classification</span>
                     <span className={`font-semibold uppercase text-[10px] block ${
                       selectedEvent.entity_type === 'human' ? 'text-cyan-400' : 'text-purple-400'
@@ -402,7 +402,7 @@ export const CombatAnalysisPage: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="space-y-1 text-[11px] text-slate-400 bg-[#0A0D15] p-2 rounded border border-[#1A2333]">
+                <div className="space-y-1 text-[11px] text-slate-400 bg-[#090909] p-2 rounded border border-[#191919]">
                   <div className="flex justify-between">
                     <span>World [X, Z]:</span>
                     <span className="text-[#00D9F5] font-semibold">
@@ -430,14 +430,14 @@ export const CombatAnalysisPage: React.FC = () => {
                 </div>
               </div>
             ) : (
-              <div className="bg-[#121826]/60 border border-dashed border-[#1E293B] rounded-xl p-3 text-center text-xs text-slate-500 font-mono">
+              <div className="bg-[#111111]/60 border border-dashed border-[#292929] rounded-xl p-3 text-center text-xs text-slate-500 font-mono">
                 Click any row in the table or dot on the map to inspect discrete event kinetics.
               </div>
             )}
           </div>
 
           {/* Mandatory Semantic Restrictions Notice */}
-          <div className="bg-[#0B0F17] border border-[#1E293B] rounded-xl p-4 text-xs text-slate-400 space-y-2">
+          <div className="bg-[#090909] border border-[#292929] rounded-xl p-4 text-xs text-slate-400 space-y-2">
             <div className="flex items-center gap-1.5 text-slate-200 font-semibold text-xs">
               <ShieldAlert className="w-4 h-4 text-amber-400 shrink-0" />
               Combat Telemetry Boundaries

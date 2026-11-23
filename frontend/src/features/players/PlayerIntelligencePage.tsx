@@ -163,7 +163,7 @@ export const PlayerIntelligencePage: React.FC = () => {
 
   if (activeReplay) {
     return (
-      <div className="flex-1 flex flex-col h-full max-h-full overflow-hidden bg-[#080B11]">
+      <div className="flex-1 flex flex-col h-full max-h-full overflow-hidden bg-transparent">
         <PlayerGameView
           initialPlayerId={activeReplay.playerId}
           initialMatchId={activeReplay.matchId}
@@ -178,9 +178,9 @@ export const PlayerIntelligencePage: React.FC = () => {
   }
 
   return (
-    <div className="flex-1 flex flex-col h-full overflow-hidden bg-[#080B11] text-[#F8FAFC]">
+    <div className="flex-1 flex flex-col h-full overflow-hidden bg-transparent text-[#F8FAFC]">
       {/* Header Bar */}
-      <div className="px-6 py-4 border-b border-[#1E2B3E] bg-[#101925] flex flex-wrap items-center justify-between gap-4">
+      <div className="px-6 py-4 border-b border-[#292929] bg-[#111111] flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className="p-2 rounded-xl bg-cyan-500/10 text-[#00D9F5] border border-cyan-500/20">
             <Users className="w-5 h-5" />
@@ -197,19 +197,19 @@ export const PlayerIntelligencePage: React.FC = () => {
 
         {/* Top Summary Stat Widgets */}
         <div className="flex items-center gap-2 text-xs font-mono">
-          <div className="bg-[#080D14] border border-[#1E2B3E] px-3 py-1.5 rounded-lg flex items-center gap-2">
+          <div className="bg-[#050505] border border-[#292929] px-3 py-1.5 rounded-lg flex items-center gap-2">
             <span className="text-slate-400">Total Entities:</span>
             <strong className="text-slate-100">{totalEntities}</strong>
           </div>
-          <div className="bg-[#080D14] border border-[#1E2B3E] px-3 py-1.5 rounded-lg flex items-center gap-2">
+          <div className="bg-[#050505] border border-[#292929] px-3 py-1.5 rounded-lg flex items-center gap-2">
             <span className="text-[#14C995]">Humans:</span>
             <strong className="text-[#14C995]">{totalHumans}</strong>
           </div>
-          <div className="bg-[#080D14] border border-[#1E2B3E] px-3 py-1.5 rounded-lg flex items-center gap-2">
+          <div className="bg-[#050505] border border-[#292929] px-3 py-1.5 rounded-lg flex items-center gap-2">
             <span className="text-[#F5A623]">Bots:</span>
             <strong className="text-[#F5A623]">{totalBots}</strong>
           </div>
-          <div className="bg-[#080D14] border border-[#1E2B3E] px-3 py-1.5 rounded-lg flex items-center gap-2">
+          <div className="bg-[#050505] border border-[#292929] px-3 py-1.5 rounded-lg flex items-center gap-2">
             <span className="text-slate-400">Total Distance:</span>
             <strong className="text-slate-100">{totalKm.toLocaleString()} km</strong>
           </div>
@@ -217,9 +217,9 @@ export const PlayerIntelligencePage: React.FC = () => {
       </div>
 
       {/* Filter and Search Controls Bar */}
-      <div className="px-6 py-3 border-b border-[#1E2B3E] bg-[#0A101A] flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+      <div className="px-6 py-3 border-b border-[#292929] bg-[#090909] flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
         {/* Search Input */}
-        <div className="flex items-center gap-2 bg-[#101925] border border-[#1E2B3E] rounded-lg px-3 py-1.5 w-72">
+        <div className="flex items-center gap-2 bg-[#111111] border border-[#292929] rounded-lg px-3 py-1.5 w-72">
           <Search className="w-4 h-4 text-slate-400 shrink-0" />
           <input
             type="text"
@@ -233,12 +233,12 @@ export const PlayerIntelligencePage: React.FC = () => {
         {/* Filter Pills */}
         <div className="flex items-center gap-2 flex-wrap">
           {/* Entity Type Toggle */}
-          <div className="flex items-center bg-[#101925] border border-[#1E2B3E] rounded-lg p-0.5">
+          <div className="flex items-center bg-[#111111] border border-[#292929] rounded-lg p-0.5">
             <button
               type="button"
               onClick={() => setEntityFilter('all')}
               className={`px-2.5 py-1 rounded text-xs transition-colors ${
-                entityFilter === 'all' ? 'bg-[#1E2B3E] text-[#00D9F5] font-bold' : 'text-slate-400 hover:text-slate-200'
+                entityFilter === 'all' ? 'bg-[#292929] text-[#00D9F5] font-bold' : 'text-slate-400 hover:text-slate-200'
               }`}
             >
               All
@@ -269,7 +269,7 @@ export const PlayerIntelligencePage: React.FC = () => {
           <select
             value={mapFilter}
             onChange={(e) => setMapFilter(e.target.value)}
-            className="bg-[#121826] border border-[#1E293B] rounded-lg px-2.5 py-1.5 text-xs text-slate-300 outline-none"
+            className="bg-[#111111] border border-[#292929] rounded-lg px-2.5 py-1.5 text-xs text-slate-300 outline-none"
           >
             <option value="all">All Maps</option>
             <option value="AmbroseValley">Ambrose Valley</option>
@@ -281,7 +281,7 @@ export const PlayerIntelligencePage: React.FC = () => {
           <select
             value={dateFilter}
             onChange={(e) => setDateFilter(e.target.value)}
-            className="bg-[#121826] border border-[#1E293B] rounded-lg px-2.5 py-1.5 text-xs text-slate-300 outline-none"
+            className="bg-[#111111] border border-[#292929] rounded-lg px-2.5 py-1.5 text-xs text-slate-300 outline-none"
           >
             <option value="all">All Dates</option>
             {allDates.map((d) => (
@@ -299,11 +299,11 @@ export const PlayerIntelligencePage: React.FC = () => {
 
       {/* Main Table Content */}
       <div className="flex-1 overflow-auto p-6">
-        <div className="bg-[#0B0F17] border border-[#1E293B] rounded-xl overflow-hidden shadow-xl">
+        <div className="bg-[#090909] border border-[#292929] rounded-xl overflow-hidden shadow-xl">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs font-mono">
               <thead>
-                <tr className="border-b border-[#1E293B] bg-[#0E1420] text-slate-400 text-[11px] uppercase tracking-wider">
+                <tr className="border-b border-[#292929] bg-[#090909] text-slate-400 text-[11px] uppercase tracking-wider">
                   <th className="px-4 py-3">Entity ID</th>
                   <th className="px-3 py-3">Classification</th>
                   <th
@@ -358,7 +358,7 @@ export const PlayerIntelligencePage: React.FC = () => {
                   <th className="px-4 py-3 text-center">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#161F30]">
+              <tbody className="divide-y divide-[#191919]">
                 {loading ? (
                   <tr>
                     <td colSpan={10} className="px-6 py-12 text-center text-slate-500 animate-pulse">
@@ -378,7 +378,7 @@ export const PlayerIntelligencePage: React.FC = () => {
                     return (
                       <tr
                         key={p.user_id}
-                        className="hover:bg-[#121A2A] transition-colors cursor-pointer"
+                        className="hover:bg-[#111111] transition-colors cursor-pointer"
                         onClick={() => setSelectedPlayer(p)}
                       >
                         <td className="px-4 py-2.5 font-bold text-slate-200 truncate max-w-[180px]">
@@ -423,7 +423,7 @@ export const PlayerIntelligencePage: React.FC = () => {
                               e.stopPropagation();
                               setSelectedPlayer(p);
                             }}
-                            className="px-2.5 py-1 rounded bg-[#1A2234] hover:bg-[#26344E] text-cyan-400 hover:text-cyan-300 text-[11px] font-sans font-medium transition-colors border border-[#2D3B55]"
+                            className="px-2.5 py-1 rounded bg-[#191919] hover:bg-[#383838] text-cyan-400 hover:text-cyan-300 text-[11px] font-sans font-medium transition-colors border border-[#383838]"
                           >
                             Inspect
                           </button>

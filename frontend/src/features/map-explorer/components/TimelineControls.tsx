@@ -82,7 +82,7 @@ export const TimelineControls: React.FC<TimelineControlsProps> = ({
   };
 
   return (
-    <div className="bg-[#0A0E17]/95 backdrop-blur-md border border-[#1E2B3E] rounded-xl p-3 font-mono text-xs select-none shadow-xl">
+    <div className="bg-[#090909]/95 backdrop-blur-md border border-[#292929] rounded-xl p-3 font-mono text-xs select-none shadow-xl">
       {/* Top row: controls, time displays, speed buttons */}
       <div className="flex items-center justify-between gap-3 mb-2 flex-wrap">
         {/* Play / Pause & Restart & Mode indicator */}
@@ -102,7 +102,7 @@ export const TimelineControls: React.FC<TimelineControlsProps> = ({
 
           <button
             onClick={onRestart}
-            className="p-2 rounded-lg text-[#94A3B8] border border-[#1E2B3E] hover:text-[#F8FAFC] hover:bg-[#101925] transition-colors"
+            className="p-2 rounded-lg text-[#94A3B8] border border-[#292929] hover:text-[#F8FAFC] hover:bg-[#111111] transition-colors"
             title="Restart from beginning"
           >
             <RotateCcw size={13} />
@@ -127,7 +127,7 @@ export const TimelineControls: React.FC<TimelineControlsProps> = ({
                 'ml-1 px-2.5 py-1 rounded text-[10px] font-mono font-medium transition-all border flex items-center gap-1.5',
                 !isTimelineActive && !isPlaying
                   ? 'bg-[#00D9F5]/15 text-[#00D9F5] border-[#00D9F5]/40 shadow-[0_0_10px_rgba(0,217,245,0.15)]'
-                  : 'bg-[#101925] text-[#94A3B8] border-[#1E2B3E] hover:text-[#F8FAFC] hover:border-[#334155]'
+                  : 'bg-[#111111] text-[#94A3B8] border-[#292929] hover:text-[#F8FAFC] hover:border-[#334155]'
               )}
               title={
                 !isTimelineActive && !isPlaying
@@ -167,7 +167,7 @@ export const TimelineControls: React.FC<TimelineControlsProps> = ({
           </div>
 
           {/* Speed Selector */}
-          <div className="flex items-center gap-0.5 bg-[#101925] border border-[#1E2B3E] rounded-lg p-0.5">
+          <div className="flex items-center gap-0.5 bg-[#111111] border border-[#292929] rounded-lg p-0.5">
             {speeds.map((s) => (
               <button
                 key={s}
@@ -175,8 +175,8 @@ export const TimelineControls: React.FC<TimelineControlsProps> = ({
                 className={clsx(
                   'px-1.5 py-0.5 rounded text-[10px] font-mono font-semibold transition-colors',
                   speed === s
-                    ? 'bg-[#00D9F5] text-[#080B11]'
-                    : 'text-[#64748B] hover:text-[#94A3B8] hover:bg-[#1E2B3E]'
+                    ? 'bg-[#00D9F5] text-[#050505]'
+                    : 'text-[#64748B] hover:text-[#94A3B8] hover:bg-[#292929]'
                 )}
               >
                 {s}×
@@ -191,7 +191,7 @@ export const TimelineControls: React.FC<TimelineControlsProps> = ({
         {/* Hover Tooltip for Event Ticks */}
         {hoveredEvent && (
           <div
-            className="absolute -top-11 z-30 pointer-events-none bg-[#0E131F]/95 backdrop-blur-sm border border-[#1E293B] rounded px-2 py-1 text-[10px] font-mono shadow-xl text-[#F8FAFC] -translate-x-1/2 whitespace-nowrap"
+            className="absolute -top-11 z-30 pointer-events-none bg-[#090909]/95 backdrop-blur-sm border border-[#292929] rounded px-2 py-1 text-[10px] font-mono shadow-xl text-[#F8FAFC] -translate-x-1/2 whitespace-nowrap"
             style={{ left: `${hoveredEvent.x}%` }}
           >
             <div className="flex items-center gap-1.5 font-bold">
@@ -215,7 +215,7 @@ export const TimelineControls: React.FC<TimelineControlsProps> = ({
         <div
           ref={trackRef}
           onMouseDown={handleTrackMouseDown}
-          className="relative h-2 bg-[#151D2E] border border-[#1E293B] rounded-full cursor-pointer overflow-hidden group"
+          className="relative h-2 bg-[#111111] border border-[#292929] rounded-full cursor-pointer overflow-hidden group"
         >
           {/* Elapsed Progress Fill */}
           <div
