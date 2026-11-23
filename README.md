@@ -49,35 +49,35 @@ Multiplayer match telemetry often arrives as massive, fragmented Parquet files w
 
 ### Overview Dashboard
 ![Overview Dashboard](docs/screenshots/overview_page.png)
-*Dataset health, global event tallies, territorial coverage comparisons, and quick-action navigation.*
+*Current dark tactical dashboard with dataset health, event tallies, map distribution, and operational activity charts.*
 
 ### Map Explorer & Trajectory Rendering
 ![Map Explorer](docs/screenshots/map_explorer_page.png)
-*High-performance Canvas 2D renderer displaying continuous player match journeys on Ambrose Valley.*
+*Interactive map view with player journeys, event markers, entity filters, and layer controls.*
 
 ### Timeline Playback & Replay Scrubber
 ![Timeline Playback](docs/screenshots/playback_midway.png)
-*Time-synchronized replay with sub-second interpolation, event ticks, and playback speed controls.*
+*Lockdown match replay with journey paths, event ticks, a scrubber, and playback speed controls.*
 
 ### 64×64 Spatial Heatmap Visualization
 ![Heatmap Visualization](docs/screenshots/heatmap_ambrose_valley.png)
-*Thermal density raster visualizing human movement intensity across 4,096 sectors with sector dossier.*
+*Human movement density across the 64×64 sector grid, with map layer and sector inspection controls.*
 
 ### Player Intelligence Directory
 ![Player Intelligence](docs/screenshots/player_intelligence_page.png)
-*Searchable entity explorer detailing behavioral statistics, lifetime distance, and match histories.*
+*Player directory with searchable entities, behavioral statistics, and match history.*
 
 ### Combat Telemetry Analysis
 ![Combat Analysis](docs/screenshots/combat_analysis_page.png)
-*Tabular log of discrete combat events with interactive spatial minimap pin preview and replay deep-linking.*
+*Combat event analysis with spatial previews and links into match replay.*
 
 ### Region Intelligence & Cross-Map Footprint
 ![Region Intelligence](docs/screenshots/region_intelligence_page.png)
-*Territorial coverage and multi-layer activity breakdown across the 64×64 map partitions.*
+*Territorial coverage and multi-layer activity across the 64×64 map partitions.*
 
 ### AI Map Analyst (Grounded Insights)
 ![AI Map Analyst](docs/screenshots/analyst_insight_response.png)
-*Natural language query response with deterministic metrics, top ground-truth sectors, and deep-link actions.*
+*Grounded loot analysis with dataset metrics, ranked sectors, and an action to focus the result on the map.*
 
 ---
 
